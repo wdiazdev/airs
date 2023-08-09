@@ -12,8 +12,12 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  background-color: var(--secondary--color);
+}
 :root {
-  /* --primary--color: #0995e0; */
+  --header--color: #329eb6;
+  --subHeader--color: #fac7c3;
   --secondary--color: #fffdfa;
   --primary--font: 'Open Sans', sans-serif;
   --secondary--font: 'REM', sans-serif;
