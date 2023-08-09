@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=REM:wght@300;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=REM:wght@300;700&display=swap');
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  /* --primary--color: #0995e0;
+    --secondary--color: #d40071;
+    --primary--bg--color: #141414; */
+  --primary--font: 'Open Sans', sans-serif;
+  --secondary--font: 'REM', sans-serif;
+}
+
+/* @media screen and (max-width: 1000px) {
+}
+
+@media screen and (max-width: 640px) {
+}
+
+@media screen and (max-width: 360px) {
+} */
