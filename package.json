@@ -1,7 +1,7 @@
 {
   "home": "https://wdiazdev.github.io/airs/",
   "name": "airs",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
