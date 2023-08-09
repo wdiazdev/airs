@@ -13,9 +13,8 @@ html {
 }
 
 :root {
-  /* --primary--color: #0995e0;
-    --secondary--color: #d40071;
-    --primary--bg--color: #141414; */
+  /* --primary--color: #0995e0; */
+  --secondary--color: #fffdfa;
   --primary--font: 'Open Sans', sans-serif;
   --secondary--font: 'REM', sans-serif;
 }

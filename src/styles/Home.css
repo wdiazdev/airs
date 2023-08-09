@@ -22,7 +22,7 @@
 }
 
 h1 {
-  color: #fffdfa;
+  color: var(--secondary--color);
   font-family: var(--secondary--font);
   font-size: 4rem;
 }
@@ -30,10 +30,10 @@ h1 {
 .btn {
   font-size: 1rem;
   letter-spacing: 1px;
-  color: #fff;
+  color: var(--secondary--color);
   padding: 1rem 1.5rem;
-  border: 1px solid #fff;
-  background: transparent;
+  border: 2px solid var(--secondary--color);
+  background: rgba(0, 0, 0, 0.6);
   cursor: pointer;
   transition: 0.5s ease-in;
   text-transform: uppercase;
@@ -43,6 +43,5 @@ h1 {
 
 .btn:hover {
   background: #fffdfa;
-  border: 1px solid #fffdfa;
   color: #111;
 }
