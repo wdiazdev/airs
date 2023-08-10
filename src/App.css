@@ -16,9 +16,9 @@ body {
   background-color: var(--secondary--color);
 }
 :root {
-  --header--color: #329eb6;
+  --blue--color: #1677ff;
   --subHeader--color: #fac7c3;
-  --secondary--color: #fffdfa;
+  --secondary--color: #ffffff;
   --primary--font: 'Open Sans', sans-serif;
   --secondary--font: 'REM', sans-serif;
 }

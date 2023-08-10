@@ -1,0 +1,16 @@
+.form--wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+.form--wrapper > h2 {
+  font-size: 2rem;
+  font-family: var(--secondary--font);
+}
