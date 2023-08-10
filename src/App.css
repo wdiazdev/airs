@@ -16,8 +16,7 @@ body {
   background-color: var(--secondary--color);
 }
 :root {
-  --blue--color: #1677ff;
-  --subHeader--color: #fac7c3;
+  --orange--color: #f05e16;
   --secondary--color: #ffffff;
   --primary--font: 'Open Sans', sans-serif;
   --secondary--font: 'REM', sans-serif;

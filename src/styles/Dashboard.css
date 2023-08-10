@@ -11,6 +11,7 @@
 .dash--wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 1rem;
 }
 
@@ -20,4 +21,15 @@
   font-family: var(--secondary--font);
   color: var(--blue--color);
   font-size: 3rem;
+}
+
+.dash--btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.forms--wrapper {
+  width: 100%;
 }

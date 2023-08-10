@@ -1,8 +1,9 @@
 import { FC } from 'react'
 import { Button, Form, Input, InputNumber, Select } from 'antd'
 import '../styles/CashFlowForm.css'
+import { styled } from 'styled-components'
 
-const CashFlowForm: FC = () => {
+const CashFlow: FC = () => {
   const form = new FormData()
 
   const onFinish = (values: any) => {
@@ -11,7 +12,7 @@ const CashFlowForm: FC = () => {
 
   return (
     <div className="form--wrapper">
-      <h2>Property Details</h2>
+      <h2>Cash Flow Calculator</h2>
       <Form
         onFinish={onFinish}
         style={{ maxWidth: 600 }}
@@ -47,17 +48,33 @@ const CashFlowForm: FC = () => {
             ))}
           </Select>
         </Form.Item>
-        <p>Expenses</p>
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={{ fontFamily: 'var(--secondary--font)' }}
-        >
+
+        <StyledAntdButton htmlType="submit" type="primary">
           Submit
-        </Button>
+        </StyledAntdButton>
       </Form>
     </div>
   )
 }
 
-export default CashFlowForm
+export default CashFlow
+
+const StyledAntdButton = styled(Button)`
+  &&.ant-btn.ant-btn-primary {
+    color: var(--secondary--color);
+    background: var(--orange--color);
+    border-radius: 0;
+    transition: ease-in 0.2s;
+
+    &:hover {
+      border-color: 0;
+      background-color: transparent;
+      border-radius: 0.8rem;
+    }
+  }
+
+  &&.ant-btn-primary:hover,
+  &&.ant-btn-primary:hover:not(:disabled):not(.ant-btn-disabled) {
+    background: #fd7c3c;
+  }
+`

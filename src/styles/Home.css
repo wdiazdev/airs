@@ -42,6 +42,6 @@ h1 {
 }
 
 .btn:hover {
-  background: #fffdfa;
+  background: var(--secondary--color);
   color: #111;
 }
