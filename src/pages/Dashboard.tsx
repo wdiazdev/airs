@@ -1,8 +1,7 @@
 import { FC, useState } from 'react'
-import '../styles/Dashboard.css'
-import { styled } from 'styled-components'
-import CashOnCash from '../components/CashOnCash'
-import CashFlow from '../components/CashFlow'
+import CashOnCash from '../components/cashoncash/CashOnCash'
+import CashFlow from '../components/cashflow/CashFlow'
+import { Button } from '@nextui-org/react'
 
 const Dashboard: FC = () => {
   const [selectedComponent, setSelectedComponent] = useState<string>()
@@ -13,7 +12,11 @@ const Dashboard: FC = () => {
     } else if (selectedComponent === 'cashOnCash') {
       return <CashOnCash />
     } else {
-      return <p>Please select a component to display.</p>
+      return (
+        <p className="text-md text-white">
+          Please choose a calculation method.
+        </p>
+      )
     }
   }
 
@@ -22,26 +25,36 @@ const Dashboard: FC = () => {
   }
   return (
     <>
-      <div className="dash--container">
-        <div className="dash--wrapper">
-          <h2>Analize Rental Properties</h2>
-          <div className="dash--btn">
-            <StyledButton
+      <div
+        className="relative min-h-screen w-full p-4 
+        bg-no-repeat bg-cover bg-center flex items-start justify-center z-30"
+        style={{ backgroundImage: "url('/src/assets/dashBg.jpg" }}
+      >
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-0"></div>
+        <div className="flex flex-col justify-center gap-2 z-40">
+          <h2 className=" text-white mt-20 sm:text-xl text-lg">
+            Analize Rental Properties
+          </h2>
+          <div className="flex justify-center items-center gap-4 mb-10">
+            <Button
               name="cashFlow"
               onClick={() => handleClick('cashFlow')}
+              title=" Cash Flow"
+              className="text-md text-white bg-primary hover:bg-primary-hover transition delay-100"
             >
               Cash Flow
-            </StyledButton>
-            <StyledButton
+            </Button>
+
+            <Button
               name="cashOnCash"
               onClick={() => handleClick('cashOnCash')}
+              title="Cash on Cash"
+              className="text-md text-white bg-primary hover:bg-primary-hover transition delay-100"
             >
               Cash on Cash
-            </StyledButton>
+            </Button>
           </div>
-          <div className="forms--wrapper">
-            <RenderComponent />
-          </div>
+          <RenderComponent />
         </div>
       </div>
     </>
@@ -49,22 +62,3 @@ const Dashboard: FC = () => {
 }
 
 export default Dashboard
-
-export const StyledButton = styled.button`
-  font-size: 0.8;
-  letter-spacing: 1px;
-  color: var(--secondary--color);
-  padding: 1rem 1.5rem;
-  border: none;
-  background: var(--orange--color);
-  cursor: pointer;
-  transition: 0.2s ease-in;
-  text-transform: uppercase;
-  font-family: var(--secondary--font);
-  font-weight: bold;
-
-  &:hover {
-    background: #fd7c3c;
-    border-radius: 0.8rem;
-  }
-`

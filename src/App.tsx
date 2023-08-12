@@ -3,12 +3,12 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
-import Navbar from './components/Navbar'
+import NavBar from './components/NavBar'
 
 const App: FC = () => {
   return (
-    <div className="App">
-      <Navbar />
+    <div>
+      <NavBar />
       <Routes>
         <Route index path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
