@@ -1,11 +1,13 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import { Button } from '@nextui-org/react'
 import DashChart from './DashChart'
 import { LoanDataTypes } from '../../types'
+import { HouseIcon } from '../../icons/Icons'
 
 const CashFlow: FC = () => {
   const [results, setResults] = useState<LoanDataTypes>()
+  const [monthlyPayment, setMonthlyPayment] = useState<number>()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -26,13 +28,30 @@ const CashFlow: FC = () => {
     form.reset()
   }
 
+  useEffect(() => {
+    let principal
+    let rate
+    let term
+
+    if (results) {
+      principal = results.propertyPrice
+      rate = results.interest / 100 / 12
+      term = results.loanType * 12
+    }
+    if (principal && rate && term) {
+      const monthlyPayment =
+        (principal * rate) / (1 - Math.pow(1 + rate, -term))
+      setMonthlyPayment(parseInt(monthlyPayment.toFixed(2)))
+    }
+  }, [results])
+
   return (
     <div className="">
       <h2 className="text-white text-lg text-center mb-4 sm:text-lg text-md">
         Cash Flow Calculator
       </h2>
 
-      <div className="flex items-center flex-wrap sm:flex gap-8 sm:gap-4 border-1 rounded-lg p-2 sm:p-6 border-zinc-800">
+      <div className="flex items-center justify-center flex-wrap sm:flex gap-8 sm:gap-4 border-1 rounded-lg p-2 sm:p-6 border-zinc-800">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-5 min-w-full sm:min-w-[300px]"
@@ -56,6 +75,7 @@ const CashFlow: FC = () => {
                 min="0"
                 step="0.01"
                 autoComplete="off"
+                required
               />
             </div>
           </div>
@@ -142,7 +162,6 @@ const CashFlow: FC = () => {
               py-3 px-1 pl-7 cursor-pointer "
               required
             >
-              <option>Choose loan type</option>
               <option value="30">30-Year-Fixed</option>
               <option value="20">20-Year-Fixed</option>
               <option value="15">15-Year-Fixed</option>
@@ -157,8 +176,20 @@ const CashFlow: FC = () => {
             Calculate
           </Button>
         </form>
-        <div>
-          <DashChart data={results} />
+
+        <div className="flex flex-col justify-between items-center gap-6">
+          {results ? (
+            <>
+              <div className="flex flex-col items-center justify-center text-md text-white">
+                <h3>Monthly payment</h3>
+                <span className="flex justify-end text-sm text-zinc-600">{`${results.loanType}-Year-Fixed`}</span>
+                <p>{monthlyPayment && `$ ${Math.ceil(monthlyPayment)}`}</p>
+              </div>
+              <DashChart data={results} />
+            </>
+          ) : (
+            <HouseIcon width={350} stroke={'0.5'} color={'rgb(39 39 42)'} />
+          )}
         </div>
       </div>
     </div>
