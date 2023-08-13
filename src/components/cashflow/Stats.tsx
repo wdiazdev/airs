@@ -23,16 +23,16 @@ const Stats: FC<props> = ({ results }) => {
       className="flex justify-evenly space-x-4 border-1 
     rounded-lg border-zinc-800 text-white bg-zinc-950"
     >
-      <div className="w-[33%] border-r border-zinc-900 pr-4 p-4 text-md">
-        <p>Property Payment</p>
+      <div className="w-[33%] border-r border-zinc-900 pr-4 p-4 text-sm">
+        <p>Payment</p>
         <span>{results ? formatCurrency(monthlyPayment) : '-'}</span>
       </div>
-      <div className="w-[33%] border-r border-zinc-900 px-4 p-4 text-md">
+      <div className="w-[33%] border-r border-zinc-900 px-4 p-4 text-sm">
         <p>Rental Income</p>
         <span>{results ? formatCurrency(results?.rent) : '-'}</span>
       </div>
 
-      <div className="w-[33%] pl-4 p-4 text-md">
+      <div className="w-[33%] pl-4 p-4 text-sm">
         <p>Cash flow</p>
         <span
           className={
