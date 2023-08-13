@@ -14,7 +14,7 @@ const CashFlow: FC = () => {
       </h2>
 
       <div className="flex gap-4 border-1 rounded-lg p-4 border-zinc-800">
-        <form className="flex flex-col gap-5 min-w-[300px]">
+        <form className="flex flex-col gap-5 min-w-[250px]">
           <div className="flex flex-col gap-0">
             <label htmlFor="price" className="block text-md text-white">
               Property Price
