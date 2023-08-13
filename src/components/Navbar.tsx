@@ -28,9 +28,9 @@ const NavBar: FC = () => {
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           className="sm:hidden text-white"
         />
-        <NavbarBrand className="flex align-baseline gap-1">
-          <HouseIcon width={35} stroke={'1'} color={'white'} />
-          <Link to="/" className="font-bold text-[25px] text-white">
+        <NavbarBrand className="flex align-baseline gap-0">
+          <HouseIcon width={25} stroke={'1'} color={'white'} />
+          <Link to="/" className="font-bold text-[20px] text-white">
             AI Real State
           </Link>
         </NavbarBrand>

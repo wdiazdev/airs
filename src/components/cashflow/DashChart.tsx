@@ -35,8 +35,8 @@ const DashChart: FC<props> = ({ data }) => {
     <>
       <Chart
         type="donut"
-        width={450}
-        height={450}
+        width={350}
+        height={350}
         series={arrOfHoldings}
         options={{
           labels: [
