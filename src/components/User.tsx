@@ -15,7 +15,7 @@ const User: FC<props> = ({ name, description, src }) => {
       avatarProps={{
         src: src,
       }}
-      className="text-primary font-bold"
+      className="text-primary font-bold flex"
     />
   )
 }

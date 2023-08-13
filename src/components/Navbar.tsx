@@ -35,26 +35,13 @@ const NavBar: FC = () => {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link to="" className="text-white">
-            Features
-          </Link>
-        </NavbarItem>
         <NavbarItem isActive>
-          <Link to="/dashboard" className="text-primary">
+          <Link to="/dashboard" className="text-primary text-md">
             Dashboard
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link to="" className="text-white">
-            Integrations
           </Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex text-primary font-bold">
-          <Link to="">Logout</Link>
-        </NavbarItem>
         <NavbarItem>
           <User
             name="John Smith"
