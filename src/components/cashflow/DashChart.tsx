@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import Chart from 'react-apexcharts'
 import { LoanDataTypes } from '../../types'
 
@@ -7,6 +7,9 @@ type props = {
 }
 
 const DashChart: FC<props> = ({ data }) => {
+  const [dataArray, setDataArray] = useState<number[]>([])
+  console.log('data:', data)
+
   const arrOfNames = [
     'Principal & Interest',
     'Property Taxes',
@@ -14,7 +17,7 @@ const DashChart: FC<props> = ({ data }) => {
     'HOA',
   ]
 
-  const arrOfHoldings = [30, 15, 40, 50]
+  const arrOfHoldings = [30, 15, 120, 50]
 
   return (
     <>
@@ -22,7 +25,7 @@ const DashChart: FC<props> = ({ data }) => {
         type="donut"
         width={450}
         height={450}
-        series={arrOfHoldings}
+        series={dataArray}
         options={{
           labels: arrOfNames,
           title: {

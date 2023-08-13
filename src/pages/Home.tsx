@@ -6,8 +6,8 @@ const Home: FC = () => {
   return (
     <div
       className="relative min-h-screen w-full p-4 
-      bg-no-repeat bg-cover bg-center flex items-end justify-center"
-      style={{ backgroundImage: "url('/src/assets/homeBg.jpg" }}
+      bg-no-repeat bg-cover bg-center flex items-end justify-center
+      bg-[url('/src/assets/homeBg.jpg')]"
     >
       <div className="fixed inset-0 bg-black bg-opacity-60 z-0"></div>
       <div className="flex flex-col items-center justify-center gap-3 py-20 z-30">

@@ -27,8 +27,8 @@ const Dashboard: FC = () => {
     <>
       <div
         className="relative min-h-screen w-full p-4 
-        bg-no-repeat bg-cover bg-center flex items-start justify-center z-30"
-        style={{ backgroundImage: "url('/src/assets/dashBg.jpg" }}
+        bg-no-repeat bg-cover bg-center flex items-start justify-center z-30
+        bg-[url('/src/assets/dashBg.jpg')]"
       >
         <div className="fixed inset-0 bg-black bg-opacity-80 z-0"></div>
         <div className="flex flex-col justify-center gap-2 z-40">

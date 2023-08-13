@@ -1,13 +1,13 @@
-import { FC, useEffect, useState } from 'react'
-
+import { FC, useState } from 'react'
 import { Button } from '@nextui-org/react'
 import DashChart from './DashChart'
 import { LoanDataTypes } from '../../types'
 import { HouseIcon } from '../../icons/Icons'
+import usePaymentCalculator from '../../hook'
+import { formatCurrency } from '../../utils/FormatCurrency'
 
 const CashFlow: FC = () => {
   const [results, setResults] = useState<LoanDataTypes>()
-  const [monthlyPayment, setMonthlyPayment] = useState<number>()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -22,28 +22,14 @@ const CashFlow: FC = () => {
       interest: parseFloat(formData.get('interest') as string) || 0,
       insurance: parseFloat(formData.get('insurance') as string) || 0,
       loanType: parseFloat(formData.get('loanType') as string) || 0,
+      taxes: parseFloat(formData.get('taxes') as string) || 0,
     }
 
     setResults(formParams)
     form.reset()
   }
 
-  useEffect(() => {
-    let principal
-    let rate
-    let term
-
-    if (results) {
-      principal = results.propertyPrice
-      rate = results.interest / 100 / 12
-      term = results.loanType * 12
-    }
-    if (principal && rate && term) {
-      const monthlyPayment =
-        (principal * rate) / (1 - Math.pow(1 + rate, -term))
-      setMonthlyPayment(parseInt(monthlyPayment.toFixed(2)))
-    }
-  }, [results])
+  const monthlyPayment = usePaymentCalculator({ results })
 
   return (
     <div className="">
@@ -57,7 +43,7 @@ const CashFlow: FC = () => {
           className="flex flex-col gap-5 min-w-full sm:min-w-[300px]"
         >
           <div className="flex flex-col gap-0">
-            <label htmlFor="price" className="block text-md text-white">
+            <label htmlFor="price" className="block text-sm text-white">
               Property Price
             </label>
             <div className="relative rounded-md shadow-sm">
@@ -71,17 +57,18 @@ const CashFlow: FC = () => {
                 className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
                 text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
                  [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0.00"
+                placeholder="0"
                 min="0"
                 step="0.01"
                 autoComplete="off"
                 required
+                defaultValue={results && results.propertyPrice}
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-0">
-            <label htmlFor="downpayment" className="block text-md text-white">
+            <label htmlFor="downpayment" className="block text-sm text-white">
               Down Payment
             </label>
             <div className="relative rounded-md shadow-sm">
@@ -95,16 +82,17 @@ const CashFlow: FC = () => {
                 className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
                 text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
                  [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0.00"
+                placeholder="0"
                 min="0"
                 step="0.01"
                 autoComplete="off"
+                defaultValue={results && results.downPayment}
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-0">
-            <label htmlFor="interest" className="block text-md text-white">
+            <label htmlFor="interest" className="block text-sm text-white">
               Interest Rate
             </label>
             <div className="relative rounded-md shadow-sm">
@@ -118,17 +106,43 @@ const CashFlow: FC = () => {
                 className="w-auto rounded-md bg-zinc-800 hover:bg-zinc-700 
                 text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
                  [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0.00"
+                placeholder="0"
                 min="0"
                 step="0.01"
                 autoComplete="off"
                 required
+                defaultValue={results && results.interest}
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-0">
-            <label htmlFor="insurance" className="block text-md text-white">
+            <label htmlFor="taxes" className="block text-sm text-white">
+              Property Taxes
+            </label>
+            <div className="relative rounded-md shadow-sm">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span className="text-white sm:text-sm">$</span>
+              </div>
+              <input
+                type="number"
+                name="taxes"
+                id="taxes"
+                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
+                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
+                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                placeholder="0"
+                min="0"
+                step="0.01"
+                autoComplete="off"
+                defaultValue={results && results.taxes}
+              />
+            </div>
+            <p className="text-sm text-zinc-500">Monthly taxes payment.</p>
+          </div>
+
+          <div className="flex flex-col gap-0">
+            <label htmlFor="insurance" className="block text-sm text-white">
               Property Insurance
             </label>
             <div className="relative rounded-md shadow-sm">
@@ -142,16 +156,18 @@ const CashFlow: FC = () => {
                 className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
                 text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
                  [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0.00"
+                placeholder="0"
                 min="0"
                 step="0.01"
                 autoComplete="off"
+                defaultValue={results && results.insurance}
               />
             </div>
+            <p className="text-sm text-zinc-500">Monthly insurance payment.</p>
           </div>
 
           <div className="flex flex-col gap-0">
-            <label htmlFor="loanType" className="block text-md text-white">
+            <label htmlFor="loanType" className="block text-sm text-white">
               Loan Type
             </label>
             <select
@@ -170,7 +186,7 @@ const CashFlow: FC = () => {
           </div>
           <Button
             type="submit"
-            className="text-md text-white bg-primary hover:bg-primary-hover 
+            className="text-sm text-white bg-primary hover:bg-primary-hover 
             transition delay-100"
           >
             Calculate
@@ -180,10 +196,14 @@ const CashFlow: FC = () => {
         <div className="flex flex-col justify-between items-center gap-6">
           {results ? (
             <>
-              <div className="flex flex-col items-center justify-center text-md text-white">
-                <h3>Monthly payment</h3>
-                <span className="flex justify-end text-sm text-zinc-600">{`${results.loanType}-Year-Fixed`}</span>
-                <p>{monthlyPayment && `$ ${Math.ceil(monthlyPayment)}`}</p>
+              <div className="flex flex-col items-center justify-center">
+                <h3 className="text-md text-white">Monthly payment</h3>
+                <span className="flex justify-end text-sm text-zinc-500">
+                  {`${results.loanType}-Year-Fixed`}
+                </span>
+                <p className="text-md text-white">
+                  {formatCurrency(monthlyPayment)}
+                </p>
               </div>
               <DashChart data={results} />
             </>
