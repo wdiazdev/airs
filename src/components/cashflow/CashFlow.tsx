@@ -8,7 +8,6 @@ import { formatCurrency } from '../../utils/FormatCurrency'
 
 const CashFlow: FC = () => {
   const [results, setResults] = useState<LoanDataTypes>()
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -23,6 +22,7 @@ const CashFlow: FC = () => {
       insurance: parseFloat(formData.get('insurance') as string) || 0,
       loanType: parseFloat(formData.get('loanType') as string) || 0,
       taxes: parseFloat(formData.get('taxes') as string) || 0,
+      hoa: parseFloat(formData.get('hoa') as string) || 0,
     }
 
     setResults(formParams)
@@ -164,6 +164,30 @@ const CashFlow: FC = () => {
               />
             </div>
             <p className="text-sm text-zinc-500">Monthly insurance payment.</p>
+          </div>
+
+          <div className="flex flex-col gap-0">
+            <label htmlFor="hoa" className="block text-sm text-white">
+              HOA Fee
+            </label>
+            <div className="relative rounded-md shadow-sm">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span className="text-white sm:text-sm">$</span>
+              </div>
+              <input
+                type="number"
+                name="hoa"
+                id="hoa"
+                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
+                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
+                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                placeholder="0"
+                min="0"
+                step="0.01"
+                autoComplete="off"
+                defaultValue={results && results.hoa}
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-0">

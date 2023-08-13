@@ -6,7 +6,6 @@ type Props = {
 }
 
 const usePaymentCalculator: FC<Props> = ({ results }) => {
-  console.log('results:', results)
   const [monthlyPayment, setMonthlyPayment] = useState<number>()
 
   useEffect(() => {
@@ -17,12 +16,14 @@ const usePaymentCalculator: FC<Props> = ({ results }) => {
       const propertyPrice = results.propertyPrice
       const rate = results.interest / 100 / 12 // Monthly Interest Rate
       const term = results.loanType * 12
+      const hoa = results.hoa
 
       const calculatedMonthlyPayment =
         ((propertyPrice - downPayment) * rate) /
           (1 - Math.pow(1 + rate, -term)) +
         insurance +
-        taxes
+        taxes +
+        hoa
 
       setMonthlyPayment(parseInt(calculatedMonthlyPayment.toFixed(2)))
     }

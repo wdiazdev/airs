@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import Chart from 'react-apexcharts'
 import { LoanDataTypes } from '../../types'
 
@@ -7,17 +7,29 @@ type props = {
 }
 
 const DashChart: FC<props> = ({ data }) => {
-  const [dataArray, setDataArray] = useState<number[]>([])
-  console.log('data:', data)
+  const [hoa, setHoa] = useState<number>(0)
+  const [insurance, setInsurance] = useState<number>(0)
+  const [principalAndInterest, setPrincipalAndInterest] = useState<number>(0)
+  const [propertyTaxes, setPropertyTaxes] = useState<number>(0)
 
-  const arrOfNames = [
-    'Principal & Interest',
-    'Property Taxes',
-    'Home Insurance',
-    'HOA',
-  ]
+  useEffect(() => {
+    if (data) {
+      const loanAmount = data.propertyPrice - data.downPayment
+      const monthlyInterestRate = data.interest / 100 / 12
+      const numberOfPayments = data.loanType * 12
 
-  const arrOfHoldings = [30, 15, 120, 50]
+      const monthlyPrincipalAndInterest =
+        (loanAmount * monthlyInterestRate) /
+        (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments))
+
+      setInsurance(data.insurance)
+      setHoa(data.hoa)
+      setPropertyTaxes(data.taxes)
+      setPrincipalAndInterest(monthlyPrincipalAndInterest)
+    }
+  }, [data])
+
+  const arrOfHoldings = [principalAndInterest, propertyTaxes, insurance, hoa]
 
   return (
     <>
@@ -25,9 +37,15 @@ const DashChart: FC<props> = ({ data }) => {
         type="donut"
         width={450}
         height={450}
-        series={dataArray}
+        series={arrOfHoldings}
         options={{
-          labels: arrOfNames,
+          labels: [
+            'Principal & Interest',
+            'Property Taxes',
+            'Home Insurance',
+            'HOA',
+          ],
+          colors: [],
           title: {
             text: undefined,
           },
@@ -39,17 +57,24 @@ const DashChart: FC<props> = ({ data }) => {
               startAngle: -90,
               endAngle: 270,
               donut: {
+                size: '60px',
                 labels: {
-                  show: true,
+                  show: false,
                   total: {
                     show: false,
+                    showAlways: false,
+                    label: 'Monthly payment',
+                    fontSize: '22px',
+                    fontFamily: 'DM Sans',
+                    fontWeight: 'bold',
+                    color: '#71717A ',
                   },
                 },
               },
             },
           },
           dataLabels: {
-            enabled: false,
+            enabled: true,
           },
           legend: {
             show: false,
