@@ -32,7 +32,7 @@ const Dashboard: FC = () => {
       >
         <div className="fixed inset-0 bg-black bg-opacity-80 z-0"></div>
         <div className="flex flex-col justify-center gap-2 z-40">
-          <h2 className=" text-white mt-20 sm:text-xl text-lg">
+          <h2 className=" text-white text-center mt-20 sm:text-xl text-lg text-lg">
             Analize Rental Properties
           </h2>
           <div className="flex justify-center items-center gap-4 mb-10">

@@ -1,20 +1,17 @@
 import { FC } from 'react'
+import { DashChart } from './DashChart'
 
 const CashFlow: FC = () => {
   const form = new FormData()
 
-  const onFinish = (values: any) => {
-    console.log(values)
-  }
-
   return (
     <div className="">
-      <h2 className="text-white text-lg text-center mb-4">
+      <h2 className="text-white text-lg text-center mb-4 sm:text-lg text-md">
         Cash Flow Calculator
       </h2>
 
-      <div className="flex gap-4 border-1 rounded-lg p-4 border-zinc-800">
-        <form className="flex flex-col gap-5 min-w-[250px]">
+      <div className="flex items-center flex-wrap sm:flex gap-8 sm:gap-4 border-1 rounded-lg p-2 sm:p-6 border-zinc-800">
+        <form className="flex flex-col gap-5 min-w-full sm:min-w-[300px]">
           <div className="flex flex-col gap-0">
             <label htmlFor="price" className="block text-md text-white">
               Property Price
@@ -125,7 +122,9 @@ const CashFlow: FC = () => {
             </select>
           </div>
         </form>
-        <div></div>
+        <div>
+          <DashChart />
+        </div>
       </div>
     </div>
   )
