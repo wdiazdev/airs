@@ -53,7 +53,7 @@ const NavBar: FC = () => {
 
       <NavbarMenu className="bg-black bg-opacity-70 text-white">
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+          <NavbarMenuItem key={`${item}-${index}`} className="mt-4">
             <Link
               className="text-white py-1 tracking-wide  hover:text-primary transition delay-100"
               to=""

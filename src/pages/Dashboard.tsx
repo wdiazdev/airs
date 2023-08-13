@@ -13,7 +13,7 @@ const Dashboard: FC = () => {
       return <CashOnCash />
     } else {
       return (
-        <p className="text-md text-white">
+        <p className="text-md text-white text-center">
           Please choose a calculation method.
         </p>
       )
@@ -54,7 +54,9 @@ const Dashboard: FC = () => {
               Cash on Cash
             </Button>
           </div>
-          <RenderComponent />
+          <div>
+            <RenderComponent />
+          </div>
         </div>
       </div>
     </>
