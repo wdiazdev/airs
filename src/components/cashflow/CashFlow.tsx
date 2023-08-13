@@ -5,9 +5,11 @@ import { LoanDataTypes } from '../../types'
 import { HouseIcon } from '../../icons/Icons'
 import usePaymentCalculator from '../../hook'
 import { formatCurrency } from '../../utils/FormatCurrency'
-
+import Stats from './Stats'
+import { toast } from 'sonner'
 const CashFlow: FC = () => {
   const [results, setResults] = useState<LoanDataTypes>()
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -23,21 +25,26 @@ const CashFlow: FC = () => {
       loanType: parseFloat(formData.get('loanType') as string) || 0,
       taxes: parseFloat(formData.get('taxes') as string) || 0,
       hoa: parseFloat(formData.get('hoa') as string) || 0,
+      rent: parseFloat(formData.get('rent') as string) || 0,
     }
 
     setResults(formParams)
+    toast.success('Success!')
     form.reset()
   }
 
   const monthlyPayment = usePaymentCalculator({ results })
 
   return (
-    <div className="">
+    <div className="flex flex-col gap-4">
       <h2 className="text-white text-lg text-center mb-4 sm:text-lg text-md">
         Cash Flow Calculator
       </h2>
 
-      <div className="flex items-center justify-center flex-wrap sm:flex gap-8 sm:gap-4 border-1 rounded-lg p-2 sm:p-6 border-zinc-800">
+      <div
+        className="flex items-center justify-center flex-wrap sm:flex gap-8 sm:gap-4 
+      border-1 rounded-lg p-2 sm:p-6 border-zinc-800"
+      >
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-5 min-w-full sm:min-w-[300px]"
@@ -208,6 +215,32 @@ const CashFlow: FC = () => {
               <option value="10">10-Year-Fixed</option>
             </select>
           </div>
+
+          <div className="flex flex-col gap-0">
+            <label htmlFor="rent" className="block text-sm text-white">
+              Rental Income
+            </label>
+            <div className="relative rounded-md shadow-sm">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <span className="text-white sm:text-sm">$</span>
+              </div>
+              <input
+                type="number"
+                name="rent"
+                id="rent"
+                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
+                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
+                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                placeholder="0"
+                min="0"
+                step="0.01"
+                autoComplete="off"
+                required
+                defaultValue={results && results.rent}
+              />
+            </div>
+          </div>
+
           <Button
             type="submit"
             className="text-sm text-white bg-primary hover:bg-primary-hover 
@@ -235,6 +268,9 @@ const CashFlow: FC = () => {
             <HouseIcon width={350} stroke={'0.5'} color={'rgb(39 39 42)'} />
           )}
         </div>
+      </div>
+      <div className="my-4">
+        <Stats results={results} />
       </div>
     </div>
   )

@@ -11,6 +11,7 @@ import {
 } from '@nextui-org/react'
 import { Link } from 'react-router-dom'
 import User from './User'
+import { HouseIcon } from '../icons/Icons'
 
 const NavBar: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
@@ -27,8 +28,9 @@ const NavBar: FC = () => {
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           className="sm:hidden text-white"
         />
-        <NavbarBrand>
-          <Link to="/" className="font-bold tracking-wide text-lg text-white">
+        <NavbarBrand className="flex align-baseline gap-1">
+          <HouseIcon width={35} stroke={'1'} color={'white'} />
+          <Link to="/" className="font-bold text-[25px] text-white">
             AI Real State
           </Link>
         </NavbarBrand>

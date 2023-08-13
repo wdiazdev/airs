@@ -4,6 +4,7 @@ import './App.css'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import NavBar from './components/NavBar'
+import { Toaster } from 'sonner'
 
 const App: FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: FC = () => {
         <Route index path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      <Toaster richColors />
     </div>
   )
 }

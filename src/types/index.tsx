@@ -6,4 +6,5 @@ export interface LoanDataTypes {
   propertyPrice: number
   taxes: number
   hoa: number
+  rent: number
 }

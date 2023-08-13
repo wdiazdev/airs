@@ -1,5 +1,5 @@
 type IconTypes = {
-  width: number
+  width?: number
   stroke?: string
   color?: string
 }
