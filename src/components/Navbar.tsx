@@ -4,7 +4,6 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Button,
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
@@ -28,9 +27,9 @@ const NavBar: FC = () => {
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           className="sm:hidden text-white"
         />
-        <NavbarBrand className="flex align-baseline gap-0">
-          <HouseIcon width={25} stroke={'1'} color={'white'} />
-          <Link to="/" className="font-bold text-[20px] text-white">
+        <NavbarBrand className="flex align-baseline gap-1">
+          <HouseIcon width={30} stroke={'1'} color={'white'} />
+          <Link to="/" className="font-bold text-[25px] text-white mt-1">
             AI Real State
           </Link>
         </NavbarBrand>
@@ -46,7 +45,7 @@ const NavBar: FC = () => {
       <NavbarContent justify="end">
         <NavbarItem>
           <User
-            name="John Smith"
+            name="Mike Smith"
             description="Customer"
             src="https://avatars.githubusercontent.com/u/30373425?v=4"
           />

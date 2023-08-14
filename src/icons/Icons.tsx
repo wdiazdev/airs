@@ -2,9 +2,10 @@ type IconTypes = {
   width?: number
   stroke?: string
   color?: string
+  height?: string
 }
 
-export const HouseIcon = ({ width, stroke, color }: IconTypes) => {
+export const HouseIcon = ({ width, stroke, color, height }: IconTypes) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,6 +14,7 @@ export const HouseIcon = ({ width, stroke, color }: IconTypes) => {
       strokeWidth={stroke}
       stroke={color}
       width={width}
+      height={height}
     >
       <path
         strokeLinecap="round"

@@ -19,7 +19,7 @@ const Home: FC = () => {
             Start
           </Button>
         </Link>
-        <h1 className="sm:text-2xl text-[25px] font-bold text-white text-center">
+        <h1 className="sm:text-2xl text-[20px] font-bold text-white text-center">
           Empower Deal Analysis with AI
         </h1>
       </div>
