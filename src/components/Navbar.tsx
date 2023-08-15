@@ -5,7 +5,6 @@ import { HouseIcon, BarIcon, XMark } from '../icons/Icons'
 
 const NavBar: FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(true)
-  console.log('isMenuOpen:', menuOpen)
 
   const handleClick = () => setMenuOpen(!menuOpen)
 

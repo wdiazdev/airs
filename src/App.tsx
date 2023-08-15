@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
-import NavBar from './components/NavBar'
+import NavBar from './components/Navbar'
 import { Toaster } from 'sonner'
 
 const App: FC = () => {
