@@ -8,3 +8,10 @@ export interface LoanDataTypes {
   hoa: number
   rent: number
 }
+
+export type IconTypes = {
+  width?: number
+  stroke?: string
+  color?: string
+  height?: string
+}
