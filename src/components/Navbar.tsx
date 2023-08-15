@@ -4,7 +4,7 @@ import User from './User'
 import { HouseIcon, BarIcon, XMark } from '../icons/Icons'
 
 const NavBar: FC = () => {
-  const [menuOpen, setMenuOpen] = useState<boolean>(false)
+  const [menuOpen, setMenuOpen] = useState<boolean>(true)
   console.log('isMenuOpen:', menuOpen)
 
   const handleClick = () => setMenuOpen(!menuOpen)
@@ -37,7 +37,9 @@ const NavBar: FC = () => {
           <Link to="/" className="text-white text-[25px]">
             <div className="flex justify-center items-center">
               <HouseIcon width={28} color="white" stroke="1.5" />
-              <h2 className="mt-1">AI Real State</h2>
+              <h2 className="mt-1 from-primary via-white to-white bg-gradient-to-r bg-clip-text text-transparent font-bold">
+                AI Real State
+              </h2>
             </div>
           </Link>
 
