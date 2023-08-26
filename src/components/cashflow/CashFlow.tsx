@@ -7,6 +7,8 @@ import usePaymentCalculator from '../../hook'
 import { formatCurrency } from '../../utils/FormatCurrency'
 import Stats from './Stats'
 import { toast } from 'sonner'
+import FormInput from './FormInput'
+
 const CashFlow: FC = () => {
   const [results, setResults] = useState<LoanDataTypes>()
 
@@ -47,155 +49,84 @@ const CashFlow: FC = () => {
       >
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-5 min-w-full sm:min-w-[300px]"
+          className="flex flex-col gap-3 min-w-full sm:min-w-[300px]"
         >
-          <div className="flex flex-col gap-0">
-            <label htmlFor="price" className="block text-sm text-white">
-              Property Price
-            </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span className="text-white sm:text-sm">$</span>
-              </div>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
-                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
-                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0"
-                min="0"
-                step="0.01"
-                autoComplete="off"
-                required
-                defaultValue={results && results.propertyPrice}
-              />
-            </div>
-          </div>
+          <FormInput
+            type="number"
+            name="price"
+            placeholder="0"
+            min="0"
+            step="0.01"
+            autoComplete="off"
+            required={true}
+            defaultValue=""
+            label={'Property Price'}
+            symbol={'$'}
+          />
+          <FormInput
+            type="number"
+            name="downpayment"
+            placeholder="0"
+            min="0"
+            step="0.01"
+            autoComplete="off"
+            required={false}
+            defaultValue=""
+            label={'Down Payment'}
+            symbol={'$'}
+          />
+          <FormInput
+            type="number"
+            name="interest"
+            placeholder="0"
+            min="0"
+            step="0.01"
+            autoComplete="off"
+            required={true}
+            defaultValue=""
+            label={'Interest Rate'}
+            symbol={'%'}
+          />
+          <FormInput
+            type="number"
+            name="taxes"
+            placeholder="0"
+            min="0"
+            step="0.01"
+            autoComplete="off"
+            required={false}
+            defaultValue=""
+            label={'Property Taxes'}
+            symbol={'$'}
+            description="Monthly taxes payment."
+          />
 
-          <div className="flex flex-col gap-0">
-            <label htmlFor="downpayment" className="block text-sm text-white">
-              Down Payment
-            </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span className="text-white sm:text-sm">$</span>
-              </div>
-              <input
-                type="number"
-                name="downpayment"
-                id="downpayment"
-                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
-                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
-                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0"
-                min="0"
-                step="0.01"
-                autoComplete="off"
-                defaultValue={results && results.downPayment}
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-0">
-            <label htmlFor="interest" className="block text-sm text-white">
-              Interest Rate
-            </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span className="text-white sm:text-sm">%</span>
-              </div>
-              <input
-                type="number"
-                name="interest"
-                id="interest"
-                className="w-auto rounded-md bg-zinc-800 hover:bg-zinc-700 
-                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
-                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0"
-                min="0"
-                step="0.01"
-                autoComplete="off"
-                required
-                defaultValue={results && results.interest}
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-0">
-            <label htmlFor="taxes" className="block text-sm text-white">
-              Property Taxes
-            </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span className="text-white sm:text-sm">$</span>
-              </div>
-              <input
-                type="number"
-                name="taxes"
-                id="taxes"
-                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
-                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
-                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0"
-                min="0"
-                step="0.01"
-                autoComplete="off"
-                defaultValue={results && results.taxes}
-              />
-            </div>
-            <p className="text-sm text-zinc-500">Monthly taxes payment.</p>
-          </div>
-
-          <div className="flex flex-col gap-0">
-            <label htmlFor="insurance" className="block text-sm text-white">
-              Property Insurance
-            </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span className="text-white sm:text-sm">$</span>
-              </div>
-              <input
-                type="number"
-                name="insurance"
-                id="insurance"
-                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
-                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
-                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0"
-                min="0"
-                step="0.01"
-                autoComplete="off"
-                defaultValue={results && results.insurance}
-              />
-            </div>
-            <p className="text-sm text-zinc-500">Monthly insurance payment.</p>
-          </div>
-
-          <div className="flex flex-col gap-0">
-            <label htmlFor="hoa" className="block text-sm text-white">
-              HOA Fee
-            </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span className="text-white sm:text-sm">$</span>
-              </div>
-              <input
-                type="number"
-                name="hoa"
-                id="hoa"
-                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
-                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
-                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0"
-                min="0"
-                step="0.01"
-                autoComplete="off"
-                defaultValue={results && results.hoa}
-              />
-            </div>
-          </div>
+          <FormInput
+            type="number"
+            name="insurance"
+            placeholder="0"
+            min="0"
+            step="0.01"
+            autoComplete="off"
+            required={false}
+            defaultValue=""
+            label={'Property Insurance'}
+            symbol={'$'}
+            description="Monthly insurance payment."
+          />
+          <FormInput
+            type="number"
+            name="hoa"
+            placeholder="0"
+            min="0"
+            step="0.01"
+            autoComplete="off"
+            required={false}
+            defaultValue=""
+            label={'HOA Fee'}
+            symbol={'$'}
+            description="Monthly HOA payment."
+          />
 
           <div className="flex flex-col gap-0">
             <label htmlFor="loanType" className="block text-sm text-white">
@@ -216,30 +147,18 @@ const CashFlow: FC = () => {
             </select>
           </div>
 
-          <div className="flex flex-col gap-0">
-            <label htmlFor="rent" className="block text-sm text-white">
-              Rental Income
-            </label>
-            <div className="relative rounded-md shadow-sm">
-              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span className="text-white sm:text-sm">$</span>
-              </div>
-              <input
-                type="number"
-                name="rent"
-                id="rent"
-                className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
-                text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
-                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                placeholder="0"
-                min="0"
-                step="0.01"
-                autoComplete="off"
-                required
-                defaultValue={results && results.rent}
-              />
-            </div>
-          </div>
+          <FormInput
+            type="number"
+            name="rent"
+            placeholder="0"
+            min="0"
+            step="0.01"
+            autoComplete="off"
+            required={true}
+            defaultValue=""
+            label={'Monthly Rental Income'}
+            symbol={'$'}
+          />
 
           <Button
             type="submit"
