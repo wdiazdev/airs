@@ -8,7 +8,7 @@ import { formatCurrency } from '../../utils/FormatCurrency'
 import Stats from './Stats'
 import { toast } from 'sonner'
 import FormInput from './FormInput'
-import PaymentBreakdown from '../PaymentBreakdown'
+import PaymentBreakdown from './PaymentBreakdown'
 
 const CashFlow: FC = () => {
   const [results, setResults] = useState<LoanDataTypes>()
@@ -60,9 +60,9 @@ const CashFlow: FC = () => {
             step="0.01"
             autoComplete="off"
             required={true}
-            defaultValue=""
             label={'Property Price'}
             symbol={'$'}
+            defaultValue={results && results.propertyPrice}
           />
           <FormInput
             type="number"
@@ -72,9 +72,9 @@ const CashFlow: FC = () => {
             step="0.01"
             autoComplete="off"
             required={false}
-            defaultValue=""
             label={'Down Payment'}
             symbol={'$'}
+            defaultValue={results && results.downPayment}
           />
           <FormInput
             type="number"
@@ -84,7 +84,7 @@ const CashFlow: FC = () => {
             step="0.01"
             autoComplete="off"
             required={true}
-            defaultValue=""
+            defaultValue={results && results.interest}
             label={'Interest Rate'}
             symbol={'%'}
           />
@@ -96,7 +96,7 @@ const CashFlow: FC = () => {
             step="0.01"
             autoComplete="off"
             required={false}
-            defaultValue=""
+            defaultValue={results && results.taxes}
             label={'Property Taxes'}
             symbol={'$'}
             description="Monthly taxes payment."
@@ -110,7 +110,7 @@ const CashFlow: FC = () => {
             step="0.01"
             autoComplete="off"
             required={false}
-            defaultValue=""
+            defaultValue={results && results.insurance}
             label={'Property Insurance'}
             symbol={'$'}
             description="Monthly insurance payment."
@@ -123,7 +123,7 @@ const CashFlow: FC = () => {
             step="0.01"
             autoComplete="off"
             required={false}
-            defaultValue=""
+            defaultValue={results && results.hoa}
             label={'HOA Fee'}
             symbol={'$'}
             description="Monthly HOA payment."
@@ -140,6 +140,7 @@ const CashFlow: FC = () => {
               hover:bg-zinc-700  text-white tracking-wider
               py-3 px-1 pl-7 cursor-pointer "
               required
+              value={results && results.loanType}
             >
               <option value="30">30-Year-Fixed</option>
               <option value="20">20-Year-Fixed</option>
@@ -156,7 +157,7 @@ const CashFlow: FC = () => {
             step="0.01"
             autoComplete="off"
             required={true}
-            defaultValue=""
+            defaultValue={results && results.rent}
             label={'Monthly Rental Income'}
             symbol={'$'}
           />

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
-import { LoanDataTypes } from '../types'
-import { formatCurrency } from '../utils/FormatCurrency'
+import { LoanDataTypes } from '../../types'
+import { formatCurrency } from '../../utils/FormatCurrency'
 
 type Props = {
   data?: LoanDataTypes
