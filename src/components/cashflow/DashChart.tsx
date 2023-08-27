@@ -45,7 +45,7 @@ const DashChart: FC<props> = ({ data }) => {
             'Home Insurance',
             'HOA',
           ],
-          colors: [],
+          colors: ['#0070F0', '#FF9C00', '#FF0000', '#008000'],
           title: {
             text: undefined,
           },

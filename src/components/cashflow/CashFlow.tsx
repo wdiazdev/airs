@@ -8,6 +8,7 @@ import { formatCurrency } from '../../utils/FormatCurrency'
 import Stats from './Stats'
 import { toast } from 'sonner'
 import FormInput from './FormInput'
+import PaymentBreakdown from '../PaymentBreakdown'
 
 const CashFlow: FC = () => {
   const [results, setResults] = useState<LoanDataTypes>()
@@ -182,6 +183,7 @@ const CashFlow: FC = () => {
                 </p>
               </div>
               <DashChart data={results} />
+              <PaymentBreakdown data={results} />
             </>
           ) : (
             <HouseIcon width={350} stroke={'0.5'} color={'rgb(39 39 42)'} />
