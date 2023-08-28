@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { LoanDataTypes } from '../../types'
-import usePaymentCalculator from '../../hook/useCashflow'
+import useCashFlow from '../../hook/useCashFlow'
 import { formatCurrency } from '../../utils/FormatCurrency'
 
 type props = {
@@ -8,7 +8,7 @@ type props = {
 }
 
 const Stats: FC<props> = ({ results }) => {
-  const { propertyData } = usePaymentCalculator({
+  const { propertyData } = useCashFlow({
     results,
   })
 

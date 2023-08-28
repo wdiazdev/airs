@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { formatCurrency } from '../../utils/FormatCurrency'
-import usePaymentCalculator from '../../hook/useCashflow'
+import useCashFlow from '../../hook/useCashFlow'
 import { LoanDataTypes } from '../../types'
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 }
 
 const PaymentBreakdown: FC<Props> = ({ results }) => {
-  const { propertyData } = usePaymentCalculator({ results })
+  const { propertyData } = useCashFlow({ results })
 
   return (
     <div className="w-full flex gap-4 justify-between items-center px-4">

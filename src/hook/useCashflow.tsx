@@ -5,7 +5,7 @@ type Props = {
   results?: LoanDataTypes
 }
 
-const usePaymentCalculator = ({ results }: Props) => {
+const useCashFlow = ({ results }: Props) => {
   const [propertyData, setPropertyData] = useState({
     monthlyPayment: 0,
     rent: 0,
@@ -43,11 +43,11 @@ const usePaymentCalculator = ({ results }: Props) => {
       setPropertyData({
         ...propertyData,
         monthlyPayment: totalMonthlyPayment,
-        rent: results.rent,
+        rent: rent,
         principalAndInterest: monthlyPrincipalAndInterest,
-        taxes: results.taxes,
-        insurance: results.insurance,
-        hoa: results.hoa,
+        taxes: taxes,
+        insurance: insurance,
+        hoa: hoa,
         cashFlow: calculatedCashFlow,
       })
     }
@@ -55,4 +55,4 @@ const usePaymentCalculator = ({ results }: Props) => {
   return { propertyData }
 }
 
-export default usePaymentCalculator
+export default useCashFlow

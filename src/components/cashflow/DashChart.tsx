@@ -1,14 +1,14 @@
 import { FC } from 'react'
 import Chart from 'react-apexcharts'
 import { LoanDataTypes } from '../../types'
-import usePaymentCalculator from '../../hook/useCashflow'
+import useCashFlow from '../../hook/useCashFlow'
 
 type Props = {
   results?: LoanDataTypes
 }
 
 const DashChart: FC<Props> = ({ results }) => {
-  const { propertyData } = usePaymentCalculator({
+  const { propertyData } = useCashFlow({
     results,
   })
 

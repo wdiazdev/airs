@@ -3,7 +3,7 @@ import { Button } from '@nextui-org/react'
 import DashChart from './DashChart'
 import { LoanDataTypes } from '../../types'
 import { HouseIcon } from '../../icons/Icons'
-import usePaymentCalculator from '../../hook/useCashflow'
+import useCashFlow from '../../hook/useCashFlow'
 import { formatCurrency } from '../../utils/FormatCurrency'
 import Stats from './Stats'
 import { toast } from 'sonner'
@@ -36,7 +36,7 @@ const CashFlow: FC = () => {
     form.reset()
   }
 
-  const { propertyData } = usePaymentCalculator({ results })
+  const { propertyData } = useCashFlow({ results })
 
   return (
     <div className="flex flex-col gap-4">
