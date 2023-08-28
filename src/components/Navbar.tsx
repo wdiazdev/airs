@@ -37,7 +37,7 @@ const NavBar: FC = () => {
             <div className="flex justify-center items-center">
               <HouseIcon width={28} color="white" stroke="1.5" />
               <h2 className="mt-1 from-primary via-white to-white bg-gradient-to-r bg-clip-text text-transparent font-bold">
-                AI Real State
+                AIRA
               </h2>
             </div>
           </Link>
