@@ -1,29 +1,15 @@
-import { FC, useEffect, useState } from 'react'
-import { LoanDataTypes } from '../../types'
+import { FC } from 'react'
 import { formatCurrency } from '../../utils/FormatCurrency'
+import usePaymentCalculator from '../../hook'
+import { LoanDataTypes } from '../../types'
 
 type Props = {
-  data?: LoanDataTypes
+  results: LoanDataTypes
 }
 
-const PaymentBreakdown: FC<Props> = ({ data }) => {
-  const [principalAndInterest, setPrincipalAndInterest] = useState<number>(0)
-  console.log('data:', data)
-  // colors: ['#0070F0', '#FF9C00', '#FF0000', '#008000']
+const PaymentBreakdown: FC<Props> = ({ results }) => {
+  const { principalAndInterest } = usePaymentCalculator({ results })
 
-  useEffect(() => {
-    if (data) {
-      const loanAmount = data.propertyPrice - data.downPayment
-      const monthlyInterestRate = data.interest / 100 / 12
-      const numberOfPayments = data.loanType * 12
-
-      const monthlyPrincipalAndInterest =
-        (loanAmount * monthlyInterestRate) /
-        (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments))
-
-      setPrincipalAndInterest(monthlyPrincipalAndInterest)
-    }
-  }, [data])
   return (
     <div className="w-full flex gap-4 justify-between items-center px-4">
       <div className="flex flex-col gap-2">
@@ -34,16 +20,16 @@ const PaymentBreakdown: FC<Props> = ({ data }) => {
       </div>
       <div className="flex flex-col gap-2">
         <span className="text-white">
-          {data && formatCurrency(principalAndInterest)}
+          {results && formatCurrency(principalAndInterest)}
         </span>
         <span className="text-white">
-          {data?.taxes ? formatCurrency(data.taxes) : '-'}
+          {results?.taxes ? formatCurrency(results.taxes) : '-'}
         </span>
         <span className="text-white">
-          {data?.insurance ? formatCurrency(data.insurance) : '-'}
+          {results?.insurance ? formatCurrency(results.insurance) : '-'}
         </span>
         <span className="text-white">
-          {data?.hoa ? formatCurrency(data.hoa) : '-'}
+          {results?.hoa ? formatCurrency(results.hoa) : '-'}
         </span>
       </div>
     </div>

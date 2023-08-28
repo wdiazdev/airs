@@ -36,7 +36,7 @@ const CashFlow: FC = () => {
     form.reset()
   }
 
-  const monthlyPayment = usePaymentCalculator({ results })
+  const { monthlyPayment } = usePaymentCalculator({ results })
 
   return (
     <div className="flex flex-col gap-4">
@@ -184,7 +184,7 @@ const CashFlow: FC = () => {
                 </p>
               </div>
               <DashChart data={results} />
-              <PaymentBreakdown data={results} />
+              <PaymentBreakdown results={results} />
             </>
           ) : (
             <HouseIcon width={350} stroke={'0.5'} color={'rgb(39 39 42)'} />

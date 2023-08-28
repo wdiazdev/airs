@@ -1,12 +1,14 @@
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LoanDataTypes } from '../types'
 
 type Props = {
-  results: LoanDataTypes | undefined
+  results?: LoanDataTypes
 }
 
-const usePaymentCalculator: FC<Props> = ({ results }) => {
+const usePaymentCalculator = ({ results }: Props) => {
   const [monthlyPayment, setMonthlyPayment] = useState<number>()
+  const [rent, setRent] = useState<number>()
+  const [principalAndInterest, setPrincipalAndInterest] = useState<number>(0)
 
   useEffect(() => {
     if (results) {
@@ -17,19 +19,24 @@ const usePaymentCalculator: FC<Props> = ({ results }) => {
       const rate = results.interest / 100 / 12 // Monthly Interest Rate
       const term = results.loanType * 12
       const hoa = results.hoa
+      const loanAmount = results.propertyPrice - results.downPayment
 
-      const calculatedMonthlyPayment =
+      const monthlyPrincipalAndInterest =
+        (loanAmount * rate) / (1 - Math.pow(1 + rate, -term))
+
+      const totalMonthlyPayment =
         ((propertyPrice - downPayment) * rate) /
           (1 - Math.pow(1 + rate, -term)) +
         insurance +
         taxes +
         hoa
 
-      setMonthlyPayment(parseInt(calculatedMonthlyPayment.toFixed(2)))
+      setMonthlyPayment(totalMonthlyPayment)
+      setRent(results.rent)
+      setPrincipalAndInterest(monthlyPrincipalAndInterest)
     }
   }, [results])
-
-  return monthlyPayment
+  return { monthlyPayment, rent, principalAndInterest }
 }
 
 export default usePaymentCalculator

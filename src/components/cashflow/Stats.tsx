@@ -9,19 +9,19 @@ type props = {
 
 const Stats: FC<props> = ({ results }) => {
   const [cashflow, setCashFlow] = useState<number>(0)
-  const monthlyPayment = usePaymentCalculator({ results })
+  const { monthlyPayment, rent } = usePaymentCalculator({ results })
 
   useEffect(() => {
-    if (typeof monthlyPayment === 'number' && results) {
-      const calculatedCashFlow = results.rent - monthlyPayment
+    if (monthlyPayment && rent && results) {
+      const calculatedCashFlow = rent - monthlyPayment
       setCashFlow(calculatedCashFlow)
     }
-  }, [monthlyPayment, results])
+  }, [monthlyPayment, rent, results])
 
   return (
     <div
       className="flex justify-evenly space-x-4 border-1 
-    rounded-lg border-zinc-800 text-white bg-zinc-950"
+      rounded-lg border-zinc-800 text-white bg-zinc-950"
     >
       <div className="w-[33%] border-r border-zinc-900 pr-4 p-4 text-sm">
         <p>Payment</p>
