@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import Chart from 'react-apexcharts'
 import { LoanDataTypes } from '../../types'
-import usePaymentCalculator from '../../hook'
+import usePaymentCalculator from '../../hook/useCashflow'
 
 type Props = {
   results?: LoanDataTypes

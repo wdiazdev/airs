@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { LoanDataTypes } from '../../types'
-import usePaymentCalculator from '../../hook'
+import usePaymentCalculator from '../../hook/useCashflow'
 import { formatCurrency } from '../../utils/FormatCurrency'
 
 type props = {
