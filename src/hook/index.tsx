@@ -6,9 +6,15 @@ type Props = {
 }
 
 const usePaymentCalculator = ({ results }: Props) => {
-  const [monthlyPayment, setMonthlyPayment] = useState<number>()
-  const [rent, setRent] = useState<number>()
-  const [principalAndInterest, setPrincipalAndInterest] = useState<number>(0)
+  const [propertyData, setPropertyData] = useState({
+    monthlyPayment: 0,
+    rent: 0,
+    principalAndInterest: 0,
+    taxes: 0,
+    insurance: 0,
+    hoa: 0,
+    cashFlow: 0,
+  })
 
   useEffect(() => {
     if (results) {
@@ -20,6 +26,7 @@ const usePaymentCalculator = ({ results }: Props) => {
       const term = results.loanType * 12
       const hoa = results.hoa
       const loanAmount = results.propertyPrice - results.downPayment
+      const rent = results.rent
 
       const monthlyPrincipalAndInterest =
         (loanAmount * rate) / (1 - Math.pow(1 + rate, -term))
@@ -31,12 +38,21 @@ const usePaymentCalculator = ({ results }: Props) => {
         taxes +
         hoa
 
-      setMonthlyPayment(totalMonthlyPayment)
-      setRent(results.rent)
-      setPrincipalAndInterest(monthlyPrincipalAndInterest)
+      const calculatedCashFlow = rent - totalMonthlyPayment
+
+      setPropertyData({
+        ...propertyData,
+        monthlyPayment: totalMonthlyPayment,
+        rent: results.rent,
+        principalAndInterest: monthlyPrincipalAndInterest,
+        taxes: results.taxes,
+        insurance: results.insurance,
+        hoa: results.hoa,
+        cashFlow: calculatedCashFlow,
+      })
     }
   }, [results])
-  return { monthlyPayment, rent, principalAndInterest }
+  return { propertyData }
 }
 
 export default usePaymentCalculator

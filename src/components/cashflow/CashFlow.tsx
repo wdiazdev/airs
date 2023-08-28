@@ -36,7 +36,7 @@ const CashFlow: FC = () => {
     form.reset()
   }
 
-  const { monthlyPayment } = usePaymentCalculator({ results })
+  const { propertyData } = usePaymentCalculator({ results })
 
   return (
     <div className="flex flex-col gap-4">
@@ -180,10 +180,10 @@ const CashFlow: FC = () => {
                   {`${results.loanType}-Year-Fixed`}
                 </span>
                 <p className="text-md text-white">
-                  {formatCurrency(monthlyPayment)}
+                  {formatCurrency(propertyData.monthlyPayment)}
                 </p>
               </div>
-              <DashChart data={results} />
+              <DashChart results={results} />
               <PaymentBreakdown results={results} />
             </>
           ) : (

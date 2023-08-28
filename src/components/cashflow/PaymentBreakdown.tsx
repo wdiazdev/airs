@@ -8,7 +8,7 @@ type Props = {
 }
 
 const PaymentBreakdown: FC<Props> = ({ results }) => {
-  const { principalAndInterest } = usePaymentCalculator({ results })
+  const { propertyData } = usePaymentCalculator({ results })
 
   return (
     <div className="w-full flex gap-4 justify-between items-center px-4">
@@ -20,16 +20,18 @@ const PaymentBreakdown: FC<Props> = ({ results }) => {
       </div>
       <div className="flex flex-col gap-2">
         <span className="text-white">
-          {results && formatCurrency(principalAndInterest)}
+          {propertyData && formatCurrency(propertyData.principalAndInterest)}
         </span>
         <span className="text-white">
-          {results?.taxes ? formatCurrency(results.taxes) : '-'}
+          {propertyData?.taxes ? formatCurrency(propertyData.taxes) : '-'}
         </span>
         <span className="text-white">
-          {results?.insurance ? formatCurrency(results.insurance) : '-'}
+          {propertyData?.insurance
+            ? formatCurrency(propertyData.insurance)
+            : '-'}
         </span>
         <span className="text-white">
-          {results?.hoa ? formatCurrency(results.hoa) : '-'}
+          {propertyData?.hoa ? formatCurrency(propertyData.hoa) : '-'}
         </span>
       </div>
     </div>

@@ -1,35 +1,23 @@
-import { FC, useState, useEffect } from 'react'
+import { FC } from 'react'
 import Chart from 'react-apexcharts'
 import { LoanDataTypes } from '../../types'
+import usePaymentCalculator from '../../hook'
 
-type props = {
-  data?: LoanDataTypes
+type Props = {
+  results?: LoanDataTypes
 }
 
-const DashChart: FC<props> = ({ data }) => {
-  const [hoa, setHoa] = useState<number>(0)
-  const [insurance, setInsurance] = useState<number>(0)
-  const [principalAndInterest, setPrincipalAndInterest] = useState<number>(0)
-  const [propertyTaxes, setPropertyTaxes] = useState<number>(0)
+const DashChart: FC<Props> = ({ results }) => {
+  const { propertyData } = usePaymentCalculator({
+    results,
+  })
 
-  useEffect(() => {
-    if (data) {
-      const loanAmount = data.propertyPrice - data.downPayment
-      const monthlyInterestRate = data.interest / 100 / 12
-      const numberOfPayments = data.loanType * 12
-
-      const monthlyPrincipalAndInterest =
-        (loanAmount * monthlyInterestRate) /
-        (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments))
-
-      setInsurance(data.insurance)
-      setHoa(data.hoa)
-      setPropertyTaxes(data.taxes)
-      setPrincipalAndInterest(monthlyPrincipalAndInterest)
-    }
-  }, [data])
-
-  const arrOfHoldings = [principalAndInterest, propertyTaxes, insurance, hoa]
+  const arrOfHoldings = [
+    propertyData.principalAndInterest,
+    propertyData.taxes,
+    propertyData.insurance,
+    propertyData.hoa,
+  ]
 
   return (
     <>

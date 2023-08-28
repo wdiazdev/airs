@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { LoanDataTypes } from '../../types'
 import usePaymentCalculator from '../../hook'
 import { formatCurrency } from '../../utils/FormatCurrency'
@@ -8,15 +8,9 @@ type props = {
 }
 
 const Stats: FC<props> = ({ results }) => {
-  const [cashflow, setCashFlow] = useState<number>(0)
-  const { monthlyPayment, rent } = usePaymentCalculator({ results })
-
-  useEffect(() => {
-    if (monthlyPayment && rent && results) {
-      const calculatedCashFlow = rent - monthlyPayment
-      setCashFlow(calculatedCashFlow)
-    }
-  }, [monthlyPayment, rent, results])
+  const { propertyData } = usePaymentCalculator({
+    results,
+  })
 
   return (
     <div
@@ -25,25 +19,31 @@ const Stats: FC<props> = ({ results }) => {
     >
       <div className="w-[33%] border-r border-zinc-900 pr-4 p-4 text-sm">
         <p>Payment</p>
-        <span>{results ? formatCurrency(monthlyPayment) : '-'}</span>
+        <span>
+          {propertyData.monthlyPayment
+            ? formatCurrency(propertyData.monthlyPayment)
+            : '-'}
+        </span>
       </div>
       <div className="w-[33%] border-r border-zinc-900 px-4 p-4 text-sm">
         <p>Rental Income</p>
-        <span>{results ? formatCurrency(results?.rent) : '-'}</span>
+        <span>
+          {propertyData.rent ? formatCurrency(propertyData.rent) : '-'}
+        </span>
       </div>
 
       <div className="w-[33%] pl-4 p-4 text-sm">
         <p>Cash flow</p>
         <span
           className={
-            cashflow > 0
+            propertyData.cashFlow > 0
               ? 'text-green-500'
-              : cashflow < 0
+              : propertyData.cashFlow < 0
               ? 'text-red-500'
               : 'text-white'
           }
         >
-          {results ? formatCurrency(cashflow) : '-'}
+          {propertyData.cashFlow ? formatCurrency(propertyData.cashFlow) : '-'}
         </span>
       </div>
     </div>
