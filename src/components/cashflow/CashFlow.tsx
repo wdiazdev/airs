@@ -53,48 +53,28 @@ const CashFlow: FC = () => {
           className="flex flex-col gap-3 min-w-full sm:min-w-[300px]"
         >
           <FormInput
-            type="number"
             name="price"
-            placeholder="0"
-            min="0"
-            step="0.01"
-            autoComplete="off"
             required={true}
             label={'Property Price'}
             symbol={'$'}
             defaultValue={results && results.propertyPrice}
           />
           <FormInput
-            type="number"
             name="downpayment"
-            placeholder="0"
-            min="0"
-            step="0.01"
-            autoComplete="off"
             required={false}
             label={'Down Payment'}
             symbol={'$'}
             defaultValue={results && results.downPayment}
           />
           <FormInput
-            type="number"
             name="interest"
-            placeholder="0"
-            min="0"
-            step="0.01"
-            autoComplete="off"
             required={true}
             defaultValue={results && results.interest}
             label={'Interest Rate'}
             symbol={'%'}
           />
           <FormInput
-            type="number"
             name="taxes"
-            placeholder="0"
-            min="0"
-            step="0.01"
-            autoComplete="off"
             required={false}
             defaultValue={results && results.taxes}
             label={'Property Taxes'}
@@ -103,12 +83,7 @@ const CashFlow: FC = () => {
           />
 
           <FormInput
-            type="number"
             name="insurance"
-            placeholder="0"
-            min="0"
-            step="0.01"
-            autoComplete="off"
             required={false}
             defaultValue={results && results.insurance}
             label={'Property Insurance'}
@@ -116,12 +91,7 @@ const CashFlow: FC = () => {
             description="Monthly insurance payment."
           />
           <FormInput
-            type="number"
             name="hoa"
-            placeholder="0"
-            min="0"
-            step="0.01"
-            autoComplete="off"
             required={false}
             defaultValue={results && results.hoa}
             label={'HOA Fee'}
@@ -150,12 +120,7 @@ const CashFlow: FC = () => {
           </div>
 
           <FormInput
-            type="number"
             name="rent"
-            placeholder="0"
-            min="0"
-            step="0.01"
-            autoComplete="off"
             required={true}
             defaultValue={results && results.rent}
             label={'Monthly Rental Income'}

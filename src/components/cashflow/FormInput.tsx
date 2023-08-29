@@ -1,13 +1,8 @@
 import { FC } from 'react'
 
 type Props = {
-  type?: string
   name?: string
   id?: string
-  placeholder?: string
-  min?: number | string
-  step?: number | string
-  autoComplete?: string
   required?: boolean
   defaultValue?: number | string
   label?: string
@@ -16,13 +11,8 @@ type Props = {
 }
 
 const FormInput: FC<Props> = ({
-  type,
   name,
   id,
-  placeholder,
-  min,
-  step,
-  autoComplete,
   required,
   defaultValue,
   label,
@@ -44,13 +34,13 @@ const FormInput: FC<Props> = ({
         )}
 
         <input
-          type={type}
+          type="number"
           name={name}
           id={id}
-          placeholder={placeholder}
-          min={min}
-          step={step}
-          autoComplete={autoComplete}
+          placeholder="0"
+          min="0"
+          step="0.01"
+          autoComplete="off"
           required={required}
           defaultValue={defaultValue}
           className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
