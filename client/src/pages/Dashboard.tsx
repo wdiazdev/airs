@@ -1,9 +1,8 @@
 import { FC, useState } from 'react'
 import CashOnCash from '../components/cashoncash/CashOnCash'
 import CashFlow from '../components/cashflow/CashFlow'
-import { Button } from '@nextui-org/react'
 
-const Dashboard: FC = () => {
+const Dashboard = () => {
   const [selectedComponent, setSelectedComponent] = useState<string>()
 
   const RenderComponent = () => {
@@ -36,23 +35,23 @@ const Dashboard: FC = () => {
             Analize Rental Properties
           </h2>
           <div className="flex justify-center items-center gap-4 mb-10">
-            <Button
+            <button
               name="cashFlow"
               onClick={() => handleClick('cashFlow')}
               title=" Cash Flow"
               className="text-md text-white bg-primary hover:bg-primary-hover transition delay-100"
             >
               Cash Flow
-            </Button>
+            </button>
 
-            <Button
+            <button
               name="cashOnCash"
               onClick={() => handleClick('cashOnCash')}
               title="Cash on Cash"
               className="text-md text-white bg-primary hover:bg-primary-hover transition delay-100"
             >
               Cash on Cash
-            </Button>
+            </button>
           </div>
           <div>
             <RenderComponent />

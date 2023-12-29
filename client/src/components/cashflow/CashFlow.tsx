@@ -1,5 +1,4 @@
 import { FC, useState } from 'react'
-import { Button } from '@nextui-org/react'
 import DashChart from './DashChart'
 import { LoanDataTypes } from '../../types'
 import { HouseIcon } from '../../icons/Icons'
@@ -127,13 +126,13 @@ const CashFlow: FC = () => {
             symbol={'$'}
           />
 
-          <Button
+          <button
             type="submit"
             className="text-sm text-white bg-primary hover:bg-primary-hover 
             transition delay-100"
           >
             Calculate
-          </Button>
+          </button>
         </form>
 
         <div className="flex flex-col justify-between items-center gap-6">
