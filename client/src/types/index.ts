@@ -9,9 +9,15 @@ export interface LoanDataTypes {
   rent: number
 }
 
-export type IconTypes = {
+export interface IconTypes {
   width?: number
   stroke?: string
   color?: string
   height?: string
+}
+
+export interface FormData {
+  username: string
+  email: string
+  password: string
 }

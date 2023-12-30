@@ -27,7 +27,7 @@ const NavBar: FC = () => {
   }, [])
 
   return (
-    <>
+    <nav>
       <div
         className="absolute z-40 w-full h-16 bg-zinc-950 bg-opacity-60 border-b 
       border-primary shadow-md shadow-primary py-3 px-12"
@@ -35,24 +35,24 @@ const NavBar: FC = () => {
         <div className="flex flex justify-between items-center">
           <Link to="/" className="text-white text-[25px]">
             <div className="flex justify-center items-center">
-              <HouseIcon width={28} color="white" stroke="1.5" />
-              <h2 className="mt-1 from-primary via-white to-white bg-gradient-to-r bg-clip-text text-transparent font-bold">
-                AIRA
-              </h2>
+              <HouseIcon width={28} color="white" stroke="2" />
+              <h2 className="mt-1 ml-1 from-primary font-bold">AIRA</h2>
             </div>
           </Link>
 
           <Link
             to="/dashboard"
-            className="hidden sm:inline text-primary text-md"
+            className="hidden sm:inline text-primary text-md text-white"
           >
             Dashboard
           </Link>
-          <User
-            name="Mike Smith"
-            description="Customer"
-            src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=699&q=80"
-          />
+
+          <Link
+            to="/sign-in"
+            className="hidden sm:inline text-primary text-md text-white"
+          >
+            Sign In
+          </Link>
         </div>
 
         <div
@@ -92,7 +92,7 @@ const NavBar: FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </nav>
   )
 }
 
