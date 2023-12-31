@@ -11,13 +11,13 @@ const SignIn = () => {
           type="email"
           placeholder="Email"
           id="email"
-          className="border rounded-lg p-3"
+          className="border rounded-lg p-3 focus:outline-none"
         />
         <input
           type="password"
           placeholder="Password"
           id="password"
-          className="border rounded-lg p-3"
+          className="border rounded-lg p-3 focus:outline-none"
         />
         <button
           type="submit"
