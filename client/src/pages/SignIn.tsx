@@ -21,16 +21,28 @@ const SignIn = () => {
         />
         <button
           type="submit"
-          className="py-3 uppercase bg-slate-500 text-white rounded-lg 
-        hover:bg-primary-hover transition duration-300 disabled:opacity-80"
+          className="py-3 uppercase bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-500 transition duration-300"
         >
           Sign In
         </button>
+        {/* <button
+          type="submit"
+          disabled={isLoading}
+          className={`py-3 uppercase bg-blue-700 text-white font-semibold rounded-lg 
+          ${
+            isLoading
+              ? 'opacity-80 cursor-not-allowed'
+              : 'hover:bg-blue-500 transition duration-300'
+          }`}
+        >
+          {isLoading ? 'Loading...' : 'Sign In'}
+        </button> */}
+        {/* <p className="text-red-500">{fetchError}</p> */}
       </form>
       <div className="flex gap-2 mt-4">
         <p>Dont have an account?</p>
         <Link to="/sign-up">
-          <span className="text-blue-500">Sign Up</span>
+          <span className="text-blue-700">Sign Up</span>
         </Link>
       </div>
     </div>
