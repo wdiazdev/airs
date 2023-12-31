@@ -17,7 +17,7 @@ export interface IconTypes {
 }
 
 export interface FormData {
-  username: string
+  username?: string
   email: string
   password: string
 }

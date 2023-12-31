@@ -8,9 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        "primary-hover": "#338EF7",
-        "custom-black": "#111",
-        "custom-text": "DM Sans",
+        primary: "#2563eb",
+      },
+      backgroundColor: {
+        primary: "#f1f5f9",
       },
     },
     fontSize: {

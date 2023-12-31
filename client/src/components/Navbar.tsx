@@ -29,8 +29,8 @@ const NavBar: FC = () => {
   return (
     <nav>
       <div
-        className="absolute z-40 w-full h-16 bg-zinc-950 bg-opacity-60 border-b 
-      border-primary shadow-md shadow-primary py-3 px-12"
+        className="h-16 absolute z-40 w-full bg-zinc-950 bg-opacity-80 border-b 
+      border-primary shadow-sm shadow-primary py-3 px-12"
       >
         <div className="flex flex justify-between items-center">
           <Link to="/" className="text-white text-[25px]">
