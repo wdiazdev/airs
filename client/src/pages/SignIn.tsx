@@ -47,7 +47,7 @@ const SignIn = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="flex flex-col p-y max-w-lg pb-16 w-full">
-        <h1 className="text-center text-custom-black text-xl font-semibold">
+        <h1 className="text-center text-custom-black text-xl font-semibold mb-4">
           Sign In
         </h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
