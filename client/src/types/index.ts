@@ -21,3 +21,16 @@ export interface FormData {
   email: string
   password: string
 }
+
+export interface UserDataResponse {
+  success: boolean
+  statusCode: number
+  message: string
+  userData: UserData
+}
+
+export interface UserData {
+  username: string
+  email: string
+  _id: string
+}

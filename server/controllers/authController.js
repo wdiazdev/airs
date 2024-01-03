@@ -10,7 +10,20 @@ export const signUp = async (req, res, next) => {
 
   try {
     await newUser.save();
-    res.status(201).json("User created successfully!");
+    const {
+      password: pass,
+      createdAt,
+      updatedAt,
+      __v,
+      ...rest
+    } = newUser?._doc;
+    const response = {
+      success: true,
+      statusCode: 201,
+      message: "User created successfully!",
+      userData: rest,
+    };
+    res.status(201).json(response);
   } catch (error) {
     next(error);
   }
@@ -29,11 +42,23 @@ export const signIn = async (req, res, next) => {
       return next(errorHandler(401, "Invalid credentials"));
     }
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET_KEY);
-    const { password: userPassword, ...rest } = validUser._doc;
+    const {
+      password: pass,
+      createdAt,
+      updatedAt,
+      __v,
+      ...rest
+    } = validUser?._doc;
+    const response = {
+      success: true,
+      statusCode: 200,
+      message: "Login successfully",
+      userData: rest,
+    };
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
-      .json(rest);
+      .json(response);
     res.status(200).json("Logged in successfully!");
   } catch (error) {
     next(error);

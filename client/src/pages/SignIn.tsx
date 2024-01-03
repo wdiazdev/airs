@@ -3,8 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FormData } from '../types'
 import useUserAuth from '../query/useUserAuth'
 import { toast } from 'sonner'
+import { useAppDispatch, useAppSelector } from '../redux/hook'
+import { currentUser } from '../redux/user/userSlice'
 
 const SignIn = () => {
+  const dispatch = useAppDispatch()
+
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
@@ -31,7 +35,10 @@ const SignIn = () => {
     e.preventDefault()
 
     try {
-      await signInUser.mutateAsync(formData)
+      const data = await signInUser.mutateAsync(formData)
+      if (data && data.userData) {
+        dispatch(currentUser(data.userData))
+      }
       if (!isError) {
         toast.success('Login successfully!')
       }

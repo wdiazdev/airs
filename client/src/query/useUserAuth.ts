@@ -1,5 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { FormData } from '../types'
+import {
+  UseMutationResult,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
+import { FormData, UserDataResponse } from '../types'
 
 const useUserAuth = () => {
   const client = useQueryClient()
@@ -15,7 +19,7 @@ const useUserAuth = () => {
           body: JSON.stringify(formData),
         })
 
-        const data = await response.json()
+        const data: UserDataResponse = await response.json()
 
         if (data.success === false) {
           throw new Error(data.message)
@@ -38,7 +42,7 @@ const useUserAuth = () => {
           body: JSON.stringify(formData),
         })
 
-        const data = await response.json()
+        const data: UserDataResponse = await response.json()
 
         if (data.success === false) {
           throw new Error(data.message)
@@ -52,8 +56,8 @@ const useUserAuth = () => {
       }
     ),
   } as {
-    signUpNewUser: ReturnType<typeof useMutation>
-    signInUser: ReturnType<typeof useMutation>
+    signUpNewUser: UseMutationResult<UserDataResponse>
+    signInUser: UseMutationResult<UserDataResponse>
   }
 }
 

@@ -39,16 +39,15 @@ const Dashboard = () => {
               name="cashFlow"
               onClick={() => handleClick('cashFlow')}
               title=" Cash Flow"
-              className="text-md text-white bg-primary hover:bg-primary-hover transition delay-100"
+              className="py-2 px-4 uppercase bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-500 transition duration-300"
             >
               Cash Flow
             </button>
-
             <button
               name="cashOnCash"
               onClick={() => handleClick('cashOnCash')}
               title="Cash on Cash"
-              className="text-md text-white bg-primary hover:bg-primary-hover transition delay-100"
+              className="py-2 px-4 uppercase bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-500 transition duration-300"
             >
               Cash on Cash
             </button>
