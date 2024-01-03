@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FormData } from '../types'
 import useUserAuth from '../query/useUserAuth'
 import { toast } from 'sonner'
-import { useAppDispatch, useAppSelector } from '../redux/hook'
+import { useAppDispatch } from '../redux/hook'
 import { currentUser } from '../redux/user/userSlice'
 
 const SignIn = () => {
@@ -42,9 +42,8 @@ const SignIn = () => {
       if (!isError) {
         toast.success('Login successfully!')
       }
-      setTimeout(() => {
-        navigate('/')
-      }, 1000)
+
+      navigate('/')
     } catch (error) {
       console.log(error)
       toast.error('Unable to login!')

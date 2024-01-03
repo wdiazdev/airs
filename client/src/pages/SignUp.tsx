@@ -44,9 +44,8 @@ const SignUp = () => {
       if (!isError) {
         toast.success('User created successfully!')
       }
-      setTimeout(() => {
-        navigate('/')
-      }, 1000)
+
+      navigate('/')
     } catch (error) {
       console.log(error)
       toast.error('Unable to create user')
