@@ -5,6 +5,7 @@ import useUserAuth from '../query/useUserAuth'
 import { toast } from 'sonner'
 import { useAppDispatch } from '../redux/hook'
 import { currentUser } from '../redux/user/userSlice'
+import GoogleAuth from '../components/GoogleAuth'
 
 const SignIn = () => {
   const dispatch = useAppDispatch()
@@ -84,6 +85,7 @@ const SignIn = () => {
           >
             {isLoading ? 'Loading...' : 'Sign In'}
           </button>
+          <GoogleAuth />
           <p className="text-red-500">{error && error.message}</p>
         </form>
         <div className="flex gap-2 mt-4">

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FormData } from '../types'
 import useUserAuth from '../query/useUserAuth'
 import { toast } from 'sonner'
+import GoogleAuth from '../components/GoogleAuth'
 
 const SignUp = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -92,6 +93,7 @@ const SignUp = () => {
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>
+          <GoogleAuth />
           <p className="text-red-500">{fetchError}</p>
         </form>
         <div className="flex gap-2 mt-4">
