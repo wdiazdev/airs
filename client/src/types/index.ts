@@ -34,3 +34,8 @@ export interface UserData {
   email: string
   _id: string
 }
+export interface GoogleSignInData {
+  username: string
+  email: string
+  avatar: string
+}

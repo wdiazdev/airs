@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import User from './User'
 import { HouseIcon, BarIcon, XMark } from '../icons/Icons'
 
 const NavBar: FC = () => {

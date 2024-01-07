@@ -19,11 +19,7 @@ const SignIn = () => {
 
   const { signInUser } = useUserAuth()
 
-  const {
-    isError,
-    isLoading,
-    error,
-  }: { isError: boolean; isLoading: boolean; error: any } = signInUser
+  const { isLoading, error }: { isLoading: boolean; error: any } = signInUser
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -37,13 +33,10 @@ const SignIn = () => {
 
     try {
       const data = await signInUser.mutateAsync(formData)
-      if (data && data.userData) {
+      if (data.success !== false && data.userData) {
         dispatch(currentUser(data.userData))
-      }
-      if (!isError) {
         toast.success('Login successfully!')
       }
-
       navigate('/')
     } catch (error) {
       console.log(error)

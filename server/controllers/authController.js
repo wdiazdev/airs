@@ -64,3 +64,62 @@ export const signIn = async (req, res, next) => {
     next(error);
   }
 };
+
+export const googleAuth = async (req, res, next) => {
+  const { username, email, avatar } = req.body;
+  try {
+    const validUser = await User.findOne({ email });
+    if (validUser) {
+      const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET_KEY);
+      const {
+        password: pass,
+        createdAt,
+        updatedAt,
+        __v,
+        ...rest
+      } = validUser?._doc;
+      const response = {
+        success: true,
+        statusCode: 200,
+        message: "Login through Google successfully",
+        userData: rest,
+      };
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .json(response);
+    } else {
+      const randomPassword = Math.random().toString(36).slice(-8);
+      const hashPassword = bcryptjs.hashSync(randomPassword, 10);
+      const newUser = new User({
+        username:
+          username.split(" ").join("").toLowerCase() +
+          Math.random().toString(36).slice(-4),
+        email,
+        password: hashPassword,
+        avatar,
+      });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
+      const {
+        password: pass,
+        createdAt,
+        updatedAt,
+        __v,
+        ...rest
+      } = newUser?._doc;
+      const response = {
+        success: true,
+        statusCode: 200,
+        message: "User created through Google successfully",
+        userData: rest,
+      };
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .json(response);
+    }
+  } catch (error) {
+    next(error);
+  }
+};

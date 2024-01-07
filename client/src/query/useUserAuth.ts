@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import { FormData, UserDataResponse } from '../types'
+import { FormData, GoogleSignInData, UserDataResponse } from '../types'
 
 const useUserAuth = () => {
   const client = useQueryClient()
@@ -55,9 +55,33 @@ const useUserAuth = () => {
         },
       }
     ),
+    googleSignIn: useMutation(
+      async (googleData: GoogleSignInData) => {
+        const response = await fetch('/api/auth/googleauth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(googleData),
+        })
+
+        const data = await response.json()
+
+        if (data.success === false) {
+          throw new Error(data.message)
+        }
+        return data
+      },
+      {
+        onSuccess: () => {
+          client.invalidateQueries()
+        },
+      }
+    ),
   } as {
     signUpNewUser: UseMutationResult<UserDataResponse>
     signInUser: UseMutationResult<UserDataResponse>
+    googleSignIn: UseMutationResult<UserDataResponse>
   }
 }
 

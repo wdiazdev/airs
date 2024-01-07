@@ -16,11 +16,7 @@ const SignUp = () => {
 
   const { signUpNewUser } = useUserAuth()
 
-  const {
-    isError,
-    isLoading,
-    error,
-  }: { isError: boolean; isLoading: boolean; error: any } = signUpNewUser
+  const { isLoading, error }: { isLoading: boolean; error: any } = signUpNewUser
 
   let fetchError
 
@@ -41,12 +37,11 @@ const SignUp = () => {
     e.preventDefault()
 
     try {
-      await signUpNewUser.mutateAsync(formData)
-      if (!isError) {
+      const data = await signUpNewUser.mutateAsync(formData)
+      if (data.success !== false) {
         toast.success('User created successfully!')
       }
-
-      navigate('/')
+      navigate('/sign-in')
     } catch (error) {
       console.log(error)
       toast.error('Unable to create user')
