@@ -16,7 +16,7 @@ const Home = () => {
           <button
             title="Start"
             type="button"
-            className="py-2 px-4 uppercase bg-blue-700 text-white font-semibold rounded-lg hover:bg-blue-500 transition duration-300"
+            className="py-2 px-4 uppercase bg-customBlue text-white font-semibold rounded-lg hover:bg-blue-500 ease-in duration-200"
           >
             Start
           </button>

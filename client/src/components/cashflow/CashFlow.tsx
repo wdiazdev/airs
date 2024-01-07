@@ -128,8 +128,7 @@ const CashFlow: FC = () => {
 
           <button
             type="submit"
-            className="text-sm text-white bg-primary hover:bg-primary-hover 
-            transition delay-100"
+            className="py-2 px-4 uppercase bg-customBlue text-white font-semibold rounded-lg hover:bg-blue-500 ease-in duration-200"
           >
             Calculate
           </button>

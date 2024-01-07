@@ -6,6 +6,7 @@ const initialState: { currentUser: UserData } = {
     username: '',
     email: '',
     _id: '',
+    avatar: '',
   },
 }
 

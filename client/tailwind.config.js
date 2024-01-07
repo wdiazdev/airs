@@ -12,6 +12,7 @@ export default {
       },
       backgroundColor: {
         primary: "#f1f5f9",
+        customBlue: "#2563eb",
       },
     },
     fontSize: {

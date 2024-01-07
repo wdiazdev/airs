@@ -1,8 +1,12 @@
 import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { HouseIcon, BarIcon, XMark } from '../icons/Icons'
+import { useAppSelector } from '../redux/hook'
 
 const NavBar: FC = () => {
+  const { currentUser } = useAppSelector((state) => state.user)
+  console.log('currentUser:', currentUser)
+
   const [menuOpen, setMenuOpen] = useState<boolean>(true)
 
   const handleClick = () => setMenuOpen(!menuOpen)
@@ -29,29 +33,39 @@ const NavBar: FC = () => {
     <nav>
       <div
         className="h-16 absolute z-40 w-full bg-zinc-950 bg-opacity-80 border-b 
-      border-primary shadow-sm shadow-primary py-3 px-12"
+      border-primary shadow-sm shadow-primary flex items-center justify-between px-12"
       >
-        <div className="flex flex justify-between items-center">
+        <div className="flex justify-between items-center">
           <Link to="/" className="text-white text-[25px]">
             <div className="flex justify-center items-center">
               <HouseIcon width={28} color="white" stroke="2" />
-              <h2 className="mt-1 ml-1 from-primary font-bold">AIRA</h2>
+              <h2 className="mt-1 ml-1 font-bold">AIRA</h2>
             </div>
           </Link>
-
+        </div>
+        <div className="flex gap-4 items-center">
           <Link
             to="/dashboard"
-            className="hidden sm:inline text-primary text-md text-white"
+            className="hidden sm:inline text-md text-white hover:text-primary ease-in duration-200"
           >
             Dashboard
           </Link>
-
-          <Link
-            to="/sign-in"
-            className="hidden sm:inline text-primary text-md text-white"
-          >
-            Sign In
-          </Link>
+          {currentUser._id ? (
+            <Link to={'/profile'}>
+              <img
+                src={currentUser.avatar}
+                alt="Profile avatar"
+                className="h-12 w-12 rounded-full border-2 border-primary object-cover"
+              />
+            </Link>
+          ) : (
+            <Link
+              to="/sign-in"
+              className="hidden sm:inline text-md text-white hover:text-primary ease-in duration-200"
+            >
+              Sign In
+            </Link>
+          )}
         </div>
 
         <div

@@ -33,6 +33,7 @@ export interface UserData {
   username: string
   email: string
   _id: string
+  avatar: string
 }
 export interface GoogleSignInData {
   username: string
