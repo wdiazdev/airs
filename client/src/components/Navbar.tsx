@@ -5,7 +5,6 @@ import { useAppSelector } from '../redux/hook'
 
 const NavBar: FC = () => {
   const { currentUser } = useAppSelector((state) => state.user)
-  console.log('currentUser:', currentUser)
 
   const [menuOpen, setMenuOpen] = useState<boolean>(true)
 
