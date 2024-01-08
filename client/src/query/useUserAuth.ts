@@ -3,13 +3,14 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query'
-import { FormData, GoogleSignInData, UserDataResponse } from '../types'
+import { FormData, UserDataResponse } from '../types'
 
 const useUserAuth = () => {
   const client = useQueryClient()
 
   return {
     signUpNewUser: useMutation(
+      ['signUpNewUser'],
       async (formData: FormData) => {
         const response = await fetch('/api/auth/signup', {
           method: 'POST',
@@ -33,6 +34,7 @@ const useUserAuth = () => {
       }
     ),
     signInUser: useMutation(
+      ['signInUser'],
       async (formData: FormData) => {
         const response = await fetch('/api/auth/signin', {
           method: 'POST',
@@ -56,7 +58,8 @@ const useUserAuth = () => {
       }
     ),
     googleSignIn: useMutation(
-      async (googleData: GoogleSignInData) => {
+      ['googleSignIn'],
+      async (googleData: FormData) => {
         const response = await fetch('/api/auth/googleauth', {
           method: 'POST',
           headers: {
@@ -78,10 +81,38 @@ const useUserAuth = () => {
         },
       }
     ),
+    updateUserProfile: useMutation(
+      ['updateUserProfile'],
+      async (userData: any) => {
+        const response = await fetch(
+          `/api/user/update/profile/${userData.id}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData.formData),
+          }
+        )
+
+        const data = await response.json()
+
+        if (data.success === false) {
+          throw new Error(data.message)
+        }
+        return data
+      },
+      {
+        onSuccess: () => {
+          client.invalidateQueries()
+        },
+      }
+    ),
   } as {
     signUpNewUser: UseMutationResult<UserDataResponse>
     signInUser: UseMutationResult<UserDataResponse>
     googleSignIn: UseMutationResult<UserDataResponse>
+    updateUserProfile: UseMutationResult<UserDataResponse>
   }
 }
 

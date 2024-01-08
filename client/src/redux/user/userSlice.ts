@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { UserData } from '../../types'
+import { FormData } from '../../types'
 
-const initialState: { currentUser: UserData } = {
+const initialState: { currentUser: FormData } = {
   currentUser: {
     username: '',
     email: '',

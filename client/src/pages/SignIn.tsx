@@ -33,6 +33,7 @@ const SignIn = () => {
 
     try {
       const data = await signInUser.mutateAsync(formData)
+      console.log('data:', data)
       if (data.success !== false && data.userData) {
         dispatch(currentUser(data.userData))
         toast.success('Login successfully!')
@@ -55,6 +56,7 @@ const SignIn = () => {
             id="email"
             className="border rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
+            required
           />
           <input
             type="password"
@@ -62,6 +64,7 @@ const SignIn = () => {
             id="password"
             className="border rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
+            required
           />
 
           <button

@@ -59,6 +59,7 @@ const SignUp = () => {
             id="username"
             className="border rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
+            required
           />
           <input
             type="email"
@@ -66,6 +67,7 @@ const SignUp = () => {
             id="email"
             className="border rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
+            required
           />
           <input
             type="password"
@@ -73,6 +75,7 @@ const SignUp = () => {
             id="password"
             className="border rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
+            required
           />
           <button
             type="submit"
