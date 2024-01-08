@@ -28,7 +28,6 @@ const Profile = () => {
     password: '',
     avatar: '',
   })
-  console.log('formData:', formData)
 
   useEffect(() => {
     if (file) {
