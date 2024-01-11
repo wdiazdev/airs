@@ -10,6 +10,7 @@ export const signUp = async (req, res, next) => {
 
   try {
     await newUser.save();
+
     const {
       password: pass,
       createdAt,
@@ -17,12 +18,14 @@ export const signUp = async (req, res, next) => {
       __v,
       ...rest
     } = newUser?._doc;
+
     const response = {
       success: true,
       statusCode: 201,
       message: "User created successfully!",
       userData: rest,
     };
+
     res.status(201).json(response);
   } catch (error) {
     next(error);
@@ -34,14 +37,18 @@ export const signIn = async (req, res, next) => {
 
   try {
     const validUser = await User.findOne({ email });
+
     if (!validUser) {
       return next(errorHandler(404, "User not found"));
     }
+
     const validPassword = bcryptjs.compareSync(password, validUser.password);
+
     if (!validPassword) {
       return next(errorHandler(401, "Invalid credentials"));
     }
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET_KEY);
+
     const {
       password: pass,
       createdAt,
@@ -49,12 +56,14 @@ export const signIn = async (req, res, next) => {
       __v,
       ...rest
     } = validUser?._doc;
+
     const response = {
       success: true,
       statusCode: 200,
       message: "Login successfully",
       userData: rest,
     };
+
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
@@ -67,10 +76,13 @@ export const signIn = async (req, res, next) => {
 
 export const googleAuth = async (req, res, next) => {
   const { username, email, avatar } = req.body;
+
   try {
     const validUser = await User.findOne({ email });
+
     if (validUser) {
       const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET_KEY);
+
       const {
         password: pass,
         createdAt,
@@ -78,12 +90,14 @@ export const googleAuth = async (req, res, next) => {
         __v,
         ...rest
       } = validUser?._doc;
+
       const response = {
         success: true,
         statusCode: 200,
         message: "Login through Google successfully",
         userData: rest,
       };
+
       res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
@@ -91,6 +105,7 @@ export const googleAuth = async (req, res, next) => {
     } else {
       const randomPassword = Math.random().toString(36).slice(-8);
       const hashPassword = bcryptjs.hashSync(randomPassword, 10);
+
       const newUser = new User({
         username:
           username.split(" ").join("").toLowerCase() +
@@ -99,8 +114,11 @@ export const googleAuth = async (req, res, next) => {
         password: hashPassword,
         avatar,
       });
+
       await newUser.save();
+
       const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
+
       const {
         password: pass,
         createdAt,
@@ -108,12 +126,14 @@ export const googleAuth = async (req, res, next) => {
         __v,
         ...rest
       } = newUser?._doc;
+
       const response = {
         success: true,
         statusCode: 200,
         message: "User created through Google successfully",
         userData: rest,
       };
+
       res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)

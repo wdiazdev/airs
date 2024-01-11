@@ -10,7 +10,6 @@ const useUserAuth = () => {
 
   return {
     signUpNewUser: useMutation(
-      ['signUpNewUser'],
       async (formData: FormData) => {
         const response = await fetch('/api/auth/signup', {
           method: 'POST',
@@ -34,7 +33,6 @@ const useUserAuth = () => {
       }
     ),
     signInUser: useMutation(
-      ['signInUser'],
       async (formData: FormData) => {
         const response = await fetch('/api/auth/signin', {
           method: 'POST',
@@ -58,7 +56,6 @@ const useUserAuth = () => {
       }
     ),
     googleSignIn: useMutation(
-      ['googleSignIn'],
       async (googleData: FormData) => {
         const response = await fetch('/api/auth/googleauth', {
           method: 'POST',
@@ -82,7 +79,6 @@ const useUserAuth = () => {
       }
     ),
     updateUserProfile: useMutation(
-      ['updateUserProfile'],
       async (userData: any) => {
         const response = await fetch(
           `/api/user/update/profile/${userData.id}`,
@@ -108,11 +104,34 @@ const useUserAuth = () => {
         },
       }
     ),
+    deleteUserProfile: useMutation(
+      async (userId: string) => {
+        const response = await fetch(`/api/user/delete/profile/${userId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        const data = await response.json()
+
+        if (data.success === false) {
+          throw new Error(data.message)
+        }
+        return data
+      },
+      {
+        onSuccess: () => {
+          client.invalidateQueries()
+        },
+      }
+    ),
   } as {
     signUpNewUser: UseMutationResult<UserDataResponse>
     signInUser: UseMutationResult<UserDataResponse>
     googleSignIn: UseMutationResult<UserDataResponse>
     updateUserProfile: UseMutationResult<UserDataResponse>
+    deleteUserProfile: UseMutationResult<UserDataResponse>
   }
 }
 

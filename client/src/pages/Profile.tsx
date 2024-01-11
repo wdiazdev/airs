@@ -10,7 +10,11 @@ import { app } from '../firebase'
 import useUserAuth from '../query/useUserAuth'
 import { FormData } from '../types'
 import { toast } from 'sonner'
-import { currentUser as dispatchCurrentUser } from '../redux/user/userSlice'
+import {
+  currentUser as dispatchCurrentUser,
+  deleteCurrentUser,
+} from '../redux/user/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
   const dispatch = useAppDispatch()
@@ -22,7 +26,9 @@ const Profile = () => {
   const [fileUploadError, setFileUploadError] = useState()
   const [formData, setFormData] = useState<FormData>({})
 
-  const { updateUserProfile } = useUserAuth()
+  const navigate = useNavigate()
+
+  const { updateUserProfile, deleteUserProfile } = useUserAuth()
   const { isLoading, error }: { isLoading: boolean; error: any } =
     updateUserProfile
 
@@ -112,6 +118,24 @@ const Profile = () => {
     }
   }
 
+  const handleDeleteUser = async () => {
+    try {
+      const data = await deleteUserProfile.mutateAsync(currentUser._id)
+      if (data.success !== false && data.userData) {
+        toast.success('User deleted successfully!')
+      } else {
+        toast.error('Error deleting profile. Please try again.')
+      }
+      dispatch(deleteCurrentUser())
+      navigate('/')
+    } catch (error) {
+      console.log('error:', error)
+      if (error) {
+        toast.error('Invalid or missing authentication credentials.')
+      }
+    }
+  }
+
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="flex flex-col gap-4 p-y max-w-lg pb-16 w-full">
@@ -161,10 +185,10 @@ const Profile = () => {
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || deleteUserProfile.isLoading}
             className={`py-3 uppercase bg-blue-700 text-white font-semibold rounded-lg 
           ${
-            isLoading
+            isLoading || deleteUserProfile.isLoading
               ? 'opacity-80 cursor-not-allowed'
               : 'hover:bg-blue-500 transition duration-300'
           }`}
@@ -173,9 +197,22 @@ const Profile = () => {
           </button>
           <div className="flex flex-col gap-4 p-y max-w-lg pb-16 w-full">
             <div className="flex justify-between">
-              <span className="text-red-500">Delete Account</span>
-              <span className="text-red-500">Sign Out</span>
+              <button
+                type="button"
+                onClick={handleDeleteUser}
+                className="text-red-700 font-bold"
+              >
+                Delete Account
+              </button>
+              <button
+                type="button"
+                // onClick={}
+                className="text-red-700 font-bold"
+              >
+                Sign Out
+              </button>
             </div>
+
             <button
               type="submit"
               // disabled={isLoading}

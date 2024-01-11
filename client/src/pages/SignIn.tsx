@@ -33,7 +33,6 @@ const SignIn = () => {
 
     try {
       const data = await signInUser.mutateAsync(formData)
-      console.log('data:', data)
       if (data.success !== false && data.userData) {
         dispatch(currentUser(data.userData))
         toast.success('Login successfully!')
@@ -70,7 +69,7 @@ const SignIn = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`py-3 uppercase bg-blue-700 text-white font-semibold rounded-lg 
+            className={`py-3 uppercase bg-customBlue text-white font-semibold rounded-lg 
           ${
             isLoading
               ? 'opacity-80 cursor-not-allowed'
@@ -79,13 +78,13 @@ const SignIn = () => {
           >
             {isLoading ? 'Loading...' : 'Sign In'}
           </button>
-          <GoogleAuth />
-          <p className="text-red-500">{error && error.message}</p>
+          <GoogleAuth loadingState={isLoading} />
+          <p className="text-red-700">{error && error.message}</p>
         </form>
         <div className="flex gap-2 mt-4">
           <p>Dont have an account?</p>
           <Link to="/sign-up">
-            <span className="text-primary">Sign Up</span>
+            <span className="text-primary font-bold">Sign Up</span>
           </Link>
         </div>
       </div>

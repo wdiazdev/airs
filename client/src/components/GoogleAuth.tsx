@@ -6,7 +6,11 @@ import { useNavigate } from 'react-router-dom'
 import { currentUser } from '../redux/user/userSlice'
 import { toast } from 'sonner'
 
-const GoogleAuth = () => {
+interface Props {
+  loadingState?: boolean
+}
+
+const GoogleAuth = ({ loadingState }: Props) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { googleSignIn } = useUserAuth()
@@ -41,9 +45,14 @@ const GoogleAuth = () => {
   return (
     <button
       type="button"
-      disabled={isLoading}
+      disabled={isLoading || loadingState}
       onClick={handleGoogleAuth}
-      className="py-3 uppercase bg-red-700 text-white font-semibold rounded-lg hover:bg-red-500 transition duration-300"
+      className={`py-3 uppercase bg-red-700 text-white font-semibold rounded-lg 
+          ${
+            isLoading || loadingState
+              ? 'opacity-80 cursor-not-allowed'
+              : 'hover:bg-red-500 transition duration-300'
+          }`}
     >
       {isLoading ? 'Loading...' : 'Continue with google'}
     </button>

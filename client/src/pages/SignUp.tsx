@@ -80,7 +80,7 @@ const SignUp = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`py-3 uppercase bg-blue-700 text-white font-semibold rounded-lg 
+            className={`py-3 uppercase bg-customBlue text-white font-semibold rounded-lg 
           ${
             isLoading
               ? 'opacity-80 cursor-not-allowed'
@@ -89,13 +89,13 @@ const SignUp = () => {
           >
             {isLoading ? 'Loading...' : 'Submit'}
           </button>
-          <GoogleAuth />
-          <p className="text-red-500">{fetchError}</p>
+          <GoogleAuth loadingState={isLoading} />
+          <p className="text-red-700">{fetchError}</p>
         </form>
         <div className="flex gap-2 mt-4">
           <p>Have an account?</p>
           <Link to="/sign-in">
-            <span className="text-primary">Sign In</span>
+            <span className="text-primary font-bold">Sign In</span>
           </Link>
         </div>
       </div>
