@@ -1,6 +1,8 @@
 import {
   UseMutationResult,
+  UseQueryResult,
   useMutation,
+  useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
 import { FormData, UserDataResponse } from '../types'
@@ -10,7 +12,7 @@ const useUserAuth = () => {
 
   return {
     signUpNewUser: useMutation(
-      async (formData: FormData) => {
+      async (formData: any) => {
         const response = await fetch('/api/auth/signup', {
           method: 'POST',
           headers: {

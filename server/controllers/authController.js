@@ -74,6 +74,20 @@ export const signIn = async (req, res, next) => {
   }
 };
 
+export const signOut = async (req, res, next) => {
+  try {
+    const response = {
+      success: true,
+      statusCode: 200,
+      message: "User logged out successfully",
+    };
+    res.clearCookie("access_token");
+    res.status(200).json(response);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const googleAuth = async (req, res, next) => {
   const { username, email, avatar } = req.body;
 

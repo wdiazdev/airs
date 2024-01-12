@@ -13,6 +13,7 @@ import { toast } from 'sonner'
 import {
   currentUser as dispatchCurrentUser,
   deleteCurrentUser,
+  singOutCurrentUser,
 } from '../redux/user/userSlice'
 import { useNavigate } from 'react-router-dom'
 
@@ -121,7 +122,7 @@ const Profile = () => {
   const handleDeleteUser = async () => {
     try {
       const data = await deleteUserProfile.mutateAsync(currentUser._id)
-      if (data.success !== false && data.userData) {
+      if (data.success !== false) {
         toast.success('User deleted successfully!')
       } else {
         toast.error('Error deleting profile. Please try again.')
@@ -133,6 +134,22 @@ const Profile = () => {
       if (error) {
         toast.error('Invalid or missing authentication credentials.')
       }
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      const res = await fetch('/api/auth/signout')
+      const data = await res.json()
+      if (data.success !== false) {
+        toast.success('User signed out successfully.')
+      } else {
+        toast.error('Error signing out. Please try again.')
+      }
+      dispatch(singOutCurrentUser())
+      navigate('/')
+    } catch (error) {
+      console.log('error:', error)
     }
   }
 
@@ -206,7 +223,7 @@ const Profile = () => {
               </button>
               <button
                 type="button"
-                // onClick={}
+                onClick={handleSignOut}
                 className="text-red-700 font-bold"
               >
                 Sign Out

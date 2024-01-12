@@ -25,9 +25,18 @@ const userSlice = createSlice({
         avatar: '',
       }
     },
+    singOutCurrentUser: (state) => {
+      state.currentUser = {
+        username: '',
+        email: '',
+        _id: '',
+        avatar: '',
+      }
+    },
   },
 })
 
-export const { currentUser, deleteCurrentUser } = userSlice.actions
+export const { currentUser, deleteCurrentUser, singOutCurrentUser } =
+  userSlice.actions
 
 export default userSlice.reducer
