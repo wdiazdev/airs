@@ -5,5 +5,15 @@ import SignUp from './SignUp'
 import About from './About'
 import Dashboard from './Dashboard'
 import PrivateRoute from '../components/PrivateRoute'
+import CreateListing from './CreateListing'
 
-export { Home, Profile, SignUp, SignIn, Dashboard, About, PrivateRoute }
+export {
+  Home,
+  Profile,
+  SignUp,
+  SignIn,
+  Dashboard,
+  About,
+  PrivateRoute,
+  CreateListing,
+}

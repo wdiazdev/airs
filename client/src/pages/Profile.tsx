@@ -15,7 +15,7 @@ import {
   deleteCurrentUser,
   singOutCurrentUser,
 } from '../redux/user/userSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Profile = () => {
   const dispatch = useAppDispatch()
@@ -154,7 +154,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div className="flex items-center justify-center h-screen p-2">
       <div className="flex flex-col gap-4 p-y max-w-lg pb-16 w-full">
         <h1 className="text-center text-xl font-semibold">Profile</h1>
         <input
@@ -229,19 +229,20 @@ const Profile = () => {
                 Sign Out
               </button>
             </div>
-
-            <button
-              type="submit"
-              // disabled={isLoading}
-              className={`py-3 uppercase bg-blue-700 text-white font-semibold rounded-lg 
-          ${
-            true
-              ? 'opacity-80 cursor-not-allowed'
-              : 'hover:bg-blue-500 transition duration-300'
-          }`}
-            >
-              {false ? 'Updating...' : 'Create Listing'}
-            </button>
+            <Link to={'/create-listing'}>
+              <button
+                type="button"
+                disabled={isLoading}
+                className={`py-3 uppercase bg-green-700 text-white font-semibold rounded-lg w-full 
+                ${
+                  isLoading
+                    ? 'opacity-80 cursor-not-allowed'
+                    : 'hover:bg-green-600 transition duration-300'
+                }`}
+              >
+                New Listing
+              </button>
+            </Link>
           </div>
         </form>
       </div>
