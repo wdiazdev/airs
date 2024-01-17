@@ -1,6 +1,63 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
+import { app } from '../firebase'
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage'
 
 const CreateListing = () => {
+  const [files, setFiles] = useState([])
+  const [formData, setFormData] = useState({
+    imageUrls: [],
+  })
+
+  const handleUploadImages = () => {
+    if (files.length > 0 && files.length <= 6) {
+      const imagesToUpload = []
+
+      for (let i = 0; i < files.length; i++) {
+        imagesToUpload.push(uploadImage(files[i]))
+      }
+      Promise.all(imagesToUpload)
+        .then((urls: any) => {
+          setFormData({
+            ...formData,
+            imageUrls: formData.imageUrls.concat(urls),
+          })
+        })
+        .catch((err) => {
+          console.log('err:', err)
+        })
+    }
+  }
+
+  const uploadImage = async (file: any) => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app)
+      const uniqueFileName = new Date().getTime() + file.name
+      const storageRef = ref(storage, uniqueFileName)
+      const uploadTask = uploadBytesResumable(storageRef, file)
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log('progress:', progress)
+        },
+        (error) => {
+          reject(error)
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+            resolve(downloadUrl)
+          })
+        }
+      )
+    })
+  }
+
   const handleChange = () => {}
   return (
     <div className="flex flex-col items-center justify-center h-screen p-2 pb-16">
@@ -109,10 +166,12 @@ const CreateListing = () => {
               accept="image/*"
               multiple
               className="p-3 border-gray-300 rounded-lg w-full"
+              onChange={(e: any) => setFiles(e.target.files)}
             />
             <button
               type="button"
               className="px-6 uppercase bg-customBlue text-white font-semibold rounded-lg hover:bg-blue-500 transition duration-300"
+              onClick={handleUploadImages}
             >
               Upload
             </button>
