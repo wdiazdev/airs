@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { HouseIcon, BarIcon, XMark } from '../icons/Icons'
 import { useAppSelector } from '../redux/hook'
+import { FaUserCircle, FaHome, FaBars, FaTimes } from 'react-icons/fa'
 
 const NavBar: FC = () => {
   const { currentUser } = useAppSelector((state) => state.user)
@@ -36,8 +36,8 @@ const NavBar: FC = () => {
       >
         <div className="flex justify-between items-center">
           <Link to="/" className="text-white text-[25px]">
-            <div className="flex justify-center items-center">
-              <HouseIcon width={28} color="white" stroke="2" />
+            <div className="flex items-center">
+              <FaHome size={28} />
               <h2 className="mt-1 ml-1 font-bold">AIRA</h2>
             </div>
           </Link>
@@ -62,7 +62,7 @@ const NavBar: FC = () => {
               to="/sign-in"
               className="hidden sm:inline text-md text-white hover:text-primary ease-in duration-200"
             >
-              Sign In
+              <FaUserCircle size={28} />
             </Link>
           )}
         </div>
@@ -72,9 +72,9 @@ const NavBar: FC = () => {
           onClick={handleClick}
         >
           {menuOpen ? (
-            <BarIcon width={28} color="white" stroke="1.5" />
+            <FaBars size={28} color="white" />
           ) : (
-            <XMark width={28} color="white" stroke="1.5" />
+            <FaTimes size={28} color="white" />
           )}
         </div>
 

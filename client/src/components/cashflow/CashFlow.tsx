@@ -1,13 +1,13 @@
 import { FC, useState } from 'react'
 import DashChart from './DashChart'
 import { LoanDataTypes } from '../../types'
-import { HouseIcon } from '../../icons/Icons'
 import useCashFlow from '../../hook/useCashFlow'
 import { formatCurrency } from '../../utils/FormatCurrency'
 import Stats from './Stats'
 import { toast } from 'sonner'
 import FormInput from './FormInput'
 import PaymentBreakdown from './PaymentBreakdown'
+import { FaHome } from 'react-icons/fa'
 
 const CashFlow: FC = () => {
   const [results, setResults] = useState<LoanDataTypes>()
@@ -44,12 +44,12 @@ const CashFlow: FC = () => {
       </h2>
 
       <div
-        className="flex items-center justify-center flex-wrap sm:flex gap-8 sm:gap-4 
+        className="flex items-center justify-center flex-wrap sm:flex gap-8 sm:gap-10 
       border-1 rounded-lg p-2 sm:p-6 border-zinc-800"
       >
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3 min-w-full sm:min-w-[300px]"
+          className="flex flex-col gap-4 min-w-full sm:min-w-[300px]"
         >
           <FormInput
             name="price"
@@ -150,7 +150,7 @@ const CashFlow: FC = () => {
               <PaymentBreakdown results={results} />
             </>
           ) : (
-            <HouseIcon width={350} stroke={'0.5'} color={'rgb(39 39 42)'} />
+            <FaHome size={400} color="#475569" />
           )}
         </div>
       </div>

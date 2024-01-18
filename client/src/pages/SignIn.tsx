@@ -73,7 +73,7 @@ const SignIn = () => {
           ${
             isLoading
               ? 'opacity-80 cursor-not-allowed'
-              : 'hover:bg-blue-500 transition duration-300'
+              : 'hover:bg-blue-500 ease-in duration-200'
           }`}
           >
             {isLoading ? 'Loading...' : 'Sign In'}
@@ -84,7 +84,9 @@ const SignIn = () => {
         <div className="flex gap-2 mt-4">
           <p>Dont have an account?</p>
           <Link to="/sign-up">
-            <span className="text-primary font-bold">Sign Up</span>
+            <span className="text-primary font-bold hover:opacity-75 ease-in duration-200">
+              Sign Up
+            </span>
           </Link>
         </div>
       </div>

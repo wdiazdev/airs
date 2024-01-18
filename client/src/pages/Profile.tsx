@@ -207,7 +207,7 @@ const Profile = () => {
           ${
             isLoading || deleteUserProfile.isLoading
               ? 'opacity-80 cursor-not-allowed'
-              : 'hover:bg-blue-500 transition duration-300'
+              : 'hover:bg-blue-500 ease-in duration-200'
           }`}
           >
             {isLoading ? 'Updating...' : 'Update'}
@@ -217,14 +217,14 @@ const Profile = () => {
               <button
                 type="button"
                 onClick={handleDeleteUser}
-                className="text-red-700 font-bold"
+                className="text-red-700 font-bold hover:opacity-75 ease-in duration-200"
               >
                 Delete Account
               </button>
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="text-red-700 font-bold"
+                className="text-red-700 font-bold hover:opacity-75 ease-in duration-200"
               >
                 Sign Out
               </button>
@@ -237,7 +237,7 @@ const Profile = () => {
                 ${
                   isLoading
                     ? 'opacity-80 cursor-not-allowed'
-                    : 'hover:bg-green-600 transition duration-300'
+                    : 'hover:bg-green-600 ease-in duration-200'
                 }`}
               >
                 New Listing

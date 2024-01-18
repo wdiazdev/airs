@@ -51,7 +51,7 @@ const GoogleAuth = ({ loadingState }: Props) => {
           ${
             isLoading || loadingState
               ? 'opacity-80 cursor-not-allowed'
-              : 'hover:bg-red-500 transition duration-300'
+              : 'hover:bg-red-500 ease-in duration-200'
           }`}
     >
       {isLoading ? 'Loading...' : 'Continue with google'}

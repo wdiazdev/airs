@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { app } from '../firebase'
 import {
   getDownloadURL,
@@ -6,15 +6,21 @@ import {
   ref,
   uploadBytesResumable,
 } from 'firebase/storage'
+import Spinner from '../components/Spinner'
+import { FaRegTrashAlt } from 'react-icons/fa'
 
 const CreateListing = () => {
   const [files, setFiles] = useState([])
+  const [imageUploadError, setImageUploadError] = useState<string>()
+  const [isLoading, setIsisLoading] = useState<boolean>(false)
+
   const [formData, setFormData] = useState({
     imageUrls: [],
   })
 
   const handleUploadImages = () => {
-    if (files.length > 0 && files.length <= 6) {
+    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+      setIsisLoading(true)
       const imagesToUpload = []
 
       for (let i = 0; i < files.length; i++) {
@@ -29,7 +35,15 @@ const CreateListing = () => {
         })
         .catch((err) => {
           console.log('err:', err)
+          setImageUploadError('Error uploading images. Please try again.')
         })
+        .finally(() => {
+          setIsisLoading(false)
+        })
+    } else if (files.length === 0) {
+      setImageUploadError('Please, upload at least one image.')
+    } else {
+      setImageUploadError('You can only upload 6 images.')
     }
   }
 
@@ -59,6 +73,15 @@ const CreateListing = () => {
   }
 
   const handleChange = () => {}
+
+  const handleDeleteImage = (index: number) => {
+    setImageUploadError('')
+    setFormData({
+      ...formData,
+      imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+    })
+  }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen p-2 pb-16">
       <h1 className="text-center text-xl font-semibold mb-4">Create Listing</h1>
@@ -167,19 +190,50 @@ const CreateListing = () => {
               multiple
               className="p-3 border-gray-300 rounded-lg w-full"
               onChange={(e: any) => setFiles(e.target.files)}
+              onClick={() => setImageUploadError('')}
             />
             <button
               type="button"
-              className="px-6 uppercase bg-customBlue text-white font-semibold rounded-lg hover:bg-blue-500 transition duration-300"
+              className="flex items-center justify-center w-[100px] px-2 uppercase bg-customBlue text-white font-semibold rounded-lg hover:bg-blue-500 ease-in duration-200"
               onClick={handleUploadImages}
             >
-              Upload
+              {isLoading ? <Spinner /> : 'Upload'}
             </button>
           </div>
+          {imageUploadError && (
+            <p className="text-red-700">{imageUploadError}</p>
+          )}
+          {formData.imageUrls.length > 0 &&
+            formData.imageUrls.map((imgUrl, index) => {
+              return (
+                <div
+                  key={index}
+                  className="flex justify-between p-3 border items-center hover:shadow-lg ease-in duration-200"
+                >
+                  <img
+                    key={index}
+                    src={imgUrl}
+                    alt={`listing image ${index}`}
+                    className="h-40- w-40 rounded-lg object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(index)}
+                    className="p-3 text-red-700 rounded-lg uppercase hover:opacity-75 ease-in duration-200"
+                  >
+                    <FaRegTrashAlt size={22} />
+                  </button>
+                </div>
+              )
+            })}
           <button
-            className={
-              'py-3 uppercase bg-green-700 text-white font-semibold rounded-lg w-full hover:bg-green-600 transition duration-300'
-            }
+            disabled={isLoading}
+            className={`py-3 uppercase bg-green-700 text-white font-semibold rounded-lg w-full 
+            ${
+              isLoading
+                ? 'opacity-80 cursor-not-allowed'
+                : 'hover:bg-green-600 ease-in duration-200'
+            }`}
           >
             Create Listing
           </button>
