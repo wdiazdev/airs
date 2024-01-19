@@ -1,3 +1,10 @@
+export interface UserDataResponse {
+  success: boolean
+  statusCode: number
+  message: string
+  userData: FormData
+}
+
 export interface LoanDataTypes {
   downPayment: number
   insurance: number
@@ -9,13 +16,6 @@ export interface LoanDataTypes {
   rent: number
 }
 
-export interface IconTypes {
-  width?: number
-  stroke?: string
-  color?: string
-  height?: string
-}
-
 export interface FormData {
   username?: string
   email?: string
@@ -24,9 +24,16 @@ export interface FormData {
   password?: string
 }
 
-export interface UserDataResponse {
-  success: boolean
-  statusCode: number
-  message: string
-  userData: FormData
+export interface CreateListingFormData {
+  type: string
+  name: string
+  description: string
+  address: string
+  price: number
+  bedrooms: number
+  bathrooms: number
+  parking: boolean
+  offer: boolean
+  imageUrls: string[]
+  userRef: string
 }

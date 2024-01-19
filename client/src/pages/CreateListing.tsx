@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { app } from '../firebase'
 import {
   getDownloadURL,
@@ -8,15 +8,30 @@ import {
 } from 'firebase/storage'
 import Spinner from '../components/Spinner'
 import { FaRegTrashAlt } from 'react-icons/fa'
+import { CreateListingFormData } from '../types'
+import { useAppSelector } from '../redux/hook'
 
 const CreateListing = () => {
+  const { currentUser } = useAppSelector((state) => state.user)
+
   const [files, setFiles] = useState([])
   const [imageUploadError, setImageUploadError] = useState<string>()
   const [isLoading, setIsisLoading] = useState<boolean>(false)
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CreateListingFormData>({
+    type: 'sell',
+    name: '',
+    description: '',
+    address: '',
+    price: 0,
+    bedrooms: 1,
+    bathrooms: 1,
+    parking: false,
+    offer: false,
     imageUrls: [],
+    userRef: '',
   })
+  console.log('formData:', formData)
 
   const handleUploadImages = () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -72,7 +87,39 @@ const CreateListing = () => {
     })
   }
 
-  const handleChange = () => {}
+  //type guard checks whether the target is an HTMLInputElement
+  const isInputElement = (target: EventTarget): target is HTMLInputElement => {
+    return 'checked' in target
+  }
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (e.target.id === 'rent' || e.target.id === 'sell') {
+      setFormData({
+        ...formData,
+        type: e.target.id,
+      })
+    }
+    if (isInputElement(e.target)) {
+      if (e.target.id === 'parking' || e.target.id === 'offer') {
+        setFormData({
+          ...formData,
+          [e.target.id]: e.target.checked,
+        })
+      }
+    }
+    if (
+      e.target.type === 'number' ||
+      e.target.type === 'text' ||
+      e.target.type === 'textarea'
+    ) {
+      setFormData({
+        ...formData,
+        [e.target.id]: e.target.value,
+      })
+    }
+  }
 
   const handleDeleteImage = (index: number) => {
     setImageUploadError('')
@@ -89,42 +136,69 @@ const CreateListing = () => {
         <div className="flex flex-col gap-4 w-full sm:max-w-xl">
           <input
             type="text"
-            placeholder="Name"
-            id="name"
-            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none"
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            placeholder="Description"
-            id="description"
-            className="border border-gray-300 rounded-lg p-3 focus:outline-none"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Address"
+            placeholder="Enter the full address of the property"
             id="address"
             className="border border-gray-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
+            value={formData.address}
+          />
+          <input
+            type="text"
+            placeholder="Name"
+            id="name"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none"
+            onChange={handleChange}
+            value={formData.name}
+            required
+          />
+          <textarea
+            placeholder="Provide a detailed description of the property"
+            id="description"
+            className="border border-gray-300 rounded-lg p-3 focus:outline-none"
+            onChange={handleChange}
+            required
+            value={formData.description}
           />
           <div className="flex sm:flex-wrap gap-4">
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="sell" className="h-4 w-4" />
+              <input
+                type="checkbox"
+                id="sell"
+                className="h-4 w-4"
+                onChange={handleChange}
+                checked={formData.type === 'sell'}
+              />
               <span className="font-semibold">Sell</span>
             </div>
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="rent" className="h-4 w-4" />
+              <input
+                type="checkbox"
+                id="rent"
+                className="h-4 w-4"
+                onChange={handleChange}
+                checked={formData.type === 'rent'}
+              />
               <span className="font-semibold">Rent</span>
             </div>
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="parking" className="h-4 w-4" />
+              <input
+                type="checkbox"
+                id="parking"
+                className="h-4 w-4"
+                onChange={handleChange}
+                checked={formData.parking}
+              />
               <span className="font-semibold">Parking</span>
             </div>
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="offer" className="h-4 w-4" />
+              <input
+                type="checkbox"
+                id="offer"
+                className="h-4 w-4"
+                onChange={handleChange}
+                checked={formData.offer}
+              />
               <span className="font-semibold">Offer</span>
             </div>
           </div>
@@ -139,6 +213,8 @@ const CreateListing = () => {
                 className="w-18 p-3 border border-gray-300 rounded-lg focus:outline-none [appearance:textfield]
                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 required
+                onChange={handleChange}
+                value={formData.bedrooms}
               />
               <span className="font-semibold">Beds</span>
             </div>
@@ -152,6 +228,8 @@ const CreateListing = () => {
                 className="w-18 p-3 border border-gray-300 rounded-lg focus:outline-none [appearance:textfield]
                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 required
+                onChange={handleChange}
+                value={formData.bathrooms}
               />
               <span className="font-semibold">Baths</span>
             </div>
@@ -167,12 +245,20 @@ const CreateListing = () => {
                   id="price"
                   className="p-3 pl-7 border border-gray-300 rounded-lg focus:outline-none [appearance:textfield]
                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  onChange={handleChange}
+                  value={formData.price}
                 />
               </div>
-              <div className="flex flex-col items-center">
-                <span className="font-semibold">Price</span>
-                <span className="text-gray-500">($/Month)</span>
-              </div>
+              {formData.type === 'rent' ? (
+                <div className="flex flex-col items-center">
+                  <span className="font-semibold">Price</span>
+                  <span className="text-gray-500">($/Month)</span>
+                </div>
+              ) : (
+                <div className="flex justify-center items-center">
+                  <span className="font-semibold">Price</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
