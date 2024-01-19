@@ -10,17 +10,22 @@ import Spinner from '../components/Spinner'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { CreateListingFormData } from '../types'
 import { useAppSelector } from '../redux/hook'
+import useCreateListing from '../query/useCreateListing'
+import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 
 const CreateListing = () => {
   const { currentUser } = useAppSelector((state) => state.user)
+
+  const navigate = useNavigate()
 
   const [files, setFiles] = useState([])
   const [imageUploadError, setImageUploadError] = useState<string>()
   const [isLoading, setIsisLoading] = useState<boolean>(false)
 
   const [formData, setFormData] = useState<CreateListingFormData>({
-    type: 'sell',
-    name: '',
+    listingType: 'sell',
+    propertyType: 'house',
     description: '',
     address: '',
     price: 0,
@@ -29,27 +34,30 @@ const CreateListing = () => {
     parking: false,
     offer: false,
     imageUrls: [],
-    userRef: '',
+    userRef: currentUser._id ? currentUser._id?.toString() : '',
   })
-  console.log('formData:', formData)
+
+  const { createListing } = useCreateListing()
 
   const handleUploadImages = () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setIsisLoading(true)
-      const imagesToUpload = []
+      const imagesToUpload: any = []
 
       for (let i = 0; i < files.length; i++) {
         imagesToUpload.push(uploadImage(files[i]))
       }
+
       Promise.all(imagesToUpload)
         .then((urls: any) => {
+          console.log('Uploaded image URLs:', urls)
           setFormData({
             ...formData,
             imageUrls: formData.imageUrls.concat(urls),
           })
         })
         .catch((err) => {
-          console.log('err:', err)
+          console.error('Error uploading images:', err)
           setImageUploadError('Error uploading images. Please try again.')
         })
         .finally(() => {
@@ -98,7 +106,7 @@ const CreateListing = () => {
     if (e.target.id === 'rent' || e.target.id === 'sell') {
       setFormData({
         ...formData,
-        type: e.target.id,
+        listingType: e.target.id,
       })
     }
     if (isInputElement(e.target)) {
@@ -108,6 +116,18 @@ const CreateListing = () => {
           [e.target.id]: e.target.checked,
         })
       }
+    }
+    if (
+      e.target.id === 'house' ||
+      e.target.id === 'townhome' ||
+      e.target.id === 'multi family' ||
+      e.target.id === 'condo' ||
+      e.target.id === 'apartment'
+    ) {
+      setFormData({
+        ...formData,
+        propertyType: e.target.id,
+      })
     }
     if (
       e.target.type === 'number' ||
@@ -129,10 +149,25 @@ const CreateListing = () => {
     })
   }
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault()
+    try {
+      const data = await createListing.mutateAsync(formData)
+      if (data.success !== false) {
+        toast.success('Listing created successfully!')
+      } else {
+        toast.error('Error creating Listing, please try again.')
+      }
+      navigate('/profile')
+    } catch (error) {
+      console.log('error:', error)
+    }
+  }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen p-2 pb-16">
       <h1 className="text-center text-xl font-semibold mb-4">Create Listing</h1>
-      <form className="flex flex-col sm:flex-row gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col gap-4 w-full sm:max-w-xl">
           <input
             type="text"
@@ -143,15 +178,6 @@ const CreateListing = () => {
             required
             value={formData.address}
           />
-          <input
-            type="text"
-            placeholder="Name"
-            id="name"
-            className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none"
-            onChange={handleChange}
-            value={formData.name}
-            required
-          />
           <textarea
             placeholder="Provide a detailed description of the property"
             id="description"
@@ -160,6 +186,63 @@ const CreateListing = () => {
             required
             value={formData.description}
           />
+
+          <div className="flex flex-col gap-2 my-4">
+            <span className="font-semibold">Property Type:</span>
+            <div className="flex flex-wrap gap-4">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="house"
+                  className="h-4 w-4"
+                  onChange={handleChange}
+                  checked={formData.propertyType === 'house'}
+                />
+                <span className="font-semibold">House</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="townhome"
+                  className="h-4 w-4"
+                  onChange={handleChange}
+                  checked={formData.propertyType === 'townhome'}
+                />
+                <span className="font-semibold">Townhouse</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="apartment"
+                  className="h-4 w-4"
+                  onChange={handleChange}
+                  checked={formData.propertyType === 'apartment'}
+                />
+                <span className="font-semibold">Apartment</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="condo"
+                  className="h-4 w-4"
+                  onChange={handleChange}
+                  checked={formData.propertyType === 'condo'}
+                />
+                <span className="font-semibold">Condo</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="multi family"
+                  className="h-4 w-4"
+                  onChange={handleChange}
+                  checked={formData.propertyType === 'multi family'}
+                />
+                <span className="font-semibold">Multi Family</span>
+              </div>
+            </div>
+          </div>
+
           <div className="flex sm:flex-wrap gap-4">
             <div className="flex items-center gap-2">
               <input
@@ -167,7 +250,7 @@ const CreateListing = () => {
                 id="sell"
                 className="h-4 w-4"
                 onChange={handleChange}
-                checked={formData.type === 'sell'}
+                checked={formData.listingType === 'sell'}
               />
               <span className="font-semibold">Sell</span>
             </div>
@@ -177,7 +260,7 @@ const CreateListing = () => {
                 id="rent"
                 className="h-4 w-4"
                 onChange={handleChange}
-                checked={formData.type === 'rent'}
+                checked={formData.listingType === 'rent'}
               />
               <span className="font-semibold">Rent</span>
             </div>
@@ -224,7 +307,7 @@ const CreateListing = () => {
                 id="bathrooms"
                 min={0}
                 max={15}
-                step={1}
+                step={0.1}
                 className="w-18 p-3 border border-gray-300 rounded-lg focus:outline-none [appearance:textfield]
                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 required
@@ -249,7 +332,7 @@ const CreateListing = () => {
                   value={formData.price}
                 />
               </div>
-              {formData.type === 'rent' ? (
+              {formData.listingType === 'rent' ? (
                 <div className="flex flex-col items-center">
                   <span className="font-semibold">Price</span>
                   <span className="text-gray-500">($/Month)</span>

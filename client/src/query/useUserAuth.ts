@@ -12,7 +12,7 @@ const useUserAuth = () => {
 
   return {
     signUpNewUser: useMutation(
-      async (formData: any) => {
+      async (formData: FormData) => {
         const response = await fetch('/api/auth/signup', {
           method: 'POST',
           headers: {

@@ -2,11 +2,11 @@ import mongoose from "mongoose"
 
 const listingSchema = new mongoose.Schema(
   {
-    type: {
+    listingType: {
       type: String,
       required: true,
     },
-    name: {
+    propertyType: {
       type: String,
       required: true,
     },
@@ -38,7 +38,7 @@ const listingSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    imageUrl: {
+    imageUrls: {
       type: Array,
       required: true,
     },
