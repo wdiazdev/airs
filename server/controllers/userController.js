@@ -1,20 +1,20 @@
-import User from "../models/user.model.js";
-import { errorHandler } from "../utils/error.js";
-import bcryptjs from "bcryptjs";
+import Listing from "../models/listing.model.js"
+import User from "../models/user.model.js"
+import { errorHandler } from "../utils/error.js"
+import bcryptjs from "bcryptjs"
 
 export const test = (req, res) => {
   res.json({
     message: "Hello World!",
-  });
-};
+  })
+}
 
 export const updateUser = async (req, res, next) => {
-  if (req.user.id !== req.params.id)
-    return next(errorHandler(401, "Unauthorized"));
+  if (req.user.id !== req.params.id) return next(errorHandler(401, "Unauthorized"))
 
   try {
     if (req.body.password) {
-      req.body.password = bcryptjs.hashSync(req.body.password, 10);
+      req.body.password = bcryptjs.hashSync(req.body.password, 10)
     }
 
     const updateUser = await User.findByIdAndUpdate(
@@ -27,40 +27,60 @@ export const updateUser = async (req, res, next) => {
           avatar: req.body.avatar,
         },
       },
-      { new: true }
-    );
+      { new: true },
+    )
 
-    const { password, createdAt, updatedAt, __v, ...rest } = updateUser?._doc;
+    const { password, createdAt, updatedAt, __v, ...rest } = updateUser?._doc
 
     const response = {
       success: true,
       statusCode: 200,
       message: "User updated successfully!",
       userData: rest,
-    };
+    }
 
-    res.status(200).json(response);
+    res.status(200).json(response)
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
 
 export const deleteUser = async (req, res, next) => {
-  if (req.user.id !== req.params.id)
-    return next(errorHandler(401, "Unauthorized"));
+  if (req.user.id !== req.params.id) return next(errorHandler(401, "Unauthorized"))
 
   try {
-    await User.findByIdAndDelete(req.params.id);
+    await User.findByIdAndDelete(req.params.id)
 
     const response = {
       success: true,
       statusCode: 200,
       message: "User deleted successfully.",
-    };
+    }
 
-    res.clearCookie("access_token");
-    res.status(200).json(response);
+    res.clearCookie("access_token")
+    res.status(200).json(response)
   } catch (error) {
-    next(error);
+    next(error)
   }
-};
+}
+
+export const getUserListing = async (req, res, next) => {
+  if (req.user.id === req.params.id) {
+    try {
+      const listing = await Listing.find({ userId: req.params.id })
+
+      const response = {
+        success: true,
+        statusCode: 200,
+        message: "User Listings",
+        data: listing,
+      }
+
+      res.status(200).json(response)
+    } catch (error) {
+      next(error)
+    }
+  } else {
+    return next(errorHandler(401, "Unauthorized"))
+  }
+}

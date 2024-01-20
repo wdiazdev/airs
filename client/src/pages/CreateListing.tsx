@@ -34,7 +34,7 @@ const CreateListing = () => {
     parking: false,
     offer: false,
     imageUrls: [],
-    userRef: currentUser._id ? currentUser._id?.toString() : '',
+    userId: currentUser._id ? currentUser._id?.toString() : '',
   })
 
   const { createListing } = useCreateListing()

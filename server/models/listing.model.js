@@ -42,7 +42,7 @@ const listingSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    userRef: {
+    userId: {
       type: String,
       required: true,
     },

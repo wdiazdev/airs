@@ -16,6 +16,9 @@ import {
   singOutCurrentUser,
 } from '../redux/user/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
+import useGetUserListing from '../query/useGetUserListing'
+import Listings from '../components/Listings'
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa'
 
 const Profile = () => {
   const dispatch = useAppDispatch()
@@ -26,12 +29,16 @@ const Profile = () => {
   const [fileProgress, setFileProgress] = useState<number>(0)
   const [fileUploadError, setFileUploadError] = useState()
   const [formData, setFormData] = useState<FormData>({})
+  const [showListings, setShowListings] = useState<boolean>(false)
 
   const navigate = useNavigate()
 
   const { updateUserProfile, deleteUserProfile } = useUserAuth()
   const { isLoading, error }: { isLoading: boolean; error: any } =
     updateUserProfile
+
+  const { getListing } = useGetUserListing(currentUser._id!)
+  const { data: userListingsData } = getListing
 
   useEffect(() => {
     if (file) {
@@ -155,7 +162,7 @@ const Profile = () => {
 
   return (
     <div className="flex items-center justify-center h-screen p-2">
-      <div className="flex flex-col gap-4 p-y max-w-lg pb-16 w-full">
+      <div className="flex flex-col gap-4 p-y max-w-lg w-full">
         <h1 className="text-center text-xl font-semibold">Profile</h1>
         <input
           type="file"
@@ -212,7 +219,7 @@ const Profile = () => {
           >
             {isLoading ? 'Updating...' : 'Update'}
           </button>
-          <div className="flex flex-col gap-4 p-y max-w-lg pb-16 w-full">
+          <div className="flex flex-col gap-4 p-y max-w-lg w-full">
             <div className="flex justify-between">
               <button
                 type="button"
@@ -245,6 +252,19 @@ const Profile = () => {
             </Link>
           </div>
         </form>
+        <button
+          type="button"
+          className="text-primary font-bold hover:opacity-75 ease-in duration-200 m-auto"
+          onClick={() => setShowListings(!showListings)}
+        >
+          <div className="flex items-center">
+            {showListings ? <FaAngleUp size={18} /> : <FaAngleDown size={18} />}
+            Manage Listing
+          </div>
+        </button>
+        {userListingsData?.data && showListings && (
+          <Listings userListingsData={userListingsData} />
+        )}
       </div>
     </div>
   )

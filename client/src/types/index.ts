@@ -35,5 +35,12 @@ export interface CreateListingFormData {
   parking: boolean
   offer: boolean
   imageUrls: string[]
-  userRef: string
+  userId: string
+}
+
+export interface ListingDataResponse {
+  success: boolean
+  statusCode: number
+  message: string
+  data: CreateListingFormData[]
 }
