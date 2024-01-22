@@ -1,14 +1,12 @@
 import {
   UseMutationResult,
-  UseQueryResult,
   useMutation,
-  useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
 import { UserDataResponse, CreateListingFormData } from '../types'
 
 const useCreateListing = () => {
-  // const client = useQueryClient()
+  const client = useQueryClient()
 
   return {
     createListing: useMutation(async (formData: CreateListingFormData) => {
@@ -27,8 +25,29 @@ const useCreateListing = () => {
       }
       return data
     }),
+    deleteListing: useMutation(
+      async (listingId: string) => {
+        const response = await fetch(`/api/listing/delete/${listingId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        const data: UserDataResponse = await response.json()
+
+        if (data.success === false) {
+          throw new Error(data.message)
+        }
+        return data
+      },
+      {
+        onSuccess: () => client.invalidateQueries(['userListings']),
+      }
+    ),
   } as {
     createListing: UseMutationResult<UserDataResponse>
+    deleteListing: UseMutationResult<UserDataResponse>
   }
 }
 

@@ -36,7 +36,7 @@ export interface CreateListingFormData {
   offer: boolean
   imageUrls: string[]
   userId: string
-  _id: string
+  _id?: string
 }
 
 export interface ListingDataResponse {
