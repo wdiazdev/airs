@@ -78,7 +78,7 @@ const Listings = ({ userListingsData }: Props) => {
                         >
                           <FaRegTrashAlt size={22} />
                         </button>
-                        <Link to={`/create-listing/${listing._id}`}>
+                        <Link to={`/update-listing/${listing._id}`}>
                           <button
                             type="button"
                             className="p-3 text-primary rounded-lg uppercase hover:opacity-75 ease-in duration-200"

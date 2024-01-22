@@ -6,6 +6,7 @@ import About from './About'
 import Dashboard from './Dashboard'
 import PrivateRoute from '../components/PrivateRoute'
 import CreateListing from './CreateListing'
+import UpdateListing from './UpdateListing'
 
 export {
   Home,
@@ -16,4 +17,5 @@ export {
   About,
   PrivateRoute,
   CreateListing,
+  UpdateListing,
 }

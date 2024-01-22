@@ -32,8 +32,35 @@ export const deleteListing = async (req, res, next) => {
 
     const response = {
       success: true,
-      statusCode: 201,
+      statusCode: 200,
       message: "Listing deleted successfully.",
+    }
+
+    res.status(200).json(response)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const updateListing = async (req, res, next) => {
+  const listing = await Listing.findById(req.params.id)
+
+  if (!listing) {
+    return next(errorHandler(404, "Listing not found."))
+  }
+
+  if (req.user.id !== listing.userId) {
+    return next(errorHandler(401, "User not authorized."))
+  }
+
+  try {
+    const updateListing = await Listing.findByIdAndUpdate(req.params.id, req.body, { new: true })
+
+    const response = {
+      success: true,
+      statusCode: 200,
+      message: "Listing updated successfully.",
+      data: updateListing,
     }
 
     res.status(200).json(response)

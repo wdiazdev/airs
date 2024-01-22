@@ -10,6 +10,7 @@ import {
   About,
   PrivateRoute,
   CreateListing,
+  UpdateListing,
 } from './pages'
 
 const App = () => {
@@ -23,9 +24,10 @@ const App = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/about" element={<About />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/create-listing" element={<CreateListing />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/create-listing" element={<CreateListing />} />
+            <Route path="/update-listing/:id" element={<UpdateListing />} />
           </Route>
         </Routes>
         <Toaster richColors />
