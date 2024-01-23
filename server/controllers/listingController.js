@@ -68,3 +68,26 @@ export const updateListing = async (req, res, next) => {
     next(error)
   }
 }
+
+export const getListing = async (req, res, next) => {
+  try {
+    const listing = await Listing.findById(req.params.id)
+
+    if (!listing) {
+      return next(404, "Listing not found")
+    }
+
+    const { __v, createdAt, updatedAt, ...rest } = listing?._doc
+
+    const response = {
+      success: true,
+      statusCode: 200,
+      message: "Listing found.",
+      data: rest,
+    }
+
+    res.status(200).json(response)
+  } catch (error) {
+    next(error)
+  }
+}

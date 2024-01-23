@@ -25,6 +25,22 @@ const useCreateListing = () => {
       }
       return data
     }),
+    updateListing: useMutation(async (formData: CreateListingFormData) => {
+      const response = await fetch(`/api/listing/update/${formData._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data: UserDataResponse = await response.json()
+
+      if (data.success === false) {
+        throw new Error(data.message)
+      }
+      return data
+    }),
     deleteListing: useMutation(
       async (listingId: string) => {
         const response = await fetch(`/api/listing/delete/${listingId}`, {
@@ -47,6 +63,7 @@ const useCreateListing = () => {
     ),
   } as {
     createListing: UseMutationResult<UserDataResponse>
+    updateListing: UseMutationResult<UserDataResponse>
     deleteListing: UseMutationResult<UserDataResponse>
   }
 }

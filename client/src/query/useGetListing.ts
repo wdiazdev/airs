@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { ListingDataResponse } from '../types'
 
-const useGetUserListing = (userId: string) => {
+const useGetListing = (listingId: string) => {
   return {
     getListing: useQuery(
-      ['userListings', userId],
+      ['listingData', listingId],
       async () => {
-        const response = await fetch(`/api/user/listing/${userId}`, {
+        const response = await fetch(`/api/listing/getListing/${listingId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -22,10 +22,10 @@ const useGetUserListing = (userId: string) => {
       },
       {
         keepPreviousData: true,
-        enabled: !!userId,
+        enabled: !!listingId,
       }
     ),
   }
 }
 
-export default useGetUserListing
+export default useGetListing
