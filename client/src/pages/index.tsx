@@ -7,6 +7,7 @@ import Dashboard from './Dashboard'
 import PrivateRoute from '../components/PrivateRoute'
 import CreateListing from './CreateListing'
 import UpdateListing from './UpdateListing'
+import Listing from './Listing'
 
 export {
   Home,
@@ -18,4 +19,5 @@ export {
   PrivateRoute,
   CreateListing,
   UpdateListing,
+  Listing,
 }
