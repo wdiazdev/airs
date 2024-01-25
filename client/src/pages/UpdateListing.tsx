@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAppSelector } from '../redux/hook'
 import { useState, useEffect, ChangeEvent } from 'react'
 import { CreateListingFormData } from '../types'
@@ -175,7 +175,7 @@ const UpdateListing = () => {
       } else {
         toast.error('Error updating Listing, please try again.')
       }
-      navigate('/profile')
+      navigate(`/listing/${listingId}`)
     } catch (error) {
       console.log('error:', error)
     }
@@ -420,19 +420,18 @@ const UpdateListing = () => {
                 </div>
               )
             })}
-          <Link to={`/listing/${listingId}`}>
-            <button
-              disabled={isLoading}
-              className={`py-3 uppercase bg-green-700 text-white font-semibold rounded-lg w-full 
+
+          <button
+            disabled={isLoading}
+            className={`py-3 uppercase bg-green-700 text-white font-semibold rounded-lg w-full 
             ${
               isLoading
                 ? 'opacity-80 cursor-not-allowed'
                 : 'hover:bg-green-600 ease-in duration-200'
             }`}
-            >
-              Update Listing
-            </button>
-          </Link>
+          >
+            Update Listing
+          </button>
         </div>
       </form>
     </div>
