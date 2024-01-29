@@ -5,11 +5,18 @@ import { CreateListingFormData } from '../types'
 import { MdSell, MdBathtub, MdHome, MdLocationOn, MdBed } from 'react-icons/md'
 import { FaParking } from 'react-icons/fa'
 import { formatCurrency } from '../utils/FormatCurrency'
+import { useAppSelector } from '../redux/hook'
+import { useState } from 'react'
+import ContactAgent from '../components/ContactAgent'
 
 const Listing = () => {
   const params = useParams()
 
+  const [contact, setContact] = useState<boolean>(false)
+
   const listingId = params.id ?? ''
+
+  const { currentUser } = useAppSelector((state) => state.user)
 
   const { getListing } = useGetListing(listingId)
   const { data: fetchedData, isLoading, isFetching, isError } = getListing
@@ -100,6 +107,23 @@ const Listing = () => {
                 {listingData.description}
               </p>
             </div>
+            {currentUser &&
+              currentUser._id !== listingData.userId &&
+              !contact && (
+                <button
+                  type="button"
+                  className="py-3 px-4 uppercase bg-customBlue text-white text-[14px] sm:text-[18px] font-semibold rounded-lg hover:bg-blue-500 ease-in duration-200 m-auto"
+                  onClick={() => setContact(true)}
+                >
+                  Contact agent
+                </button>
+              )}
+            {contact && (
+              <ContactAgent
+                userId={listingData.userId}
+                address={listingData.address}
+              />
+            )}
           </div>
         </>
       ) : null}
