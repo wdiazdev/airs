@@ -2,7 +2,14 @@ import { useParams } from 'react-router-dom'
 import useGetListing from '../query/useGetListing'
 import Spinner from '../components/Spinner'
 import { CreateListingFormData } from '../types'
-import { MdSell, MdBathtub, MdHome, MdLocationOn, MdBed } from 'react-icons/md'
+import {
+  MdSell,
+  MdBathtub,
+  MdHome,
+  MdLocationOn,
+  MdBed,
+  MdChair,
+} from 'react-icons/md'
 import { FaParking } from 'react-icons/fa'
 import { formatCurrency } from '../utils/FormatCurrency'
 import { useAppSelector } from '../redux/hook'
@@ -53,7 +60,8 @@ const Listing = () => {
             <div className="flex items-center gap-1">
               <MdSell className="text-sm sm:text-[20px] text-primary" />
               <span className="font-semibold text-sm sm:text-[20px]">
-                {listingData.listingType}
+                {listingData.listingType.charAt(0).toUpperCase() +
+                  listingData.listingType.slice(1)}
               </span>
             </div>
 
@@ -64,33 +72,41 @@ const Listing = () => {
               </span>
               &nbsp; - &nbsp;
               <span className="font-semibold text-sm sm:text-[20px]">
-                {listingData.listingType === 'sell'
+                {listingData.listingType === 'sale'
                   ? formatCurrency(listingData.price)
                   : `${formatCurrency(listingData.price)}/Month`}
               </span>
             </div>
 
             <ul className="flex items-center flex-wrap gap-3">
-              <li className="flex items-center gap-1">
+              <li className="flex items-center gap-1" title="Property type">
                 <MdHome className="text-sm sm:text-[18px] text-primary" />
                 <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.propertyType.charAt(0).toUpperCase() +
                     listingData.propertyType.slice(1)}
                 </span>
               </li>
-              <li className="flex items-center gap-1">
+              <li className="flex items-center gap-1" title="Bedrooms">
                 <MdBed className="text-sm sm:text-[18px] text-primary" />
                 <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.bedrooms}
                 </span>
               </li>
-              <li className="flex items-center gap-1">
+              <li className="flex items-center gap-1" title="Bathroom">
                 <MdBathtub className="text-sm sm:text-[18px] text-primary" />
                 <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.bathrooms}
                 </span>
               </li>
-              <li className="flex items-center gap-1">
+              {listingData.listingType === 'rent' && (
+                <li className="flex items-center gap-1" title="Furnished">
+                  <MdChair className="text-sm sm:text-[18px] text-primary" />
+                  <span className="font-semibold text-sm sm:text-[18px]">
+                    {listingData.furnished ? 'Yes' : 'No'}
+                  </span>
+                </li>
+              )}
+              <li className="flex items-center gap-1" title="Parking">
                 <FaParking className="text-sm sm:text-[18px] text-primary" />
                 <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.parking === true ? 'Yes' : 'No parking'}

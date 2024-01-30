@@ -33,6 +33,7 @@ const CreateListing = () => {
     bathrooms: 1,
     parking: false,
     offer: false,
+    furnished: false,
     imageUrls: [],
     userId: currentUser._id ? currentUser._id?.toString() : '',
   })
@@ -109,14 +110,20 @@ const CreateListing = () => {
         listingType: e.target.id,
       })
     }
+
     if (isInputElement(e.target)) {
-      if (e.target.id === 'parking' || e.target.id === 'offer') {
+      if (
+        e.target.id === 'parking' ||
+        e.target.id === 'offer' ||
+        e.target.id === 'furnished'
+      ) {
         setFormData({
           ...formData,
           [e.target.id]: e.target.checked,
         })
       }
     }
+
     if (
       e.target.id === 'house' ||
       e.target.id === 'townhome' ||
@@ -129,6 +136,7 @@ const CreateListing = () => {
         propertyType: e.target.id,
       })
     }
+
     if (
       e.target.type === 'number' ||
       e.target.type === 'text' ||
@@ -264,6 +272,18 @@ const CreateListing = () => {
               />
               <span className="font-semibold">Rent</span>
             </div>
+            {formData.listingType === 'rent' && (
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="furnished"
+                  className="h-4 w-4"
+                  onChange={handleChange}
+                  checked={formData.furnished}
+                />
+                <span className="font-semibold">Furnished</span>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"

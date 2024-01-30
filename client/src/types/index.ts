@@ -33,6 +33,7 @@ export interface CreateListingFormData {
   bedrooms: number
   bathrooms: number
   parking: boolean
+  furnished: boolean
   offer: boolean
   imageUrls: string[]
   userId: string
