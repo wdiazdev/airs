@@ -24,7 +24,7 @@ const CreateListing = () => {
   const [isLoading, setIsisLoading] = useState<boolean>(false)
 
   const [formData, setFormData] = useState<CreateListingFormData>({
-    listingType: 'sell',
+    listingType: 'sale',
     propertyType: 'house',
     description: '',
     address: '',
@@ -103,7 +103,7 @@ const CreateListing = () => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (e.target.id === 'rent' || e.target.id === 'sell') {
+    if (e.target.id === 'rent' || e.target.id === 'sale') {
       setFormData({
         ...formData,
         listingType: e.target.id,
@@ -247,10 +247,10 @@ const CreateListing = () => {
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
-                id="sell"
+                id="sale"
                 className="h-4 w-4"
                 onChange={handleChange}
-                checked={formData.listingType === 'sell'}
+                checked={formData.listingType === 'sale'}
               />
               <span className="font-semibold">Sell</span>
             </div>
@@ -307,7 +307,7 @@ const CreateListing = () => {
                 id="bathrooms"
                 min={0}
                 max={15}
-                step={0.1}
+                step={1}
                 className="w-18 p-3 border border-gray-300 rounded-lg focus:outline-none [appearance:textfield]
                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 required

@@ -25,7 +25,7 @@ export interface FormData {
 }
 
 export interface CreateListingFormData {
-  listingType: string
+  listingType: 'sale' | 'rent'
   propertyType: 'apartment' | 'condo' | 'house' | 'multi family' | 'townhome'
   description: string
   address: string
