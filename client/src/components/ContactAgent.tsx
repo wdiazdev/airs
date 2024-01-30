@@ -20,9 +20,9 @@ const ContactAgent = ({ userId, address }: Props) => {
   return (
     <>
       {userData ? (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 bg-slate-500 p-4 rounded-md">
           <div className="flex items-center">
-            <p className="text-sm sm:text-[26px]">
+            <p className="text-sm sm:text-[20px] text-white">
               Contact:{' '}
               <span className="font-semibold">
                 {userData.username &&
@@ -42,7 +42,7 @@ const ContactAgent = ({ userId, address }: Props) => {
             onChange={(e: any) => setMessage(e.target.value)}
           ></textarea>
           <Link
-            className="m-auto py-3 px-4 uppercase bg-customBlue text-white text-[14px] sm:text-[18px] font-semibold rounded-lg hover:bg-blue-500 ease-in duration-200"
+            className="m-auto py-3 px-4 uppercase bg-customBlue text-white text-[12px] sm:text-[16px] font-semibold rounded-lg hover:bg-blue-500 ease-in duration-200"
             to={`mailto:${userData.email}?subject=Regarding:${address}&body=${message}`}
           >
             Send Message

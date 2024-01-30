@@ -49,21 +49,21 @@ const Listing = () => {
             alt="listing image"
           />
 
-          <div className="flex flex-col gap-6 p-2 mt-6 border-b border-gray-300">
+          <div className="flex flex-col gap-4 p-2 mt-6 border-b border-gray-300">
             <div className="flex items-center gap-1">
-              <MdSell className="text-sm sm:text-[26px] text-primary" />
-              <span className="font-semibold text-sm sm:text-[26px]">
+              <MdSell className="text-sm sm:text-[20px] text-primary" />
+              <span className="font-semibold text-sm sm:text-[20px]">
                 {listingData.listingType}
               </span>
             </div>
 
             <div className="flex items-center gap-1">
-              <MdLocationOn className="text-sm sm:text-[26px] text-primary" />
-              <span className="font-semibold text-sm sm:text-[26px]">
+              <MdLocationOn className="text-sm sm:text-[20px] text-primary" />
+              <span className="font-semibold text-sm sm:text-[20px]">
                 {listingData.address}
               </span>
               &nbsp; - &nbsp;
-              <span className="font-semibold text-sm sm:text-[26px]">
+              <span className="font-semibold text-sm sm:text-[20px]">
                 {listingData.listingType === 'sell'
                   ? formatCurrency(listingData.price)
                   : `${formatCurrency(listingData.price)}/Month`}
@@ -72,38 +72,38 @@ const Listing = () => {
 
             <ul className="flex items-center flex-wrap gap-3">
               <li className="flex items-center gap-1">
-                <MdHome className="text-sm sm:text-[20px] text-primary" />
-                <span className="font-semibold text-sm sm:text-[20px]">
+                <MdHome className="text-sm sm:text-[18px] text-primary" />
+                <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.propertyType.charAt(0).toUpperCase() +
                     listingData.propertyType.slice(1)}
                 </span>
               </li>
               <li className="flex items-center gap-1">
-                <MdBed className="text-sm sm:text-[20px] text-primary" />
-                <span className="font-semibold text-sm sm:text-[20px]">
+                <MdBed className="text-sm sm:text-[18px] text-primary" />
+                <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.bedrooms}
                 </span>
               </li>
               <li className="flex items-center gap-1">
-                <MdBathtub className="text-sm sm:text-[20px] text-primary" />
-                <span className="font-semibold text-sm sm:text-[20px]">
+                <MdBathtub className="text-sm sm:text-[18px] text-primary" />
+                <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.bathrooms}
                 </span>
               </li>
               <li className="flex items-center gap-1">
-                <FaParking className="text-sm sm:text-[20px] text-primary" />
-                <span className="font-semibold text-sm sm:text-[20px]">
+                <FaParking className="text-sm sm:text-[18px] text-primary" />
+                <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.parking === true ? 'Yes' : 'No parking'}
                 </span>
               </li>
             </ul>
 
             <div className="">
-              <span className="font-semibold text-sm sm:text-[26px]">
+              <span className="font-semibold text-sm sm:text-[20px]">
                 Property Details:
               </span>
 
-              <p className="text-sm sm:text-[26px] text-justify">
+              <p className="text-sm sm:text-[20px] text-justify">
                 {listingData.description}
               </p>
             </div>
