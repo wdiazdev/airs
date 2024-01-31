@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppSelector } from '../redux/hook'
-import { useState, useEffect, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { CreateListingFormData } from '../types'
 import useGetListing from '../query/useGetListing'
 import {
@@ -171,7 +171,7 @@ const UpdateListing = () => {
     })
   }
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const data = await updateListing.mutateAsync(formData)

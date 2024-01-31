@@ -1,12 +1,15 @@
-import { FC, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../redux/hook'
-import { FaUserCircle, FaHome, FaBars, FaTimes } from 'react-icons/fa'
+import { FaUserCircle, FaHome, FaBars, FaTimes, FaSearch } from 'react-icons/fa'
 
 const NavBar: FC = () => {
   const { currentUser } = useAppSelector((state) => state.user)
 
+  const navigate = useNavigate()
+
   const [menuOpen, setMenuOpen] = useState<boolean>(true)
+  const [searchTerm, setSearchTerm] = useState<string>('')
 
   const handleClick = () => setMenuOpen(!menuOpen)
 
@@ -28,6 +31,23 @@ const NavBar: FC = () => {
     }
   }, [])
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const urlParams = new URLSearchParams(location.search)
+    console.log('urlParams:', urlParams)
+    urlParams.set('searchTerm', searchTerm)
+    const searchQuery = urlParams.toString()
+    navigate(`/search?${searchQuery}`)
+  }
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search)
+    const searchTermInUrl = urlParams.get('searchTerm')
+    if (searchTermInUrl && typeof searchTermInUrl === 'string') {
+      setSearchTerm(searchTermInUrl)
+    }
+  }, [location.search])
+
   return (
     <nav>
       <div
@@ -42,6 +62,23 @@ const NavBar: FC = () => {
             </div>
           </Link>
         </div>
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white flex items-center p-2 rounded-lg"
+        >
+          <input
+            type="text"
+            placeholder="Search..."
+            className="bg-transparent focus:outline-none w-18 sm:w-64"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setSearchTerm(e.target.value)
+            }
+            value={searchTerm}
+          />
+          <button>
+            <FaSearch size={26} />
+          </button>
+        </form>
         <div className="flex gap-4 items-center">
           <Link
             to="/dashboard"

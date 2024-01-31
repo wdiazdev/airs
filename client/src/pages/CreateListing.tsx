@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { app } from '../firebase'
 import {
   getDownloadURL,
@@ -157,7 +157,7 @@ const CreateListing = () => {
     })
   }
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const data = await createListing.mutateAsync(formData)
