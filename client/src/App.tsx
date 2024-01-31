@@ -12,6 +12,7 @@ import {
   CreateListing,
   UpdateListing,
   Listing,
+  SearchListing,
 } from './pages'
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/listing/:id" element={<Listing />} />
+          <Route path="/search" element={<SearchListing />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-listing" element={<CreateListing />} />

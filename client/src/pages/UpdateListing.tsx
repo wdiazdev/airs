@@ -228,7 +228,7 @@ const UpdateListing = () => {
                   onChange={handleChange}
                   checked={formData.propertyType === 'house'}
                 />
-                <span className="font-semibold">House</span>
+                <label className="font-semibold">House</label>
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -238,7 +238,7 @@ const UpdateListing = () => {
                   onChange={handleChange}
                   checked={formData.propertyType === 'townhome'}
                 />
-                <span className="font-semibold">Townhouse</span>
+                <label className="font-semibold">Townhouse</label>
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -248,7 +248,7 @@ const UpdateListing = () => {
                   onChange={handleChange}
                   checked={formData.propertyType === 'apartment'}
                 />
-                <span className="font-semibold">Apartment</span>
+                <label className="font-semibold">Apartment</label>
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -258,7 +258,7 @@ const UpdateListing = () => {
                   onChange={handleChange}
                   checked={formData.propertyType === 'condo'}
                 />
-                <span className="font-semibold">Condo</span>
+                <label className="font-semibold">Condo</label>
               </div>
               <div className="flex items-center gap-2">
                 <input
@@ -268,7 +268,7 @@ const UpdateListing = () => {
                   onChange={handleChange}
                   checked={formData.propertyType === 'multi family'}
                 />
-                <span className="font-semibold">Multi Family</span>
+                <label className="font-semibold">Multi Family</label>
               </div>
             </div>
           </div>
@@ -282,7 +282,7 @@ const UpdateListing = () => {
                 onChange={handleChange}
                 checked={formData.listingType === 'sale'}
               />
-              <span className="font-semibold">Sell</span>
+              <label className="font-semibold">Sell</label>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -292,7 +292,7 @@ const UpdateListing = () => {
                 onChange={handleChange}
                 checked={formData.listingType === 'rent'}
               />
-              <span className="font-semibold">Rent</span>
+              <label className="font-semibold">Rent</label>
             </div>
             {formData.listingType === 'rent' && (
               <div className="flex items-center gap-2">
@@ -303,7 +303,7 @@ const UpdateListing = () => {
                   onChange={handleChange}
                   checked={formData.furnished}
                 />
-                <span className="font-semibold">Furnished</span>
+                <label className="font-semibold">Furnished</label>
               </div>
             )}
             <div className="flex items-center gap-2">
@@ -314,7 +314,7 @@ const UpdateListing = () => {
                 onChange={handleChange}
                 checked={formData.parking}
               />
-              <span className="font-semibold">Parking</span>
+              <label className="font-semibold">Parking</label>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -324,7 +324,7 @@ const UpdateListing = () => {
                 onChange={handleChange}
                 checked={formData.offer}
               />
-              <span className="font-semibold">Offer</span>
+              <label className="font-semibold">Offer</label>
             </div>
           </div>
           <div className="flex gap-4">
@@ -341,7 +341,7 @@ const UpdateListing = () => {
                 onChange={handleChange}
                 value={formData.bedrooms}
               />
-              <span className="font-semibold">Beds</span>
+              <label className="font-semibold">Beds</label>
             </div>
             <div className="flex items-center gap-2">
               <input
@@ -356,7 +356,7 @@ const UpdateListing = () => {
                 onChange={handleChange}
                 value={formData.bathrooms}
               />
-              <span className="font-semibold">Baths</span>
+              <label className="font-semibold">Baths</label>
             </div>
           </div>
           <div>
@@ -374,16 +374,12 @@ const UpdateListing = () => {
                   value={formData.price}
                 />
               </div>
-              {formData.listingType === 'rent' ? (
-                <div className="flex flex-col items-center">
-                  <span className="font-semibold">Price</span>
+              <div className="flex flex-col items-center">
+                <label className="font-semibold">Price</label>
+                {formData.listingType === 'rent' && (
                   <span className="text-gray-500">($/Month)</span>
-                </div>
-              ) : (
-                <div className="flex justify-center items-center">
-                  <span className="font-semibold">Price</span>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>

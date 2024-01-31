@@ -8,6 +8,7 @@ import PrivateRoute from '../components/PrivateRoute'
 import CreateListing from './CreateListing'
 import UpdateListing from './UpdateListing'
 import Listing from './Listing'
+import SearchListing from './SearchListing'
 
 export {
   Home,
@@ -20,4 +21,5 @@ export {
   CreateListing,
   UpdateListing,
   Listing,
+  SearchListing,
 }
