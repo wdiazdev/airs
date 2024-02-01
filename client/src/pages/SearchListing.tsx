@@ -1,10 +1,117 @@
-import React from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { SearchParams } from '../types'
+import { useNavigate } from 'react-router-dom'
 
 const SearchListing = () => {
+  const [searchParams, setSearchParams] = useState<SearchParams>({
+    searchTerm: '',
+    listingType: 'sale',
+    furnished: false,
+    parking: false,
+    offer: false,
+    sort: 'createdAt',
+    order: 'desc',
+  })
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search)
+    const searchTermFromUrl = urlParams.get('searchTerm')
+    const parkingFromUrl = urlParams.get('parking')
+    const furnishedFromUrl = urlParams.get('furnished')
+    const offerFromUrl = urlParams.get('offer')
+    const listingTypeFromUrl = urlParams.get('listingType')
+    const sortFromUrl = urlParams.get('sort')
+    const orderFromUrl = urlParams.get('order')
+
+    if (
+      searchTermFromUrl ||
+      parkingFromUrl ||
+      furnishedFromUrl ||
+      offerFromUrl ||
+      listingTypeFromUrl ||
+      sortFromUrl ||
+      orderFromUrl
+    ) {
+      setSearchParams({
+        searchTerm: searchTermFromUrl || '',
+        listingType: listingTypeFromUrl === 'sale' ? 'sale' : 'rent',
+        furnished: furnishedFromUrl === 'true' ? true : false,
+        parking: parkingFromUrl === 'true' ? true : false,
+        offer: offerFromUrl === 'true' ? true : false,
+        sort: sortFromUrl === 'createdAt' ? 'createdAt' : 'regularPrice',
+        order: orderFromUrl === 'asc' ? 'asc' : 'desc',
+      })
+    }
+  }, [location.search])
+
+  //type guard checks whether the target is an HTMLInputElement
+  const isInputElement = (target: EventTarget): target is HTMLInputElement => {
+    return 'checked' in target
+  }
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    if (e.target.id === 'rent' || e.target.id === 'sale') {
+      setSearchParams({
+        ...searchParams,
+        listingType: e.target.id,
+      })
+    }
+
+    if (e.target.id === 'searchTerm') {
+      setSearchParams({
+        ...searchParams,
+        searchTerm: e.target.value,
+      })
+    }
+
+    if (isInputElement(e.target)) {
+      if (
+        e.target.id === 'parking' ||
+        e.target.id === 'offer' ||
+        e.target.id === 'furnished'
+      ) {
+        setSearchParams({
+          ...searchParams,
+          [e.target.id]: e.target.checked,
+        })
+      }
+    }
+
+    if (e.target.id === 'sort') {
+      const sort = e.target.value.split('_')[0] as 'createdAt' | 'regularPrice'
+      const order = e.target.value.split('_')[1] as 'asc' | 'desc'
+      setSearchParams({
+        ...searchParams,
+        sort,
+        order,
+      })
+    }
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const urlParams = new URLSearchParams(location.search)
+
+    urlParams.set('searchTerm', searchParams.searchTerm)
+    urlParams.set('parking', searchParams.parking.toString())
+    urlParams.set('furnished', searchParams.furnished.toString())
+    urlParams.set('offer', searchParams.offer.toString())
+    urlParams.set('listingType', searchParams.listingType)
+    urlParams.set('sort', searchParams.sort)
+    urlParams.set('order', searchParams.order)
+
+    const searchQuery = urlParams.toString()
+    navigate(`/search?${searchQuery}`)
+  }
+
   return (
     <div className="flex flex-col md:flex-row p-2">
       <div className="flex border-b-2 md:border-r-2 md:border-b-0 md:min-h-screen mt-20 p-4">
-        <form className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
             <label htmlFor="searchTerm" className="font-semibold">
               Search:
@@ -14,19 +121,21 @@ const SearchListing = () => {
               id="searchTerm"
               placeholder="Search..."
               className="border rounded-lg p-3 w-full"
+              onChange={handleChange}
+              value={searchParams.searchTerm}
             />
           </div>
           <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-2">
               <label htmlFor="sale" className="font-semibold">
-                Sell
+                Sale
               </label>
               <input
                 type="checkbox"
                 id="sale"
                 className="h-4 w-4"
-                // onChange={handleChange}
-                // checked={formData.listingType === 'sale'}
+                onChange={handleChange}
+                checked={searchParams.listingType === 'sale'}
               />
             </div>
             <div className="flex items-center gap-2">
@@ -37,8 +146,8 @@ const SearchListing = () => {
                 type="checkbox"
                 id="rent"
                 className="h-4 w-4"
-                // onChange={handleChange}
-                // checked={formData.listingType === 'rent'}
+                onChange={handleChange}
+                checked={searchParams.listingType === 'rent'}
               />
             </div>
 
@@ -50,8 +159,8 @@ const SearchListing = () => {
                 type="checkbox"
                 id="furnished"
                 className="h-4 w-4"
-                //   onChange={handleChange}
-                //   checked={formData.furnished}
+                onChange={handleChange}
+                checked={searchParams.furnished}
               />
             </div>
 
@@ -63,8 +172,8 @@ const SearchListing = () => {
                 type="checkbox"
                 id="parking"
                 className="h-4 w-4"
-                // onChange={handleChange}
-                // checked={formData.parking}
+                onChange={handleChange}
+                checked={searchParams.parking}
               />
             </div>
             <div className="flex items-center gap-2">
@@ -75,8 +184,8 @@ const SearchListing = () => {
                 type="checkbox"
                 id="offer"
                 className="h-4 w-4"
-                // onChange={handleChange}
-                // checked={formData.offer}
+                onChange={handleChange}
+                checked={searchParams.offer}
               />
             </div>
           </div>
@@ -88,11 +197,13 @@ const SearchListing = () => {
               name="sort"
               id="sort"
               className="border border-slate-300 rounded-lg p-2"
+              onChange={handleChange}
+              defaultValue={'createdAt_desc'}
             >
-              <option>Price high to low</option>
-              <option>Price low to high</option>
-              <option>Latest</option>
-              <option>Oldest</option>
+              <option value={'regularPrice_desc'}>Price high to low</option>
+              <option value={'regularPrice_asc'}>Price low to high</option>
+              <option value={'createdAt_desc'}>Latest</option>
+              <option value={'createdAt_asc'}>Oldest</option>
             </select>
           </div>
           <button className="w-full py-3 px-4 uppercase bg-customBlue text-white text-[12px] sm:text-[16px] font-semibold rounded-lg hover:bg-blue-500 ease-in duration-200">

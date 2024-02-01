@@ -34,7 +34,6 @@ const NavBar: FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const urlParams = new URLSearchParams(location.search)
-    console.log('urlParams:', urlParams)
     urlParams.set('searchTerm', searchTerm)
     const searchQuery = urlParams.toString()
     navigate(`/search?${searchQuery}`)

@@ -46,3 +46,13 @@ export interface ListingDataResponse {
   message: string
   data: CreateListingFormData[]
 }
+
+export interface SearchParams {
+  searchTerm: string
+  listingType: 'sale' | 'rent'
+  furnished: boolean
+  parking: boolean
+  offer: boolean
+  sort: 'createdAt' | 'regularPrice'
+  order: 'desc' | 'asc'
+}
