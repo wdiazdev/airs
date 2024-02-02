@@ -4,7 +4,7 @@ import Spinner from '../components/Spinner'
 import { CreateListingFormData } from '../types'
 import {
   MdSell,
-  MdBathtub,
+  MdBathroom,
   MdHome,
   MdLocationOn,
   MdBed,
@@ -93,7 +93,7 @@ const Listing = () => {
                 </span>
               </li>
               <li className="flex items-center gap-1" title="Bathroom">
-                <MdBathtub className="text-sm sm:text-[18px] text-primary" />
+                <MdBathroom className="text-sm sm:text-[18px] text-primary" />
                 <span className="font-semibold text-sm sm:text-[18px]">
                   {listingData.bathrooms}
                 </span>

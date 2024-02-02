@@ -120,9 +120,12 @@ const SearchListing = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row p-2">
-      <div className="flex border-b-2 md:border-r-2 md:border-b-0 md:min-h-screen mt-20 p-4">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <div className="flex flex-col md:flex-row p-2 h-full">
+      <div className="flex justify-center border-b-2 md:border-r-2 md:border-b-0 mt-20 p-4">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 w-full sm:min-w-[380px]"
+        >
           <div className="flex items-center gap-2">
             <label htmlFor="searchTerm" className="font-semibold">
               Search:
@@ -222,9 +225,9 @@ const SearchListing = () => {
           </button>
         </form>
       </div>
-      <div className="mt-20 p-4">
-        <h1 className="font-semibold text-lg">Listing Results:</h1>
-        <div className="mt-4 bg-slate-300 h-screen w-screen p-4 rounded-lg">
+      <div className="flex flex-col sm:mt-20 p-4 w-full">
+        <h1 className="font-semibold text-md sm:text-lg">Listing Results:</h1>
+        <div className="flex flex-wrap gap-4  mt-4 bg-slate-300 p-4 rounded-lg h-screen">
           {searchResult &&
             searchResult.map((result) => {
               return (
