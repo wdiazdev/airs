@@ -1,6 +1,8 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import { SearchParams } from '../types'
+import { CreateListingFormData, SearchParams } from '../types'
 import { useNavigate } from 'react-router-dom'
+import useGetSearchListing from '../query/useGetSearchListing.ts'
+import ListingResultCard from '../components/ListingResultCard.tsx'
 
 const SearchListing = () => {
   const [searchParams, setSearchParams] = useState<SearchParams>({
@@ -12,8 +14,14 @@ const SearchListing = () => {
     sort: 'createdAt',
     order: 'desc',
   })
+  const [searchQueryParams, setSearchQueryParams] = useState<string>('')
 
   const navigate = useNavigate()
+
+  const { searchListing } = useGetSearchListing(searchQueryParams)
+  const { data: searchResultData, refetch, isLoading, isError } = searchListing
+
+  const searchResult = searchResultData?.data as CreateListingFormData[]
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search)
@@ -105,6 +113,9 @@ const SearchListing = () => {
     urlParams.set('order', searchParams.order)
 
     const searchQuery = urlParams.toString()
+    if (searchQuery) {
+      setSearchQueryParams(searchQuery)
+    }
     navigate(`/search?${searchQuery}`)
   }
 
@@ -212,7 +223,17 @@ const SearchListing = () => {
         </form>
       </div>
       <div className="mt-20 p-4">
-        <h1>Listing Result</h1>
+        <h1 className="font-semibold text-lg">Listing Results:</h1>
+        <div className="mt-4 bg-slate-300 h-screen w-screen p-4 rounded-lg">
+          {searchResult &&
+            searchResult.map((result) => {
+              return (
+                <React.Fragment key={result._id}>
+                  <ListingResultCard cardData={result} />
+                </React.Fragment>
+              )
+            })}
+        </div>
       </div>
     </div>
   )

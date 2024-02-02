@@ -92,7 +92,7 @@ export const getListing = async (req, res, next) => {
   }
 }
 
-export const getAllListing = async (req, res, next) => {
+export const getSearchListing = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9
     const startIndex = parseInt(req.query.startIndex) || 0
@@ -138,7 +138,7 @@ export const getAllListing = async (req, res, next) => {
     const response = {
       success: true,
       statusCode: 200,
-      message: "Listings found.",
+      message: "Search results",
       data: listings,
     }
 
