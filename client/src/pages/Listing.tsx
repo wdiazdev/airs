@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useGetListing from '../query/useGetListing'
 import Spinner from '../components/Spinner'
 import { CreateListingFormData } from '../types'
@@ -9,6 +9,7 @@ import {
   MdLocationOn,
   MdBed,
   MdChair,
+  MdArrowCircleLeft,
 } from 'react-icons/md'
 import { FaParking } from 'react-icons/fa'
 import { formatCurrency } from '../utils/FormatCurrency'
@@ -18,6 +19,8 @@ import ContactAgent from '../components/ContactAgent'
 
 const Listing = () => {
   const params = useParams()
+
+  const navigate = useNavigate()
 
   const [contact, setContact] = useState<boolean>(false)
 
@@ -50,13 +53,24 @@ const Listing = () => {
     <div className="h-screen">
       {listingData && !isLoading && !isError ? (
         <>
-          <img
-            className="h-[550px] w-full object-cover"
-            src={listingData.imageUrls[0]}
-            alt="listing image"
-          />
+          <div className="relative">
+            <img
+              className="h-[550px] w-full object-cover"
+              src={
+                listingData.imageUrls[0] ||
+                'https://www.ssn.no/build/images/temp/placeholder-house.5fe09041.png'
+              }
+              alt="listing image"
+            />
+            <button
+              onClick={() => history.back()}
+              className="absolute bottom-4 left-4 hover:opacity-75 ease-in duration-200"
+            >
+              <MdArrowCircleLeft className="text-sm sm:text-[38px] text-primary" />
+            </button>
+          </div>
 
-          <div className="flex flex-col gap-4 p-2 mt-6 border-b border-gray-300">
+          <div className="flex flex-col gap-4 p-2 mt-6 border-b-2">
             <div className="flex items-center gap-1">
               <MdSell className="text-sm sm:text-[20px] text-primary" />
               <span className="font-semibold text-sm sm:text-[20px]">

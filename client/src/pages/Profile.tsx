@@ -17,7 +17,7 @@ import {
 } from '../redux/user/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import useGetUserListing from '../query/useGetUserListing'
-import Listings from '../components/Listings'
+import ProfileListingCard from '../components/ProfileListingCard'
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa'
 
 const Profile = () => {
@@ -263,7 +263,7 @@ const Profile = () => {
           </div>
         </button>
         {userListingsData?.data && showListings && (
-          <Listings userListingsData={userListingsData} />
+          <ProfileListingCard userListingsData={userListingsData} />
         )}
       </div>
     </div>

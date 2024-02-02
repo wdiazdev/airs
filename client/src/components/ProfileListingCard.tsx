@@ -10,7 +10,7 @@ interface Props {
   userListingsData: ListingDataResponse
 }
 
-const Listings = ({ userListingsData }: Props) => {
+const ProfileListingCard = ({ userListingsData }: Props) => {
   const [deletingStatus, setDeletingStatus] = useState<boolean[]>(
     Array(userListingsData.data.length).fill(false)
   )
@@ -48,6 +48,9 @@ const Listings = ({ userListingsData }: Props) => {
           <h2 className="text-center font-semibold text-md">Your Listings</h2>
           {userListingsData.data.map(
             (listing: CreateListingFormData, index: number) => {
+              const truncatedAddress =
+                listing.address.slice(0, 36) +
+                (listing.address.length > 36 ? '...' : '')
               return (
                 <div
                   key={listing._id}
@@ -55,7 +58,7 @@ const Listings = ({ userListingsData }: Props) => {
                     deletingStatus[index]
                       ? 'justify-center'
                       : ' justify-between'
-                  } p-3 border items-center hover:shadow-lg ease-in duration-200 my-2`}
+                  } p-3 border-2 rounded-lg items-center hover:shadow-lg ease-in duration-200 my-2`}
                 >
                   {deletingStatus[index] ? (
                     <Spinner />
@@ -67,7 +70,9 @@ const Listings = ({ userListingsData }: Props) => {
                           alt="listing image"
                           className="h-36- w-36 rounded-lg object-contain"
                         />
-                        <span className="font-semibold">{listing.address}</span>
+                        <span className="font-semibold">
+                          {truncatedAddress}
+                        </span>
                       </div>
 
                       <div className="flex flex-col">
@@ -101,4 +106,4 @@ const Listings = ({ userListingsData }: Props) => {
   )
 }
 
-export default Listings
+export default ProfileListingCard

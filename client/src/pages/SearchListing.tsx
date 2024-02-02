@@ -1,8 +1,9 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { CreateListingFormData, SearchParams } from '../types'
 import { useNavigate } from 'react-router-dom'
 import useGetSearchListing from '../query/useGetSearchListing.ts'
 import ListingResultCard from '../components/ListingResultCard.tsx'
+import Spinner from '../components/Spinner.tsx'
 
 const SearchListing = () => {
   const [searchParams, setSearchParams] = useState<SearchParams>({
@@ -205,7 +206,7 @@ const SearchListing = () => {
           </div>
           <div className="flex items-center gap-2">
             <label htmlFor="sort" className="font-semibold">
-              Sort:
+              Sort by:
             </label>
             <select
               name="sort"
@@ -220,22 +221,36 @@ const SearchListing = () => {
               <option value={'createdAt_asc'}>Oldest</option>
             </select>
           </div>
-          <button className="w-full py-3 px-4 uppercase bg-customBlue text-white text-[12px] sm:text-[16px] font-semibold rounded-lg hover:bg-blue-500 ease-in duration-200">
-            Search
+          <button
+            className="flex items-center justify-center py-3 px-4 uppercase 
+          bg-customBlue text-white text-[12px] sm:text-[16px] font-semibold 
+          rounded-lg hover:bg-blue-500 ease-in duration-200"
+          >
+            {isLoading ? <Spinner /> : 'Search'}
           </button>
         </form>
       </div>
       <div className="flex flex-col sm:mt-20 p-4 w-full">
         <h1 className="font-semibold text-md sm:text-lg">Listing Results:</h1>
-        <div className="flex flex-wrap gap-4  mt-4 bg-slate-300 p-4 rounded-lg h-screen">
+        <div
+          className={`flex flex-wrap ${
+            (isLoading || isError || !searchResult?.length) &&
+            'justify-center items-center'
+          } gap-4  mt-4 bg-slate-300 p-4 rounded-lg h-screen`}
+        >
+          {isLoading && !isError && !searchResult?.length && <Spinner />}
+          {!isError && !isLoading && !searchResult?.length && (
+            <p className="font-semibold">No results found</p>
+          )}
+          {isError && !isLoading && !searchResult?.length && (
+            <p className="font-semibold">Error. Please try again!</p>
+          )}
           {searchResult &&
-            searchResult.map((result) => {
-              return (
-                <React.Fragment key={result._id}>
-                  <ListingResultCard cardData={result} />
-                </React.Fragment>
-              )
-            })}
+            !isError &&
+            !isLoading &&
+            searchResult.map((result) => (
+              <ListingResultCard cardData={result} key={result._id} />
+            ))}
         </div>
       </div>
     </div>
