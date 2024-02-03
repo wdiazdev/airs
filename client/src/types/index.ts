@@ -53,6 +53,6 @@ export interface SearchParams {
   furnished: boolean
   parking: boolean
   offer: boolean
-  sort: 'createdAt' | 'regularPrice'
+  sort: 'createdAt' | 'price'
   order: 'desc' | 'asc'
 }

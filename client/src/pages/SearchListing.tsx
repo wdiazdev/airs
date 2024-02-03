@@ -1,11 +1,12 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { CreateListingFormData, SearchParams } from '../types'
 import { useNavigate } from 'react-router-dom'
-import useGetSearchListing from '../query/useGetSearchListing.ts'
 import ListingResultCard from '../components/ListingResultCard.tsx'
 import Spinner from '../components/Spinner.tsx'
 
 const SearchListing = () => {
+  const navigate = useNavigate()
+
   const [searchParams, setSearchParams] = useState<SearchParams>({
     searchTerm: '',
     listingType: 'sale',
@@ -15,50 +16,64 @@ const SearchListing = () => {
     sort: 'createdAt',
     order: 'desc',
   })
-  const [searchQueryParams, setSearchQueryParams] = useState<string>('')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isError, setIsError] = useState<boolean>(false)
+  const [searchResult, setSearchResult] = useState<CreateListingFormData[]>()
 
-  const navigate = useNavigate()
-
-  const { searchListing } = useGetSearchListing(searchQueryParams)
-  const { data: searchResultData, refetch, isLoading, isError } = searchListing
-
-  const searchResult = searchResultData?.data as CreateListingFormData[]
+  const urlParams = new URLSearchParams(location.search)
+  const searchTermFromUrl = urlParams.get('searchTerm')
+  const parkingFromUrl = urlParams.get('parking')
+  const furnishedFromUrl = urlParams.get('furnished')
+  const offerFromUrl = urlParams.get('offer')
+  const listingTypeFromUrl = urlParams.get('listingType')
+  const sortFromUrl = urlParams.get('sort')
+  const orderFromUrl = urlParams.get('order')
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search)
-    const searchTermFromUrl = urlParams.get('searchTerm')
-    const parkingFromUrl = urlParams.get('parking')
-    const furnishedFromUrl = urlParams.get('furnished')
-    const offerFromUrl = urlParams.get('offer')
-    const listingTypeFromUrl = urlParams.get('listingType')
-    const sortFromUrl = urlParams.get('sort')
-    const orderFromUrl = urlParams.get('order')
-    try {
-      if (
-        searchTermFromUrl ||
-        parkingFromUrl ||
-        furnishedFromUrl ||
-        offerFromUrl ||
-        listingTypeFromUrl ||
-        sortFromUrl ||
-        orderFromUrl
-      ) {
-        setSearchParams({
-          searchTerm: searchTermFromUrl || '',
-          listingType: listingTypeFromUrl === 'sale' ? 'sale' : 'rent',
-          furnished: furnishedFromUrl === 'true' ? true : false,
-          parking: parkingFromUrl === 'true' ? true : false,
-          offer: offerFromUrl === 'true' ? true : false,
-          sort: sortFromUrl === 'createdAt' ? 'createdAt' : 'regularPrice',
-          order: orderFromUrl === 'asc' ? 'asc' : 'desc',
-        })
-      }
-    } catch (error) {
-      console.log('error:', error)
-    } finally {
-      refetch()
+    if (
+      searchTermFromUrl ||
+      parkingFromUrl ||
+      furnishedFromUrl ||
+      offerFromUrl ||
+      listingTypeFromUrl ||
+      sortFromUrl ||
+      orderFromUrl
+    ) {
+      setSearchParams({
+        searchTerm: searchTermFromUrl || '',
+        listingType: listingTypeFromUrl === 'sale' ? 'sale' : 'rent',
+        furnished: furnishedFromUrl === 'true' ? true : false,
+        parking: parkingFromUrl === 'true' ? true : false,
+        offer: offerFromUrl === 'true' ? true : false,
+        sort: sortFromUrl === 'createdAt' ? 'createdAt' : 'price',
+        order: orderFromUrl === 'asc' ? 'asc' : 'desc',
+      })
     }
-  }, [location.search])
+    const fetchSearchListing = async () => {
+      setIsLoading(true)
+      const searchQuery = urlParams.toString()
+      try {
+        const res = await fetch(`/api/listing/searchListing?${searchQuery}`)
+        const result = await res.json()
+        setSearchResult(result.data)
+      } catch (error) {
+        console.log('error:', error)
+        setIsError(true)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchSearchListing()
+  }, [
+    searchTermFromUrl,
+    parkingFromUrl,
+    furnishedFromUrl,
+    offerFromUrl,
+    listingTypeFromUrl,
+    sortFromUrl,
+    orderFromUrl,
+    location.search,
+  ])
 
   //type guard checks whether the target is an HTMLInputElement
   const isInputElement = (target: EventTarget): target is HTMLInputElement => {
@@ -96,7 +111,7 @@ const SearchListing = () => {
     }
 
     if (e.target.id === 'sort') {
-      const sort = e.target.value.split('_')[0] as 'createdAt' | 'regularPrice'
+      const sort = e.target.value.split('_')[0] as 'createdAt' | 'price'
       const order = e.target.value.split('_')[1] as 'asc' | 'desc'
       setSearchParams({
         ...searchParams,
@@ -108,7 +123,6 @@ const SearchListing = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const urlParams = new URLSearchParams(location.search)
 
     urlParams.set('searchTerm', searchParams.searchTerm)
     urlParams.set('parking', searchParams.parking.toString())
@@ -119,9 +133,6 @@ const SearchListing = () => {
     urlParams.set('order', searchParams.order)
 
     const searchQuery = urlParams.toString()
-    if (searchQuery) {
-      setSearchQueryParams(searchQuery)
-    }
     navigate(`/search?${searchQuery}`)
   }
 
@@ -130,6 +141,11 @@ const SearchListing = () => {
       <div className="border-b-2 md:border-r-2 md:border-b-0 p-4 h-screen">
         <form
           onSubmit={handleSubmit}
+          // onKeyDown={(e) => {
+          //   if (e.key === 'Enter') {
+          //     handleSubmit
+          //   }
+          // }}
           className="flex flex-col gap-4 w-full sm:min-w-[380px] mt-20"
         >
           <div className="flex items-center gap-2">
@@ -220,8 +236,8 @@ const SearchListing = () => {
               onChange={handleChange}
               defaultValue={'createdAt_desc'}
             >
-              <option value={'regularPrice_desc'}>Price high to low</option>
-              <option value={'regularPrice_asc'}>Price low to high</option>
+              <option value={'price_desc'}>Price high to low</option>
+              <option value={'price_asc'}>Price low to high</option>
               <option value={'createdAt_desc'}>Latest</option>
               <option value={'createdAt_asc'}>Oldest</option>
             </select>

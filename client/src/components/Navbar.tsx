@@ -44,6 +44,8 @@ const NavBar: FC = () => {
     const searchTermInUrl = urlParams.get('searchTerm')
     if (searchTermInUrl && typeof searchTermInUrl === 'string') {
       setSearchTerm(searchTermInUrl)
+    } else if (!searchTermInUrl) {
+      setSearchTerm('')
     }
   }, [location.search])
 
@@ -65,6 +67,9 @@ const NavBar: FC = () => {
           onSubmit={handleSubmit}
           className="bg-white flex items-center p-2 rounded-lg border-2 border-primary"
         >
+          <button>
+            <FaSearch className="text-[20px] sm:text-[24px] text-slate-400 mr-2" />
+          </button>
           <input
             type="text"
             placeholder="Search..."
@@ -74,9 +79,6 @@ const NavBar: FC = () => {
             }
             value={searchTerm}
           />
-          <button>
-            <FaSearch className="text-[20px] sm:text-[26px] text-slate-400" />
-          </button>
         </form>
         <div className="flex gap-4 items-center">
           <Link
