@@ -63,7 +63,7 @@ const NavBar: FC = () => {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="bg-white flex items-center p-2 rounded-lg"
+          className="bg-white flex items-center p-2 rounded-lg border-2 border-primary"
         >
           <input
             type="text"
@@ -75,7 +75,7 @@ const NavBar: FC = () => {
             value={searchTerm}
           />
           <button>
-            <FaSearch size={26} />
+            <FaSearch className="text-[20px] sm:text-[26px] text-slate-400" />
           </button>
         </form>
         <div className="flex gap-4 items-center">

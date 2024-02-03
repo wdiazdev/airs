@@ -33,25 +33,30 @@ const SearchListing = () => {
     const listingTypeFromUrl = urlParams.get('listingType')
     const sortFromUrl = urlParams.get('sort')
     const orderFromUrl = urlParams.get('order')
-
-    if (
-      searchTermFromUrl ||
-      parkingFromUrl ||
-      furnishedFromUrl ||
-      offerFromUrl ||
-      listingTypeFromUrl ||
-      sortFromUrl ||
-      orderFromUrl
-    ) {
-      setSearchParams({
-        searchTerm: searchTermFromUrl || '',
-        listingType: listingTypeFromUrl === 'sale' ? 'sale' : 'rent',
-        furnished: furnishedFromUrl === 'true' ? true : false,
-        parking: parkingFromUrl === 'true' ? true : false,
-        offer: offerFromUrl === 'true' ? true : false,
-        sort: sortFromUrl === 'createdAt' ? 'createdAt' : 'regularPrice',
-        order: orderFromUrl === 'asc' ? 'asc' : 'desc',
-      })
+    try {
+      if (
+        searchTermFromUrl ||
+        parkingFromUrl ||
+        furnishedFromUrl ||
+        offerFromUrl ||
+        listingTypeFromUrl ||
+        sortFromUrl ||
+        orderFromUrl
+      ) {
+        setSearchParams({
+          searchTerm: searchTermFromUrl || '',
+          listingType: listingTypeFromUrl === 'sale' ? 'sale' : 'rent',
+          furnished: furnishedFromUrl === 'true' ? true : false,
+          parking: parkingFromUrl === 'true' ? true : false,
+          offer: offerFromUrl === 'true' ? true : false,
+          sort: sortFromUrl === 'createdAt' ? 'createdAt' : 'regularPrice',
+          order: orderFromUrl === 'asc' ? 'asc' : 'desc',
+        })
+      }
+    } catch (error) {
+      console.log('error:', error)
+    } finally {
+      refetch()
     }
   }, [location.search])
 
@@ -121,11 +126,11 @@ const SearchListing = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row p-2 h-full">
-      <div className="flex justify-center border-b-2 md:border-r-2 md:border-b-0 mt-20 p-4">
+    <div className="flex flex-col md:flex-row p-2 max-h-screen overflow-y-auto">
+      <div className="border-b-2 md:border-r-2 md:border-b-0 p-4 h-screen">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-4 w-full sm:min-w-[380px]"
+          className="flex flex-col gap-4 w-full sm:min-w-[380px] mt-20"
         >
           <div className="flex items-center gap-2">
             <label htmlFor="searchTerm" className="font-semibold">
@@ -135,7 +140,7 @@ const SearchListing = () => {
               type="text"
               id="searchTerm"
               placeholder="Search..."
-              className="border rounded-lg p-3 w-full"
+              className="border-2 border-slate-300 rounded-lg p-3 w-full"
               onChange={handleChange}
               value={searchParams.searchTerm}
             />
@@ -211,7 +216,7 @@ const SearchListing = () => {
             <select
               name="sort"
               id="sort"
-              className="border border-slate-300 rounded-lg p-2"
+              className="border-2 border-slate-300 rounded-lg p-2"
               onChange={handleChange}
               defaultValue={'createdAt_desc'}
             >
@@ -233,12 +238,14 @@ const SearchListing = () => {
       <div className="flex flex-col sm:mt-20 p-4 w-full">
         <h1 className="font-semibold text-md sm:text-lg">Listing Results:</h1>
         <div
-          className={`flex flex-wrap ${
-            (isLoading || isError || !searchResult?.length) &&
-            'justify-center items-center'
-          } gap-4  mt-4 bg-slate-300 p-4 rounded-lg h-screen`}
+          className={
+            isLoading || isError || !searchResult?.length
+              ? 'flex items-center justify-center h-screen gap-4 mt-4 bg-slate-400 p-4 rounded-lg'
+              : 'flex flex-wrap items-center justify-center md:justify-normal gap-4 mt-4 bg-slate-400 p-4 rounded-lg'
+          }
         >
           {isLoading && !isError && !searchResult?.length && <Spinner />}
+
           {!isError && !isLoading && !searchResult?.length && (
             <p className="font-semibold">No results found</p>
           )}

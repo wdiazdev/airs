@@ -58,7 +58,7 @@ const ProfileListingCard = ({ userListingsData }: Props) => {
                     deletingStatus[index]
                       ? 'justify-center'
                       : ' justify-between'
-                  } p-3 border-2 rounded-lg items-center hover:shadow-lg ease-in duration-200 my-2`}
+                  } p-3 border-2 border-slate-300 rounded-lg items-center hover:shadow-lg ease-in duration-200 my-2`}
                 >
                   {deletingStatus[index] ? (
                     <Spinner />

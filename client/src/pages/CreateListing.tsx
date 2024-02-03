@@ -181,7 +181,7 @@ const CreateListing = () => {
             type="text"
             placeholder="Enter the full address of the property"
             id="address"
-            className="border border-gray-300 rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
             value={formData.address}
@@ -189,7 +189,7 @@ const CreateListing = () => {
           <textarea
             placeholder="Provide a detailed description of the property"
             id="description"
-            className="border border-gray-300 rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
             value={formData.description}
@@ -313,7 +313,7 @@ const CreateListing = () => {
                 min={0}
                 max={15}
                 step={1}
-                className="w-18 p-3 border border-gray-300 rounded-lg focus:outline-none [appearance:textfield]
+                className="w-18 p-3 border-2 border-slate-300 rounded-lg focus:outline-none [appearance:textfield]
                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 required
                 onChange={handleChange}
@@ -328,7 +328,7 @@ const CreateListing = () => {
                 min={0}
                 max={15}
                 step={1}
-                className="w-18 p-3 border border-gray-300 rounded-lg focus:outline-none [appearance:textfield]
+                className="w-18 p-3 border-2 border-slate-300 rounded-lg focus:outline-none [appearance:textfield]
                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 required
                 onChange={handleChange}
@@ -346,7 +346,7 @@ const CreateListing = () => {
                 <input
                   type="number"
                   id="price"
-                  className="p-3 pl-7 border border-gray-300 rounded-lg focus:outline-none [appearance:textfield]
+                  className="p-3 pl-7 border-2 border-slate-300 rounded-lg focus:outline-none [appearance:textfield]
                 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   onChange={handleChange}
                   value={formData.price}

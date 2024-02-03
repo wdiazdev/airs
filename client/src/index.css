@@ -4,21 +4,22 @@
 @tailwind utilities;
 
 :root {
-    --primary--font: 'DM Sans', sans-serif;
-  }
+  --primary--font: 'DM Sans', sans-serif;
+}
 
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    text-decoration: none;
-  }
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-decoration: none;
+}
 
-  html {
-    scroll-behavior: smooth;
-  }
+html {
+  scroll-behavior: smooth;
+}
 
-  body {
-    font-family: var(--primary--font);
-  }
+body {
+  font-family: var(--primary--font);
+  background-color: #f1f5f9;
+}

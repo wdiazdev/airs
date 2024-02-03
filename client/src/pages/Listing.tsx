@@ -76,6 +76,9 @@ const Listing = () => {
               <span className="font-semibold text-sm sm:text-[20px]">
                 {listingData.listingType.charAt(0).toUpperCase() +
                   listingData.listingType.slice(1)}
+                {listingData.offer && (
+                  <span className=" text-slate-400"> - Pending</span>
+                )}
               </span>
             </div>
 

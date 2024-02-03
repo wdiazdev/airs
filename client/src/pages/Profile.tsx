@@ -161,8 +161,8 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen p-2">
-      <div className="flex flex-col gap-4 p-y max-w-lg w-full">
+    <div className="flex justify-center items-center p-2">
+      <div className="flex flex-col gap-4 max-w-lg w-full mt-20">
         <h1 className="text-center text-xl font-semibold">Profile</h1>
         <input
           type="file"
@@ -171,6 +171,7 @@ const Profile = () => {
           accept="image/*"
           onChange={handleFileChange}
         />
+
         <img
           onClick={() => {
             if (fileRef.current) {
@@ -179,8 +180,9 @@ const Profile = () => {
           }}
           src={formData.avatar || currentUser.avatar}
           alt="Profile avatar"
-          className="h-24 w-24 rounded-full border-2 border-primary object-cover self-center cursor-pointer"
+          className="h-28 w-28 object-cover rounded-full border-2 border-primary self-center cursor-pointer"
         />
+
         <UserUploadFeedback />
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
@@ -188,7 +190,7 @@ const Profile = () => {
             placeholder="Username"
             id="username"
             defaultValue={currentUser.username}
-            className="border rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
           />
           <input
@@ -196,14 +198,14 @@ const Profile = () => {
             placeholder="Email"
             id="email"
             defaultValue={currentUser.email}
-            className="border rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
           />
           <input
             type="password"
             placeholder="Password"
             id="password"
-            className="border rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
           />
 
@@ -262,6 +264,7 @@ const Profile = () => {
             Manage Listing
           </div>
         </button>
+
         {userListingsData?.data && showListings && (
           <ProfileListingCard userListingsData={userListingsData} />
         )}

@@ -57,7 +57,7 @@ const SignUp = () => {
             type="text"
             placeholder="Username"
             id="username"
-            className="border rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
           />
@@ -65,7 +65,7 @@ const SignUp = () => {
             type="email"
             placeholder="Email"
             id="email"
-            className="border rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
           />
@@ -73,7 +73,7 @@ const SignUp = () => {
             type="password"
             placeholder="Password"
             id="password"
-            className="border rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
           />

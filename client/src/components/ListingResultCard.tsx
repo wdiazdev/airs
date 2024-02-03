@@ -33,6 +33,7 @@ const ListingResultCard = ({ cardData }: Props) => {
               {' - '}
               {cardData.listingType.charAt(0).toUpperCase() +
                 cardData.listingType.slice(1)}
+              {cardData.furnished && ' - Furnished'}
             </span>
             <div className="flex items-center gap-1">
               <MdLocationOn className="text-sm sm:text-[18px] text-primary" />

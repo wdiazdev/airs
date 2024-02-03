@@ -53,7 +53,7 @@ const SignIn = () => {
             type="email"
             placeholder="Email"
             id="email"
-            className="border rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
           />
@@ -61,7 +61,7 @@ const SignIn = () => {
             type="password"
             placeholder="Password"
             id="password"
-            className="border rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
           />
