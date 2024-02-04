@@ -1,9 +1,8 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import useGetListing from '../query/useGetListing'
 import Spinner from '../components/Spinner'
 import { CreateListingFormData } from '../types'
 import {
-  MdSell,
   MdBathroom,
   MdHome,
   MdLocationOn,
@@ -16,11 +15,13 @@ import { formatCurrency } from '../utils/FormatCurrency'
 import { useAppSelector } from '../redux/hook'
 import { useState } from 'react'
 import ContactAgent from '../components/ContactAgent'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/swiper-bundle.css'
 
 const Listing = () => {
   const params = useParams()
-
-  const navigate = useNavigate()
 
   const [contact, setContact] = useState<boolean>(false)
 
@@ -53,33 +54,48 @@ const Listing = () => {
     <div className="h-screen">
       {listingData && !isLoading && !isError ? (
         <>
-          <div className="relative">
-            <img
-              className="h-[550px] w-full object-cover"
-              src={
-                listingData.imageUrls[0] ||
-                'https://www.ssn.no/build/images/temp/placeholder-house.5fe09041.png'
-              }
-              alt="listing image"
-            />
-            <button
-              onClick={() => history.back()}
-              className="absolute bottom-4 left-4 hover:opacity-75 ease-in duration-200"
-            >
-              <MdArrowCircleLeft className="text-sm sm:text-[38px] text-primary" />
-            </button>
-          </div>
+          <Swiper navigation={true} modules={[Navigation]} slidesPerView={1}>
+            {listingData.imageUrls.map((url, index) => {
+              return (
+                <div className="relative">
+                  <SwiperSlide key={index}>
+                    <img
+                      src={
+                        url ||
+                        'https://www.ssn.no/build/images/temp/placeholder-house.5fe09041.png'
+                      }
+                      alt="listing image"
+                      className=" h-[600px] w-full object-cover"
+                    />
+                  </SwiperSlide>
+                  <button
+                    onClick={() => history.back()}
+                    className="absolute bottom-4 left-4 hover:opacity-75 ease-in duration-200"
+                  >
+                    <MdArrowCircleLeft className="text-sm sm:text-[38px] text-primary" />
+                  </button>
+                </div>
+              )
+            })}
+          </Swiper>
 
           <div className="flex flex-col gap-4 p-2 mt-6 border-b-2">
             <div className="flex items-center gap-1">
-              <MdSell className="text-sm sm:text-[20px] text-primary" />
-              <span className="font-semibold text-sm sm:text-[20px]">
+              <div
+                className={`w-2 h-2 sm:h-3 sm:w-3 ${
+                  listingData.offer ? 'bg-amber-500' : 'bg-green-500'
+                } rounded-full`}
+              />
+              <p className="text-sm sm:text-[20px]">
+                {listingData.propertyType.charAt(0).toUpperCase() +
+                  listingData.propertyType.slice(1)}
+                {' for '}
                 {listingData.listingType.charAt(0).toUpperCase() +
                   listingData.listingType.slice(1)}
                 {listingData.offer && (
-                  <span className=" text-slate-400"> - Pending</span>
+                  <span className="text-amber-500"> - Pending</span>
                 )}
-              </span>
+              </p>
             </div>
 
             <div className="flex items-center gap-1">

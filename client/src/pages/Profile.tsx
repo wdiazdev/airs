@@ -162,7 +162,7 @@ const Profile = () => {
 
   return (
     <div className="flex justify-center items-center p-2">
-      <div className="flex flex-col gap-4 max-w-lg w-full mt-20">
+      <div className="flex flex-col gap-4 max-w-lg w-full mt-40">
         <h1 className="text-center text-xl font-semibold">Profile</h1>
         <input
           type="file"

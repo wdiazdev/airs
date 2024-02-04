@@ -34,7 +34,7 @@ const App = () => {
             <Route path="/update-listing/:id" element={<UpdateListing />} />
           </Route>
         </Routes>
-        <Toaster richColors />
+        <Toaster richColors position="top-center" style={{ marginTop: 36 }} />
       </BrowserRouter>
     </div>
   )

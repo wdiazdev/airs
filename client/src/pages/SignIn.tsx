@@ -45,7 +45,7 @@ const SignIn = () => {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen p-2">
+    <div className="flex items-center justify-center h-full p-2">
       <div className="flex flex-col p-y max-w-lg pb-16 w-full">
         <h1 className="text-center text-xl font-semibold mb-4">Sign In</h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -82,7 +82,7 @@ const SignIn = () => {
           <p className="text-red-700">{error && error.message}</p>
         </form>
         <div className="flex gap-2 mt-4">
-          <p>Dont have an account?</p>
+          <p>Don't have an account?</p>
           <Link to="/sign-up">
             <span className="text-primary font-bold hover:opacity-75 ease-in duration-200">
               Sign Up

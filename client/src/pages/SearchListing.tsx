@@ -19,6 +19,7 @@ const SearchListing = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isError, setIsError] = useState<boolean>(false)
   const [searchResult, setSearchResult] = useState<CreateListingFormData[]>()
+  const [showMore, setShowMore] = useState<boolean>(false)
 
   const urlParams = new URLSearchParams(location.search)
   const searchTermFromUrl = urlParams.get('searchTerm')
@@ -55,9 +56,12 @@ const SearchListing = () => {
       try {
         const res = await fetch(`/api/listing/searchListing?${searchQuery}`)
         const result = await res.json()
+        if (result.data.length > 8) {
+          setShowMore(true)
+        }
         setSearchResult(result.data)
       } catch (error) {
-        console.log('error:', error)
+        console.log('Error:', error)
         setIsError(true)
       } finally {
         setIsLoading(false)
@@ -136,16 +140,32 @@ const SearchListing = () => {
     navigate(`/search?${searchQuery}`)
   }
 
+  const handleShowMore = async () => {
+    const startIndex = searchResult?.length
+    if (startIndex) {
+      urlParams.set('startIndex', startIndex.toString())
+    }
+    const searchQuery = urlParams.toString()
+    try {
+      const res = await fetch(`/api/listing/searchListing?${searchQuery}`)
+      const result = await res.json()
+      if (result?.data.length < 9) {
+        setShowMore(false)
+      }
+      setSearchResult((prevSearchResult) => [
+        ...(prevSearchResult || []),
+        ...result.data,
+      ])
+    } catch (error) {
+      console.log('Error:', error)
+    }
+  }
+
   return (
     <div className="flex flex-col md:flex-row p-2 max-h-screen overflow-y-auto">
       <div className="border-b-2 md:border-r-2 md:border-b-0 p-4 h-screen">
         <form
           onSubmit={handleSubmit}
-          // onKeyDown={(e) => {
-          //   if (e.key === 'Enter') {
-          //     handleSubmit
-          //   }
-          // }}
           className="flex flex-col gap-4 w-full sm:min-w-[380px] mt-20"
         >
           <div className="flex items-center gap-2">
@@ -275,6 +295,15 @@ const SearchListing = () => {
               <ListingResultCard cardData={result} key={result._id} />
             ))}
         </div>
+        {showMore && (
+          <button
+            onClick={handleShowMore}
+            className="font-semibold text-center m-auto py-8 hover:opacity-75 
+            ease-in duration-200"
+          >
+            Show more
+          </button>
+        )}
       </div>
     </div>
   )
