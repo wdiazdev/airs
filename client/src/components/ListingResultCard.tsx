@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ListingResultCard = ({ cardData }: Props) => {
-  const truncatedDescription = cardData.description.slice(0, 100) + '...'
+  const truncatedDescription = cardData.description.slice(0, 90) + '...'
   const truncatedAddress =
     cardData.address.slice(0, 30) + (cardData.address.length > 30 ? '...' : '')
   return (

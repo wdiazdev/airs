@@ -57,8 +57,8 @@ const Listing = () => {
           <Swiper navigation={true} modules={[Navigation]} slidesPerView={1}>
             {listingData.imageUrls.map((url, index) => {
               return (
-                <div className="relative">
-                  <SwiperSlide key={index}>
+                <div className="relative" key={index}>
+                  <SwiperSlide>
                     <img
                       src={
                         url ||
@@ -67,13 +67,13 @@ const Listing = () => {
                       alt="listing image"
                       className=" h-[600px] w-full object-cover"
                     />
+                    <button
+                      onClick={() => history.back()}
+                      className="absolute bottom-4 left-4 hover:opacity-75 ease-in duration-200"
+                    >
+                      <MdArrowCircleLeft className="text-sm sm:text-[38px] text-primary" />
+                    </button>
                   </SwiperSlide>
-                  <button
-                    onClick={() => history.back()}
-                    className="absolute bottom-4 left-4 hover:opacity-75 ease-in duration-200"
-                  >
-                    <MdArrowCircleLeft className="text-sm sm:text-[38px] text-primary" />
-                  </button>
                 </div>
               )
             })}
