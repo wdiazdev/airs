@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import DashChart from './DashChart'
 import { LoanDataTypes } from '../../types'
-import useCashFlow from '../../hook/useCashFlow'
 import { formatCurrency } from '../../utils/FormatCurrency'
 import Stats from './Stats'
 import { toast } from 'sonner'
 import FormInput from './FormInput'
 import PaymentBreakdown from './PaymentBreakdown'
 import { FaHome } from 'react-icons/fa'
+import useCashFlow from '../../hook/useCashFlow'
 
 const CashFlow = () => {
   const [results, setResults] = useState<LoanDataTypes>()
