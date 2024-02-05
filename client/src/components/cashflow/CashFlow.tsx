@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import DashChart from './DashChart'
 import { LoanDataTypes } from '../../types'
 import useCashFlow from '../../hook/useCashFlow'
@@ -9,7 +9,7 @@ import FormInput from './FormInput'
 import PaymentBreakdown from './PaymentBreakdown'
 import { FaHome } from 'react-icons/fa'
 
-const CashFlow: FC = () => {
+const CashFlow = () => {
   const [results, setResults] = useState<LoanDataTypes>()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
