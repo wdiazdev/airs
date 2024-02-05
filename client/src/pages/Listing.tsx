@@ -79,7 +79,7 @@ const Listing = () => {
             })}
           </Swiper>
 
-          <div className="flex flex-col gap-4 p-2 mt-6 border-b-2">
+          <div className="flex flex-col gap-4 p-6 mt-6 border-b-2">
             <div className="flex items-center gap-1">
               <div
                 className={`w-2 h-2 sm:h-3 sm:w-3 ${

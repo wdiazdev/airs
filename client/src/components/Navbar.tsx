@@ -31,7 +31,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className="h-16 bg-zinc-950 flex items-center justify-between px-12 w-full absolute z-40 
+      className="h-16 bg-zinc-950 flex items-center justify-between pl-12 pr-2 sm:pr-12 w-full absolute z-40 
         border-b-1border-primary shadow-md shadow-primary"
     >
       <div className="flex justify-between items-center">
@@ -42,7 +42,8 @@ const NavBar = () => {
           </div>
         </Link>
       </div>
-      {location.pathname !== '/' && <SearchBar />}
+
+      {location.pathname !== '/' && <SearchBar fullWidth={false} />}
 
       <div className="flex gap-4 items-center">
         <Link
@@ -93,6 +94,12 @@ const NavBar = () => {
             className="hover:text-primary ease-in duration-200"
           >
             <Link to="/">Home</Link>
+          </div>
+          <div
+            onClick={handleClick}
+            className="hover:text-primary ease-in duration-200"
+          >
+            <Link to="/profile">Profile</Link>
           </div>
           <div
             onClick={handleClick}

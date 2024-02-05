@@ -6,6 +6,7 @@ import 'swiper/css'
 import 'swiper/swiper-bundle.css'
 import { Link } from 'react-router-dom'
 import Spinner from '../components/Spinner'
+import ListingResultCard from '../components/ListingResultCard'
 
 const Home = () => {
   const { getCreatedAtData, getSaleData, getRentData } = useGetFilterListing()
@@ -31,22 +32,24 @@ const Home = () => {
   return (
     <div className="flex flex-col gap-8">
       <div
-        className="h-screen relative p-2 
+        className="h-[700px] relative p-2 
       bg-no-repeat bg-cover bg-center flex items-center justify-center
       bg-[url('/src/assets/homeBg.jpg')]"
       >
         <div className="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
         <div className="flex flex-col items-center gap-3 z-30">
-          <h1 className="sm:text-xl text-[26px] font-bold text-white text-center">
+          <h1 className="text-[26px] sm:text-xl font-bold text-white text-center">
             The<span className="text-primary"> #1 </span>site real estate
             <br /> professionals trust
           </h1>
           <SearchBar fullWidth />
         </div>
       </div>
-      <h2 className="text-lg font-semibold px-6 text-slate-600">
+
+      <h2 className="text-[26px] sm:text-lg font-semibold px-4 text-slate-600">
         Recent listings added
       </h2>
+
       <div className="flex justify-center items-center p-2 h-[500px]">
         {createdAtResults?.data && !createdAtIsLoading && !createdAtIsError && (
           <Swiper navigation={true} modules={[Navigation]} slidesPerView={1}>
@@ -79,7 +82,49 @@ const Home = () => {
         )}
       </div>
 
-      <div>Test</div>
+      <div className="p-4">
+        <h2 className="text-[26px] sm:text-lg font-semibold text-slate-600 mb-2">
+          Recent listings for sale
+        </h2>
+        <div className="flex flex-wrap justify-center gap-4 bg-slate-400 p-4 rounded-lg">
+          {saleResults?.data && !saleIsLoading && !saleIsError && (
+            <>
+              {saleResults.data.map((element) => (
+                <ListingResultCard cardData={element} key={element._id} />
+              ))}
+            </>
+          )}
+          {saleIsLoading && !saleIsError && !saleResults && <Spinner />}
+          {!saleIsLoading && !saleIsError && !saleResults && (
+            <p className="font-semibold">No results found</p>
+          )}
+          {saleIsError && !saleIsLoading && !saleResults && (
+            <p className="font-semibold">Error. Please try again!</p>
+          )}
+        </div>
+      </div>
+
+      <div className="p-4">
+        <h2 className="text-[26px] sm:text-lg font-semibold text-slate-600 mb-2">
+          Recent listings for rent
+        </h2>
+        <div className="flex flex-wrap justify-center gap-4 bg-slate-400 p-4 rounded-lg">
+          {rentResults?.data && !rentIsLoading && !rentIsError && (
+            <>
+              {rentResults.data.map((element) => (
+                <ListingResultCard cardData={element} key={element._id} />
+              ))}
+            </>
+          )}
+          {rentIsLoading && !rentIsError && !rentResults && <Spinner />}
+          {!rentIsLoading && !rentIsError && !rentResults && (
+            <p className="font-semibold">No results found</p>
+          )}
+          {rentIsError && !rentIsLoading && !rentResults && (
+            <p className="font-semibold">Error. Please try again!</p>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
