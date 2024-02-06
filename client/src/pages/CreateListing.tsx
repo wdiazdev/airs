@@ -173,9 +173,14 @@ const CreateListing = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen p-2 pb-16">
-      <h1 className="text-center text-xl font-semibold mb-4">Create Listing</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+    <div className="flex flex-col items-center justify-center p-2">
+      <h1 className="text-center text-lg sm:text-xl font-semibold mb-4 mt-32 sm:mt-40">
+        Create Listing
+      </h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col justify-center sm:flex-row gap-4 pb-10"
+      >
         <div className="flex flex-col gap-4 w-full sm:max-w-xl">
           <input
             type="text"

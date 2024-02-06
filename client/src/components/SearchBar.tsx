@@ -32,7 +32,7 @@ const SearchBar = ({ fullWidth }: Props) => {
     <form
       onSubmit={handleSubmit}
       className={`bg-white flex items-center rounded-lg ${
-        fullWidth ? 'w-full p-3' : 'w-lg p-2'
+        fullWidth ? 'w-full p-3' : 'w-[240px] p-2'
       }`}
     >
       <button>

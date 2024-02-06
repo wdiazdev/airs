@@ -195,15 +195,20 @@ const UpdateListing = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen p-2 pb-16">
-      <h1 className="text-center text-xl font-semibold mb-4">Update Listing</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+    <div className="flex flex-col items-center justify-center p-2">
+      <h1 className="text-center text-lg sm:text-xl font-semibold mb-4 mt-32 sm:mt-40">
+        Update Listing
+      </h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col sm:flex-row gap-4 pb-10"
+      >
         <div className="flex flex-col gap-4 w-full sm:max-w-xl">
           <input
             type="text"
             placeholder="Enter the full address of the property"
             id="address"
-            className="border-2 border-slate-300 border-gray-300 rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
             value={formData.address}
@@ -211,7 +216,7 @@ const UpdateListing = () => {
           <textarea
             placeholder="Provide a detailed description of the property"
             id="description"
-            className="border-2 border-slate-300 border-gray-300 rounded-lg p-3 focus:outline-none"
+            className="border-2 border-slate-300 rounded-lg p-3 focus:outline-none"
             onChange={handleChange}
             required
             value={formData.description}
@@ -436,7 +441,7 @@ const UpdateListing = () => {
 
           <button
             disabled={isLoading}
-            className={`py-3 uppercase bg-green-700 text-white font-semibold rounded-lg w-full 
+            className={`py-3 uppercase bg-green-700 text-white font-semibold rounded-lg w-full
             ${
               isLoading
                 ? 'opacity-80 cursor-not-allowed'
