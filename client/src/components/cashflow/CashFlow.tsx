@@ -39,9 +39,7 @@ const CashFlow = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-white text-lg text-center mb-4 sm:text-lg text-md">
-        Cash Flow Calculator
-      </h2>
+      <h2 className="text-lg text-center mb-4">Cash Flow Calculator</h2>
 
       <div
         className="flex items-center justify-center flex-wrap sm:flex gap-8 sm:gap-10 
@@ -99,15 +97,13 @@ const CashFlow = () => {
           />
 
           <div className="flex flex-col gap-0">
-            <label htmlFor="loanType" className="block text-sm text-white">
+            <label htmlFor="loanType" className="block text-sm text-slate-500">
               Loan Type
             </label>
             <select
               name="loanType"
               id="loanType"
-              className="w-full border-none rounded-md bg-zinc-800
-              hover:bg-zinc-700  text-white tracking-wider
-              py-3 px-1 pl-7 cursor-pointer "
+              className="w-full py-3 pl-2 cursor-pointer border-2 border-slate-300 rounded-lg"
               required
               value={results && results.loanType}
             >
@@ -138,11 +134,11 @@ const CashFlow = () => {
           {results ? (
             <>
               <div className="flex flex-col items-center justify-center">
-                <h3 className="text-md text-white">Monthly payment</h3>
-                <span className="flex justify-end text-sm text-zinc-500">
+                <h3 className="text-md text-slate-500">Monthly payment</h3>
+                <span className="flex justify-end text-sm text-slate-500">
                   {`${results.loanType}-Year-Fixed`}
                 </span>
-                <p className="text-md text-white">
+                <p className="text-md text-slate-500">
                   {formatCurrency(propertyData.monthlyPayment)}
                 </p>
               </div>
@@ -150,7 +146,7 @@ const CashFlow = () => {
               <PaymentBreakdown results={results} />
             </>
           ) : (
-            <FaHome size={400} color="#475569" />
+            <FaHome size={400} color="#334155" />
           )}
         </div>
       </div>

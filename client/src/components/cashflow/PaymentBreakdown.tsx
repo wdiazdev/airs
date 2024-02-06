@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { formatCurrency } from '../../utils/FormatCurrency'
 import useCashFlow from '../../hook/useCashFlow'
 import { LoanDataTypes } from '../../types'
@@ -7,7 +6,7 @@ type Props = {
   results: LoanDataTypes
 }
 
-const PaymentBreakdown: FC<Props> = ({ results }) => {
+const PaymentBreakdown = ({ results }: Props) => {
   const { propertyData } = useCashFlow({ results })
 
   return (
@@ -19,18 +18,18 @@ const PaymentBreakdown: FC<Props> = ({ results }) => {
         <span className="text-[#008000]">HOA</span>
       </div>
       <div className="flex flex-col gap-2">
-        <span className="text-white">
+        <span className="text-slate-500">
           {propertyData && formatCurrency(propertyData.principalAndInterest)}
         </span>
-        <span className="text-white">
+        <span className="text-slate-500">
           {propertyData?.taxes ? formatCurrency(propertyData.taxes) : '-'}
         </span>
-        <span className="text-white">
+        <span className="text-slate-500">
           {propertyData?.insurance
             ? formatCurrency(propertyData.insurance)
             : '-'}
         </span>
-        <span className="text-white">
+        <span className="text-slate-500">
           {propertyData?.hoa ? formatCurrency(propertyData.hoa) : '-'}
         </span>
       </div>

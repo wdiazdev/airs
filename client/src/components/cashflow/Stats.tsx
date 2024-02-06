@@ -1,13 +1,12 @@
-import { FC } from 'react'
 import { LoanDataTypes } from '../../types'
 import useCashFlow from '../../hook/useCashFlow'
 import { formatCurrency } from '../../utils/FormatCurrency'
 
-type props = {
+type Props = {
   results?: LoanDataTypes
 }
 
-const Stats: FC<props> = ({ results }) => {
+const Stats = ({ results }: Props) => {
   const { propertyData } = useCashFlow({
     results,
   })
@@ -15,9 +14,9 @@ const Stats: FC<props> = ({ results }) => {
   return (
     <div
       className="flex justify-evenly space-x-4 border-1 
-      rounded-lg border-zinc-800 text-white bg-zinc-950"
+      rounded-lg border-zinc-800 text-white bg-slate-700"
     >
-      <div className="w-[33%] border-r border-zinc-900 pr-4 p-4 text-sm">
+      <div className="w-[33%] border-r border-slate-900 pr-4 p-4 text-sm">
         <p>Payment</p>
         <span>
           {propertyData.monthlyPayment
@@ -25,7 +24,7 @@ const Stats: FC<props> = ({ results }) => {
             : '-'}
         </span>
       </div>
-      <div className="w-[33%] border-r border-zinc-900 px-4 p-4 text-sm">
+      <div className="w-[33%] border-r border-slate-900 px-4 p-4 text-sm">
         <p>Rental Income</p>
         <span>
           {propertyData.rent ? formatCurrency(propertyData.rent) : '-'}

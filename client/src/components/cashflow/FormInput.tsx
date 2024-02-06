@@ -1,5 +1,3 @@
-import { FC } from 'react'
-
 type Props = {
   name?: string
   id?: string
@@ -10,7 +8,7 @@ type Props = {
   description?: string
 }
 
-const FormInput: FC<Props> = ({
+const FormInput = ({
   name,
   id,
   required,
@@ -18,18 +16,18 @@ const FormInput: FC<Props> = ({
   label,
   symbol,
   description,
-}) => {
+}: Props) => {
   return (
     <div className="flex flex-col gap-0">
       {label && (
-        <label htmlFor={name} className="block text-sm text-white">
+        <label htmlFor={name} className="block text-sm text-slate-500">
           {label}
         </label>
       )}
       <div className="relative">
         {symbol && (
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            <span className="text-white sm:text-sm">$</span>
+            <span className="text-slate-500 sm:text-sm">$</span>
           </div>
         )}
 
@@ -43,12 +41,12 @@ const FormInput: FC<Props> = ({
           autoComplete="off"
           required={required}
           defaultValue={defaultValue}
-          className="w-full rounded-md bg-zinc-800 hover:bg-zinc-700 
-        text-white placeholder-white py-3 pl-7 border-none [appearance:textfield]
-        [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="w-full border-2 border-slate-300 rounded-lg p-3 py-3 pl-7 focus:outline-none"
         />
       </div>
-      {description && <p className="text-sm text-zinc-500">{description}</p>}
+      {description && (
+        <p className="text-[12px] text-slate-500">{description}</p>
+      )}
     </div>
   )
 }
