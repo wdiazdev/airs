@@ -12,7 +12,7 @@ const Dashboard = () => {
       return <CashOnCash />
     } else {
       return (
-        <p className="text-md text-white text-center">
+        <p className="text-md text-center">
           Please choose a calculation method.
         </p>
       )
