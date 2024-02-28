@@ -31,13 +31,12 @@ const SearchBar = ({ fullWidth }: Props) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className={`bg-white flex items-center rounded-lg ${
-        fullWidth ? 'w-full p-3' : 'w-[220px] p-2'
-      }`}
+      className="bg-white flex items-center rounded-lg w-70 py-3 px-2"
     >
-      <button>
+      <button type="submit">
         <FaSearch className="text-[20px] sm:text-[24px] text-slate-600 mr-2 hover:opacity-75 ease-in duration-200" />
       </button>
+
       <input
         type="text"
         placeholder="Search..."
